@@ -1,0 +1,3 @@
+include flybrains/data/*.json
+include flybrains/data/*.csv
+include flybrains/meshes/*.stl

@@ -1,0 +1,4 @@
+gitpython
+navis
+numpy
+pandas
