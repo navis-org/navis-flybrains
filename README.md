@@ -11,8 +11,9 @@ You can install `flybrains` from PyPI:
 pip3 install flybrains
 ```
 
+## Bridging transforms
 It's highly recommended that after install, you download the optional
-bridging registrations.
+bridging transforms to map between template brains.
 
 _If you already have downloaded these registrations via `nat.jrcbrains` and/or_
 _`nat.flybrains` you can skip this: `flybrains`_
@@ -47,6 +48,11 @@ transforms available to [navis](https://navis.readthedocs.io/en/latest/):
 On import of `flybrains`, these data sources are injected into and can be
 readily used to e.g. transform 3d coordinates between brain spaces.
 
+## External dependencies
+In order to use some of these transforms, you will need to have
+[CMTK](https://www.nitrc.org/projects/cmtk/) installed and its `streamxform` 
+script where `navis` can find it. Normally this should happen automatically on
+install.
 
 ## Acknowledgements
 Critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
