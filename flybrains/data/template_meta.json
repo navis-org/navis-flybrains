@@ -13,7 +13,7 @@
          0.0,
          0.0
       ],
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          563.9342,
          0.0,
@@ -27,7 +27,7 @@
          "microns"
       ],
       "description": "An intersex averaged brain formed from 17 female and 9 male brains from the FlyCircuit dataset.",
-      "regName": "FCWB",
+      "label": "FCWB",
       "dims": [
          1769,
          1026,
@@ -49,7 +49,7 @@
          0.0,
          0.0
       ],
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          327.04,
          0.0,
@@ -59,7 +59,7 @@
       ],
       "units": null,
       "description": "Template used for the study \"A Systematic Nomenclature for the Insect Brain\" (doi: 10.1016/j.neuron.2013.12.01).\n\nConstructed from the green channel of serial sections of a Drosophila melanogaster brain that was tricolor-labeled with a combination of the following reporters:\n  * cytoplasmic DsRed (UAS-DsRed; Verkhusha et al., 2001; red channel),\n  * presynaptic GFP (synaptic-vesicles-targeted UAS-n-syb-GFP; Estes et al., 2000; green channel),\n  * postsynaptic Rdl-hemagglutinin (GABA-receptor-targeted UAS-Rdl-HA; Sanchez-Soriano et al., 2005; blue channel).\nThey are expressed with the pan-neuronal elav-GAL4 expression driver (C155; Lin and Goodman, 1994).\n\nNote that, because of the excess amount of ectopic protein expression, the presynaptic and postsynaptic labelling (especially the latter) was not completely specific, visualizing not only synaptic sites but also cell bodies and large fiber bundles.\n\nThe image was acquired using a confocal laser-scanning microscope LSM510 (Zeiss) with a 40x water-immersion C-Apochromat objective (NA = 1.2). Each section, of 135 total, was recorded with a resolution of 1024 by 1024 pixels and 1.41 micron optical z-slice steps. These were then down-sampled to a resolution of 512 by 512 pixels.",
-      "regName": "IBN",
+      "label": "IBN",
       "dims": [
          512,
          512,
@@ -80,7 +80,7 @@
          0.0,
          0.0
       ],
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          578.56,
          0.0,
@@ -94,7 +94,7 @@
          "microns"
       ],
       "description": "A synthetic whole brain constructed from the Insect Brain Nomenclature template brain. The original confocal stack was duplicated, mirrored about a vertical axis and then displaced by 392 pixels in x and then merged with the original, with a linear blend in the overlapping region.",
-      "regName": "IBNWB",
+      "label": "IBNWB",
       "dims": [
          905,
          513,
@@ -112,7 +112,7 @@
          1.066
       ],
       "origin": null,
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          314.71851,
          0.0,
@@ -126,7 +126,7 @@
          "microns"
       ],
       "description": "IS2 template brain.",
-      "regName": "IS2",
+      "label": "IS2",
       "dims": [
          768,
          768,
@@ -144,7 +144,7 @@
          0.622088
       ],
       "origin": null,
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          636.396,
          0.0,
@@ -158,7 +158,7 @@
          "microns"
       ],
       "description": "The JFRC2 reference brain is a refractive-index-corrected version of the original FlyLight reference brain (JFRC).",
-      "regName": "JFRC2",
+      "label": "JFRC2",
       "dims": [
          1024,
          512,
@@ -180,7 +180,7 @@
          0.0,
          0.0
       ],
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          420.9968,
          0.0,
@@ -194,7 +194,7 @@
          "microns"
       ],
       "description": "BrainBase",
-      "regName": "T1",
+      "label": "T1",
       "dims": [
          768,
          768,
@@ -204,7 +204,7 @@
    },
    {
       "name": "Drosophila melanogaster",
-      "regName": "Dmel",
+      "label": "Dmel",
       "type": "Average",
       "sex": "Intersex",
       "dims": [
@@ -229,7 +229,7 @@
       ],
       "description": "An intersex averaged brain formed from 14 female and 18 male brains. Bridging registrations between this brain and other brains in this package can be downloaded from https://github.com/jefferislab/DrosophilidBridgingRegistrations. See ?add_reg_repo for details.",
       "doi": "10.5281/zenodo.10591",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          603.3268,
          0.0,
@@ -240,7 +240,7 @@
    },
    {
       "name": "DsecI",
-      "regName": "DsecI",
+      "label": "DsecI",
       "type": null,
       "sex": null,
       "dims": [
@@ -261,7 +261,7 @@
       "units": null,
       "description": "D. sechellia intersex template brain",
       "doi": null,
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          353.7855,
          0.0,
@@ -272,7 +272,7 @@
    },
    {
       "name": "Drosophila simulans",
-      "regName": "Dsim",
+      "label": "Dsim",
       "type": "Average",
       "sex": "Intersex",
       "dims": [
@@ -297,7 +297,7 @@
       ],
       "description": "An intersex averaged brain formed from 10 female and 11 male brains. Bridging registrations between this brain and other brains in this package can be downloaded from https://github.com/jefferislab/DrosophilidBridgingRegistrations. See ?add_reg_repo for details.",
       "doi": "10.5281/zenodo.10594",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          569.1933,
          0.0,
@@ -308,7 +308,7 @@
    },
    {
       "name": "Dvir",
-      "regName": "Dvir",
+      "label": "Dvir",
       "type": "Average",
       "sex": "Intersex",
       "dims": [
@@ -333,7 +333,7 @@
       ],
       "description": "An intersex averaged brain formed from 11 female and 10 male brains. Bridging registrations between this brain and other brains in this package can be downloaded from https://github.com/jefferislab/DrosophilidBridgingRegistrations. See ?add_reg_repo for details.",
       "doi": "10.5281/zenodo.10593",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          619.9318,
          0.0,
@@ -344,7 +344,7 @@
    },
    {
       "name": "JFRC2013",
-      "regName": "JFRC2013",
+      "label": "JFRC2013",
       "type": "Single brain",
       "sex": "Female",
       "dims": [
@@ -369,7 +369,7 @@
       ],
       "description": "The JFRC2013 reference brain is a spatially calibrated version of the brain used in Aso et al. 2014, \"The neuronal architecture of the mushroom body provides a logic for associative learning\".",
       "doi": "10.7554/eLife.04577",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          550.62,
          0.0,
@@ -380,7 +380,7 @@
    },
    {
       "name": "JFRC2013DS",
-      "regName": "JFRC2013DS",
+      "label": "JFRC2013DS",
       "type": "Single brain",
       "sex": "Female",
       "dims": [
@@ -405,7 +405,7 @@
       ],
       "description": "This is a downsampled version of the JFRC2013 reference brain, designed for use with images taken on a microscope with 20 x magnification. The downsampling has shrunk the z direction, such that the brain appears flattened when compared with the original.",
       "doi": "10.7554/eLife.04577",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          550.62,
          0.0,
@@ -416,7 +416,7 @@
    },
    {
       "name": "JRC2018F",
-      "regName": "JRC2018F",
+      "label": "JRC2018F",
       "type": "Average template brain",
       "sex": "F",
       "dims": [
@@ -441,7 +441,7 @@
       ],
       "description": "Average template brain constructed from brains labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
       "doi": "https://doi.org/10.1101/376384",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          627.38,
          0.0,
@@ -452,7 +452,7 @@
    },
    {
       "name": "JRC2018U",
-      "regName": "JRC2018U",
+      "label": "JRC2018U",
       "type": "Average template brain",
       "sex": "Intersex",
       "dims": [
@@ -477,7 +477,7 @@
       ],
       "description": "Average template brain constructed from brains labelled with brp-SNAP presynaptic marker,dehydrated, and mounted in DPX and then imaged by confocal microscope. There were 36 female individuals (72 images including left-right flips) and 26 male individuals (52 image with left-right flips) for a total of 62 individuals (124 images with left-right flips).",
       "doi": "https://doi.org/10.1101/376384",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          627.38,
          0.0,
@@ -488,7 +488,7 @@
    },
    {
       "name": "JRCFIB2018F",
-      "regName": "JRCFIB2018F",
+      "label": "JRCFIB2018F",
       "type": null,
       "sex": null,
       "dims": null,
@@ -498,14 +498,14 @@
          0.008
       ],
       "origin": null,
-      "BoundingBox": null,
+      "boundingbox": null,
       "units": "microns",
       "description": "Calibrated version of Janelia FIB hemibrain dataset",
       "doi": "https://doi.org/10.1101/2020.01.21.911859"
    },
    {
       "name": "JRCFIB2018Fraw",
-      "regName": "JRCFIB2018Fraw",
+      "label": "JRCFIB2018Fraw",
       "type": null,
       "sex": null,
       "dims": null,
@@ -515,14 +515,14 @@
          1
       ],
       "origin": null,
-      "BoundingBox": null,
+      "boundingbox": null,
       "units": "pixels",
       "description": "Uncalibrated version of Janelia FIB hemibrain dataset",
       "doi": "https://doi.org/10.1101/2020.01.21.911859"
    },
    {
       "name": "JRCVNC2018F",
-      "regName": "JRCVNC2018F",
+      "label": "JRCVNC2018F",
       "type": "Average template VNC",
       "sex": "F",
       "dims": [
@@ -547,7 +547,7 @@
       ],
       "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
       "doi": "https://doi.org/10.1101/376384",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          263.6,
          0.0,
@@ -558,7 +558,7 @@
    },
    {
       "name": "VNCIS1",
-      "regName": "VNCIS1",
+      "label": "VNCIS1",
       "type": "Average",
       "sex": "Intersex",
       "dims": [
@@ -583,7 +583,7 @@
       ],
       "description": "See http://dx.doi.org/10.1016/j.cub.2010.07.045 for details",
       "doi": "10.5281/zenodo.13884",
-      "BoundingBox": [
+      "boundingbox": [
          0.0,
          439.9851,
          0.0,

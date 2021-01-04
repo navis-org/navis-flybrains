@@ -20,11 +20,13 @@ import trimesh as tm
 
 from textwrap import dedent
 
+from navis import transforms
 from navis.transforms.templates import TemplateBrain
+
 
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
-           'JRCFIB2018F', 'JRCVNC2018F', 'VNCIS1']
+           'JRCFIB2018F', 'JRCVNC2018F', 'VNCIS1', 'register_templates']
 
 # Read in meta data
 fp = os.path.dirname(__file__)
@@ -35,8 +37,8 @@ mesh_filepath = os.path.join(fp, 'meshes')
 with open(meta_filepath, 'r') as f:
     template_meta = json.load(f)
 
-# Index by short name
-template_meta = {e['regName']: e for e in template_meta}
+# Index by short label
+template_meta = {e['label']: e for e in template_meta}
 
 
 class FlyTemplateBrain(TemplateBrain):
@@ -55,11 +57,11 @@ class FlyTemplateBrain(TemplateBrain):
         return self.__str__()
 
     def __str__(self):
-        if getattr(self, 'BoundingBox'):
+        if getattr(self, 'boundingbox'):
             bbox = f"""\
             Bounding box ({self.units[0] if getattr(self, 'units') else 'NA'}):
-              x = {self.BoundingBox[0]}, y = {self.BoundingBox[2]}, z = {self.BoundingBox[4]},
-              x = {self.BoundingBox[1]}, y = {self.BoundingBox[3]}, z = {self.BoundingBox[5]},"""
+              x = {self.boundingbox[0]}, y = {self.boundingbox[2]}, z = {self.boundingbox[4]},
+              x = {self.boundingbox[1]}, y = {self.boundingbox[3]}, z = {self.boundingbox[5]},"""
         else:
             bbox = f"""\
             Bounding box ({self.units[0] if getattr(self, 'units') else 'units NA'}):
@@ -87,7 +89,7 @@ class FlyTemplateBrain(TemplateBrain):
         Template brain
         --------------
         Name: {name}
-        Short Name: {regName}
+        Short Name: {label}
         Type: {type}
         Sex:  {sex}
         Dimensions: {dims}
@@ -97,7 +99,7 @@ class FlyTemplateBrain(TemplateBrain):
         DOI: {doi}"""
 
         msg = dedent(msg).format(name=getattr(self, 'name', 'NA'),
-                                 regName=getattr(self, 'regName', 'NA'),
+                                 label=getattr(self, 'label', 'NA'),
                                  type=getattr(self, 'type', 'NA'),
                                  sex=getattr(self, 'sex', 'NA'),
                                  dims=dims,
@@ -111,10 +113,10 @@ class FlyTemplateBrain(TemplateBrain):
     def mesh(self):
         """On-demand loading of surface mesh."""
         if not hasattr(self, '_mesh'):
-            fp = os.path.join(mesh_filepath, f'{self.regName}.ply')
+            fp = os.path.join(mesh_filepath, f'{self.label}.ply')
 
             if not os.path.isfile(fp):
-                raise ValueError(f'{self.regName} does not appear to have a mesh')
+                raise ValueError(f'{self.label} does not appear to have a mesh')
 
             self._mesh = tm.load_mesh(fp)
 
@@ -571,7 +573,7 @@ class _JRCFIB2018F(FlyTemplateBrain):
         """On-demand loading of surface mesh."""
         if not hasattr(self, '_mesh'):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.regName}raw.ply')
+            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
             self._mesh = tm.load_mesh(fp)
             # Convert voxels to nanometers
             self.mesh.vertices *= 8
