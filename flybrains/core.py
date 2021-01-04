@@ -155,7 +155,6 @@ def inject_paths():
 
 def register_transforms():
     """Register transforms with navis."""
-
     # These are the paths we need to scan
     data_home = pathlib.Path(get_data_home()).expanduser()
     default_path = pathlib.Path('~/flybrain-data').expanduser()

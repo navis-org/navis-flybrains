@@ -23,3 +23,6 @@ from .core import *
 
 # This registers the transforms
 register_transforms()
+
+# This registers the template brains
+register_templates()
