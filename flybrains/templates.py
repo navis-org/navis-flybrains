@@ -26,7 +26,8 @@ from navis.transforms.templates import TemplateBrain
 
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
-           'JRCFIB2018F', 'JRCVNC2018F', 'VNCIS1', 'register_templates']
+           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCVNC2018F', 'VNCIS1',
+           'register_templates']
 
 # Read in meta data
 fp = os.path.dirname(__file__)
@@ -693,7 +694,7 @@ def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI,
                  Dsim, Dvir, JFRC2013, JFRC2013DS, JRC2018F,
-                 JRC2018U, JRCFIB2018F, JRCVNC2018F, VNCIS1]
+                 JRC2018U, JRCFIB2018F, JRCFIB2018Fraw, JRCVNC2018F, VNCIS1]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
