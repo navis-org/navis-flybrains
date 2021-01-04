@@ -5,6 +5,12 @@ This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.
 
 `flybrains` ships with meta data and surface meshes for 17 template brains.
 
+You can install `flybrains` from PyPI:
+
+```bash
+pip3 install flybrains
+```
+
 It's highly recommended that after install, you download the optional
 bridging registrations.
 
