@@ -15,32 +15,18 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
     requirements = [l for l in requirements if l and not l.startswith('#')]
 
-LONG_DESCRIPTION = """
-NAVis is a Python 3 library for Neuron Analysis and
-Visualization with focus on hierarchical tree-like neuron data.
-
-Features:
-
-  - interactive 2D (matplotlib) and 3D (vispy/plotly) plotting of neurons
-  - virtual neuron surgery: cutting, pruning, rerooting
-  - clustering methods (e.g. by connectivity or synapse placement)
-  - R bindings (e.g. for libraries nat, rcatmaid, elmr)
-  - interfaces with neuprint, Blender 3D and Cytoscape
-
-Check out the `Documentation <http://navis.readthedocs.io/>`_.
-"""
-
 setup(
     name='flybrains',
     version=verstr,
     packages=find_packages(),
     license='GNU GPL V3',
     description='Transforms to map between different Drosophila template brains',
-    long_description=LONG_DESCRIPTION,
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     url='https://github.com/schlegelp/navis-flybrains',
     author='Philipp Schlegel',
     author_email='pms70@cam.ac.uk',
-    keywords='Drosophila Template Registration Brain',
+    keywords='Drosophila template registration brain navis transform',
     classifiers=[
         'Development Status :: 3 - Alpha',
 
