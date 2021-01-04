@@ -1,18 +1,17 @@
-# flybrains
+# navis-flybrains
 Transforms to map between different _Drosophila_ template brains.
 
-This library is analogous to Greg Jefferis'
-[nat.templatebrains](https://github.com/natverse/nat.templatebrains),  
-[nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and
-[nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
+This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.com/natverse/nat.templatebrains), [nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and [nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
 
 `flybrains` ships with meta data and surface meshes for 17 template brains.
 
-It's highly recommended that after install you download the optional
-bridging registrations. _If you already have downloaded these registrations_
-_via `nat.jrcbrains` and/or `nat.flybrains` you can skip this: `flybrains`_
+It's highly recommended that after install, you download the optional
+bridging registrations.
+
+_If you already have downloaded these registrations via `nat.jrcbrains` and/or_
+_`nat.flybrains` you can skip this: `flybrains`_
 _should be able to find the registrations downloaded via R and register_
-_them for you._.
+_them for you._
 
 ```Python
 >>> import flybrains
@@ -39,14 +38,13 @@ transforms available to [navis](https://navis.readthedocs.io/en/latest/):
 
 ```
 
-On import of `flybrains`, these data sources are injected into
- and can be readily used
-to e.g. transform 3d coordinates between brain spaces.
+On import of `flybrains`, these data sources are injected into and can be
+readily used to e.g. transform 3d coordinates between brain spaces.
 
 
 ## Acknowledgements
 Critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
-et. al for inspiration for the implementation and meta data on e.g. template
+_et al._ for inspiration for the implementation and meta data on e.g. template
 brains.
 
 As reference for the Jefferis lab registrations, please use:
@@ -65,7 +63,7 @@ John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, G
 bioRxiv 376384; doi: https://doi.org/10.1101/376384
 ```
 
-For reference for individual template brains, please see their docstrings:
+For references of individual template brains, please see their docstrings:
 ```Python
 >>> help(flybrains.IBN)
 ```
