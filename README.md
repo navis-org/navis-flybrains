@@ -28,10 +28,7 @@ In order to use the Jefferis lab transforms, you will need to have
 It's highly recommended that after install, you download the optional
 bridging transforms to map between template brains.
 
-_If you already have downloaded these registrations via `nat.jrcbrains` and/or_
-_`nat.flybrains` you can skip this: `flybrains`_
-_should be able to find the registrations downloaded via R and register_
-_them for you (see also code at the bottom)._
+> :exclamation: If you already have downloaded these registrations via `nat.jrcbrains` and/or `nat.flybrains` you can skip this: `flybrains` should be able to find the registrations downloaded via R and register them for you (see also code at the bottom).
 
 ```Python
 >>> import flybrains
