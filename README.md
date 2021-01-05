@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
+</p>
+
 # navis-flybrains
 Transforms to map between different _Drosophila_ template brains.
 
@@ -14,6 +18,10 @@ pip3 install flybrains
 ### External dependencies
 In order to use the Jefferis lab transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
+
+<p align="center">
+<img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/bridging_graph.png?raw=true" width="700">
+</p>
 
 ## Bridging transforms
 It's highly recommended that after install, you download the optional
