@@ -26,7 +26,7 @@ import numpy as np
 
 from .download import get_data_home
 
-__all__ = ['register_transforms']
+__all__ = ['register_transforms', 'report']
 
 
 @functools.lru_cache()
