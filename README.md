@@ -22,7 +22,7 @@ In order to use the Jefferis lab transforms, you will need to have
 ## Bridging transforms
 
 <p align="center">
-<img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/bridging_graph.png?raw=true" width="700">
+<img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/bridging_graph.png?raw=true" width="800">
 </p>
 
 It's highly recommended that after install, you download the optional
