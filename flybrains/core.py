@@ -190,13 +190,20 @@ def register_transforms():
                             source = hit.name.split('_')[1].split('.')[0]
 
                         # "FAFB" refers to FAFB14 and requires microns
-                        # we will change it's label to make this explicit
+                        # we will change its label to make this explicit
                         # and later add a bridging transform
                         if target == 'FAFB':
                             target = 'FAFB14um'
 
                         if source == 'FAFB':
                             source = 'FAFB14um'
+
+                        # "JRCFIB2018F" likewise requires microns
+                        if target == 'JRCFIB2018F':
+                            target = 'JRCFIB2018Fum'
+
+                        if source == 'JRCFIB2018F':
+                            source = 'JRCFIB2018Fum'
 
                         # For reasons I have not yet figured out, source
                         # and target appear to be swapped for the h5 regfiles.
