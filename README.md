@@ -11,6 +11,10 @@ You can install `flybrains` from PyPI:
 pip3 install flybrains
 ```
 
+### External dependencies
+In order to use the Jefferis lab transforms, you will need to have
+[CMTK](https://www.nitrc.org/projects/cmtk/) installed.
+
 ## Bridging transforms
 It's highly recommended that after install, you download the optional
 bridging transforms to map between template brains.
@@ -67,12 +71,6 @@ nat regdirs
 /Library/Frameworks/R.framework/Versions/3.6/Resources/library/nat.flybrains/extdata/mirroringregistrations: 5 CMTK | 0 H5 transforms
 /Users/philipps/Library/Application Support/R/nat.jrcbrains: 0 CMTK | 5 H5 transforms
 ```
-
-## External dependencies
-In order to use some of these transforms, you will need to have
-[CMTK](https://www.nitrc.org/projects/cmtk/) installed and its `streamxform`
-script where `navis` can find it. Normally this should happen automatically on
-install.
 
 ## Acknowledgements
 Critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
