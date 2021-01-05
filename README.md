@@ -19,11 +19,12 @@ pip3 install flybrains
 In order to use the Jefferis lab transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
 
+## Bridging transforms
+
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/bridging_graph.png?raw=true" width="700">
 </p>
 
-## Bridging transforms
 It's highly recommended that after install, you download the optional
 bridging transforms to map between template brains.
 
