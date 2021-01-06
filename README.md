@@ -3,12 +3,14 @@
 </p>
 
 # navis-flybrains
-Transforms to map between different _Drosophila_ template brains.
+Transforms to map between different _Drosophila_ template brains. Intended to be used with [navis](https://github.com/schlegelp/navis).
 
 This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.com/natverse/nat.templatebrains), [nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and [nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
 
 `flybrains` ships with meta data and surface meshes for 17 template brains.
+Transforms need to be downloaded separately (see below).
 
+## Installation
 You can install `flybrains` from PyPI:
 
 ```bash
@@ -81,8 +83,12 @@ nat regdirs
 /Users/philipps/Library/Application Support/R/nat.jrcbrains: 0 CMTK | 5 H5 transforms
 ```
 
+## Documentation
+Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/source/tutorials/transforming.html)
+for navis to learn how to use the data `flybrains` provides.
+
 ## Changes
-- `0.1.1` (06/01/21): add `um` (for microns) suffix to `JRCFIB2018F` transforms; add affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms 
+- `0.1.1` (06/01/21): added `um` (for microns) suffix to `JRCFIB2018F` transforms; added affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms
 - `0.1.0` (03/01/21): first working version  
 
 ## Acknowledgements
