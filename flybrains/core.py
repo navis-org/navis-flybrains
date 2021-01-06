@@ -219,7 +219,7 @@ def register_transforms():
                                                                target=target,
                                                                transform_type=transform_type)
                     except BaseException as e:
-                        warnings.warn(f'Error registering {path} as transform: {str(e)}')
+                        warnings.warn(f'Error registering {hit} as transform: {str(e)}')
 
     # Add transform between JRCFIB2018Fraw (8nm voxel) and JRCFIB2018F (nm)
     tr = transforms.affine.AffineTransform(np.diag([8, 8, 8, 1]))
