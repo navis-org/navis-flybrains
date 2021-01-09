@@ -26,7 +26,7 @@ from navis.transforms.templates import TemplateBrain
 
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
-           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCVNC2018F', 'VNCIS1',
+           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCVNC2018F', 'VNCIS1', 'FAFB14',
            'register_templates']
 
 # Read in meta data
@@ -690,11 +690,47 @@ class _VNCIS1(FlyTemplateBrain):
 VNCIS1 = _VNCIS1(**template_meta['VNCIS1'])
 
 
+class _FAFB14(FlyTemplateBrain):
+    """Full Adult Fly Brain (FAFB) EM volume.
+
+    This SSTEM volume comprising an entire female Drosophila brain was imaged at
+    4x4x40nm by Zheng et al. (2018) and is availabe for download at
+    https://temca2data.org/. The meta data and associated mesh represent
+    version 14 (FAFB14) of this data set.
+
+    The FAFB mesh was generated from automatically detected synapses in this
+    dataset (Buhmann et al., 2019). For this the synapses were grouped into
+    2 micron bins which were then used to generate a mesh using a marching
+    cube algorithm. This raw mesh was then cleaned up, smoothed and downsampled
+    in Blender 3D.
+
+    References
+    ----------
+    Zheng Z, Lauritzen JS, Perlman E, Robinson CG, Nichols M, Milkie D,
+    Torrens O, Price J, Fisher CB, Sharifi N, Calle-Schuler SA, Kmecova L,
+    Ali IJ, Karsh B, Trautman ET, Bogovic JA, Hanslovsky P, Jefferis GSXE,
+    Kazhdan M, Khairy K, Saalfeld S, Fetter RD, Bock DD.
+    A Complete Electron Microscopy Volume of the Brain of Adult Drosophila
+    melanogaster. Cell. 2018 Jul 26;174(3):730-743.e22.
+    doi: 10.1016/j.cell.2018.06.019.
+
+    Julia Buhmann, Arlo Sheridan, Stephan Gerhard, Renate Krause, Tri Nguyen,
+    Larissa Heinrich, Philipp Schlegel, Wei-Chung Allen Lee, Rachel Wilson,
+    Stephan Saalfeld, Gregory Jefferis, Davi Bock, Srinivas Turaga,
+    Matthew Cook, Jan Funke.
+    Automatic Detection of Synaptic Partners in a Whole-Brain Drosophila EM Dataset
+    bioRxiv 2019.12.12.874172; doi: https://doi.org/10.1101/2019.12.12.874172
+
+    """
+
+FAFB14 = _FAFB14(**template_meta['FAFB14'])
+
+
 def register_templates():
     """Register template brains with navis."""
-    templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI,
-                 Dsim, Dvir, JFRC2013, JFRC2013DS, JRC2018F,
-                 JRC2018U, JRCFIB2018F, JRCFIB2018Fraw, JRCVNC2018F, VNCIS1]
+    templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
+                 JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
+                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)

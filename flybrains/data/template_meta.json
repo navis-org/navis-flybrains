@@ -591,5 +591,41 @@
          0.0,
          171.6938
       ]
+   },
+   {
+      "name": "Full Adult Fly Brain",
+      "label": "FAFB14",
+      "type": null,
+      "sex": "female",
+      "dims": [
+         165372,
+         80745,
+         6730
+      ],
+      "voxdims": [
+         4,
+         4,
+         40
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "nanometers",
+         "nanometers",
+         "nanometers"
+      ],
+      "description": "SSTEM volume comprising an entire female Drosophila brain was imaged at\n 4x4x40nm by Zheng et al. (2018) and is availabe for download at\nhttps://temca2data.org/. The meta data and associated mesh represent\nversion 14 (FAFB14) of this data set.",
+      "doi": "10.1016/j.cell.2018.06.019",
+      "boundingbox": [
+         192200,
+         853686,
+         75853,
+         398832,
+         2007,
+         271205
+      ]
    }
 ]
