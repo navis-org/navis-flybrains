@@ -78,7 +78,7 @@ class FlyTemplateBrain(TemplateBrain):
             Voxel size:
               x = {self.voxdims[0]} {self.units[0] if getattr(self, 'units') else ''}
               y = {self.voxdims[1]} {self.units[1] if getattr(self, 'units') else ''}
-              z = {self.voxdims[1]} {self.units[2] if getattr(self, 'units') else ''}"""
+              z = {self.voxdims[2]} {self.units[2] if getattr(self, 'units') else ''}"""
         else:
             vxsize = """\
             Voxel size:
