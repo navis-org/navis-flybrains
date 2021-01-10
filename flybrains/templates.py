@@ -640,11 +640,11 @@ class _JRCVNC2018F(FlyTemplateBrain):
     The JRCVNC2018U reference VNC was constructed as for JRCVNC2018F VNC but
     pooling both male and female brains.
 
-    JRCVNC2018F.surf, was generated in Amira from a 2 micron downsampled,
+    The JRCVNC2018F mesh, was generated in Amira from a 2 micron downsampled,
     Lanczos filtered version of the respective template VNC. A surface was then
     generated with a threshold level of 2800 and then smoothed and downsampled.
 
-    JRCVNC2018U.surf, was generated in Amira from a 2 micron downsampled,
+    The JRCVNC2018U mesh, was generated in Amira from a 2 micron downsampled,
     Lanczos filtered 8 bit version of the respective template VNC. A surface was
     then generated with a threshold level of 20 and then smoothed and
     downsampled.

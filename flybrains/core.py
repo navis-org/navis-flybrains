@@ -23,10 +23,16 @@ from textwrap import dedent
 from navis import transforms
 
 import numpy as np
+import pandas as pd
 
 from .download import get_data_home
 
 __all__ = ['register_transforms', 'report']
+
+# Read in meta data
+fp = os.path.dirname(__file__)
+
+data_filepath = os.path.join(fp, 'data')
 
 
 @functools.lru_cache()
@@ -229,10 +235,10 @@ def register_transforms():
                                            transform_type='bridging')
 
     # Add transform between JRCFIB2018F (nm) and JRCFIB2018Fum (um)
-    tr = transforms.affine.AffineTransform(np.diag([1/1e3, 1/1e3, 1/1e3, 1]))
+    tr = transforms.affine.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
     transforms.registry.register_transform(transform=tr,
-                                           source='JRCFIB2018F',
-                                           target='JRCFIB2018Fum',
+                                           source='JRCFIB2018Fum',
+                                           target='JRCFIB2018F',
                                            transform_type='bridging')
 
     # Add transform between FAFB14um and FAFB14 (nm)
@@ -255,3 +261,13 @@ def register_transforms():
                                            source='JFRC2',
                                            target='JFRC2010',
                                            transform_type='bridging')
+
+    # Add a simple mirror transform for FAFB14
+    fp = os.path.join(data_filepath, 'FAFB14_mirror_landmarks.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.thinplate.TPStransform(lm[['x_mirr', 'y_mirr', 'z_mirr']].values,
+                                           lm[['x', 'y', 'z']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FAFB14',
+                                           target=None,
+                                           transform_type='mirror')
