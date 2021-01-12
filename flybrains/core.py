@@ -265,8 +265,8 @@ def register_transforms():
     # Add a simple mirror transform for FAFB14
     fp = os.path.join(data_filepath, 'FAFB14_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
-    tr = transforms.thinplate.TPStransform(lm[['x_mirr', 'y_mirr', 'z_mirr']].values,
-                                           lm[['x', 'y', 'z']].values)
+    tr = transforms.thinplate.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
+                                           lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB14',
                                            target=None,
