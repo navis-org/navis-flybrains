@@ -7,8 +7,9 @@ Transforms to map between different _Drosophila_ template brains. Intended to be
 
 This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.com/natverse/nat.templatebrains), [nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and [nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
 
-`flybrains` ships with meta data and surface meshes for 17 template brains.
-Transforms need to be downloaded separately (see below).
+`flybrains` ships with meta data, surface meshes for 17 template brains and a
+mirror transform for `FAFB14`. Additional transforms need to be downloaded
+separately (see below).
 
 ## Installation
 You can install `flybrains` from PyPI:
