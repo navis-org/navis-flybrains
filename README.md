@@ -89,6 +89,7 @@ Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/sourc
 for navis to learn how to use the data `flybrains` provides.
 
 ## Changes
+- `0.1.4` (24/02/21): added "hemibrain" alias for "JRCFIB2018F"; added hemibrain bounding box mesh
 - `0.1.3` (12/01/21): improved the warp mirror registration for `FAFB14`
 - `0.1.2` (10/01/21): added a warp mirror registration for `FAFB14`
 - `0.1.1` (06/01/21): added `um` (for microns) suffix to `JRCFIB2018F` transforms; added affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms
