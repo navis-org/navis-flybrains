@@ -577,8 +577,19 @@ class _JRCFIB2018F(FlyTemplateBrain):
             fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
             self._mesh = tm.load_mesh(fp)
             # Convert voxels to nanometers
-            self.mesh.vertices *= 8
+            self._mesh.vertices *= 8
         return self._mesh
+
+    @property
+    def bbox(self):
+        """On-demand loading of approximate bounding box."""
+        if not hasattr(self, '_mesh_bbox'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}raw_bbox.ply')
+            self._mesh_bbox = tm.load_mesh(fp)
+            # Convert voxels to nanometers
+            self._mesh_bbox.vertices *= 8
+        return self._mesh_bbox
 
 JRCFIB2018F = _JRCFIB2018F(**template_meta['JRCFIB2018F'])
 
@@ -624,6 +635,14 @@ class _JRCFIB2018Fraw(FlyTemplateBrain):
     Jain, Viren; Plaza, Stephen M bioRxiv doi:10.1101/2020.01.21.911859.
 
     """
+    @property
+    def bbox(self):
+        """On-demand loading of approximate bounding box."""
+        if not hasattr(self, '_mesh_bbox'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}_bbox.ply')
+            self._mesh_bbox = tm.load_mesh(fp)
+        return self._mesh_bbox
 
 JRCFIB2018Fraw = _JRCFIB2018Fraw(**template_meta['JRCFIB2018Fraw'])
 
