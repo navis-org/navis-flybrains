@@ -248,6 +248,27 @@ def register_transforms():
                                            target='FAFB14',
                                            transform_type='bridging')
 
+    # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
+    tr = transforms.base.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='hemibrain',
+                                           target='JRCFIB2018F',
+                                           transform_type='bridging')
+
+    # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
+    tr = transforms.base.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='hemibrainraw',
+                                           target='JRCFIB2018Fraw',
+                                           transform_type='bridging')
+
+    # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
+    tr = transforms.base.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='hemibrainum',
+                                           target='JRCFIB2018Fum',
+                                           transform_type='bridging')
+
     # Add alias transform between FAFB and FAFB14 (they are synonymous)
     tr = transforms.base.AliasTransform()
     transforms.registry.register_transform(transform=tr,
