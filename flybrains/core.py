@@ -76,6 +76,12 @@ def get_nat_regdirs(verbose=False):
             continue
         match = re.search('.*?"(.*?)"', line)
         if match:
+            # Skip empty strings (happens if path not set at all)
+            # If we don't skip then we add the current directory
+            # `PosixPath('.')` which will lead to A LOT of recursive
+            # searching
+            if match.group(1) == '':
+                continue
             path = pathlib.Path(match.group(1))
             regdirs.append(path)
 
