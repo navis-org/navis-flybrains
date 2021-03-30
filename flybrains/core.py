@@ -59,8 +59,10 @@ def get_nat_regdirs(verbose=False):
 
     # Parse output
     outstr = proc.stdout.decode()
-    path = pathlib.Path(re.search('.*?"(.*?)"', outstr).group(1))
-    regdirs.append(path)
+    match = re.search('.*?"(.*?)"', outstr)
+    if match and match.group(1).strip() != '':
+        path = pathlib.Path(match.group(1))
+        regdirs.append(path)
 
     # This is basepath for nat.flybrains
     cmd = "regdirs=c('bridgingregistrations', 'mirroringregistrations');system.file('extdata', regdirs, package = 'nat.flybrains')"
@@ -80,7 +82,7 @@ def get_nat_regdirs(verbose=False):
             # If we don't skip then we add the current directory
             # `PosixPath('.')` which will lead to A LOT of recursive
             # searching
-            if match.group(1) == '':
+            if match.group(1).strip() == '':
                 continue
             path = pathlib.Path(match.group(1))
             regdirs.append(path)
@@ -94,8 +96,10 @@ def get_nat_regdirs(verbose=False):
 
     # Parse output
     outstr = proc.stdout.decode()
-    path = pathlib.Path(re.search('.*?"(.*?)"', outstr).group(1))
-    regdirs.append(path)
+    match = re.search('.*?"(.*?)"', outstr)
+    if match and match.group(1).strip() != '':
+        path = pathlib.Path(match.group(1))
+        regdirs.append(path)
 
     return regdirs
 
