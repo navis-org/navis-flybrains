@@ -89,6 +89,7 @@ Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/sourc
 for navis to learn how to use the data `flybrains` provides.
 
 ## Changes
+- `0.1.8` (10/04/21): add a simple symmetrization transform for FAFB: `FAFB14sym`
 - `0.1.7` (30/03/21): better deal with systems without nat libraries
 - `0.1.6` (25/03/21): fix bug that led to excessive recursive scanning of directories
 - `0.1.5` (03/03/21): fix bug that led to meshes not being packaged
