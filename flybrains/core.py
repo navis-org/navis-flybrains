@@ -302,3 +302,13 @@ def register_transforms():
                                            source='FAFB14',
                                            target=None,
                                            transform_type='mirror')
+
+    # Add a simple symmetrization transform for FAFB14
+    fp = os.path.join(data_filepath, 'FAFB14_symmetrize_landmarks_nm.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.thinplate.TPStransform(lm[['x', 'y', 'z']].values,
+                                           lm[['x_sym', 'y_sym', 'z_sym']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FAFB14',
+                                           target='FAFB14sym',
+                                           transform_type='bridging')
