@@ -448,7 +448,8 @@
          291.46,
          0.0,
          181.64
-      ]
+      ],
+      "symmetrical": true
    },
    {
       "name": "JRC2018U",
@@ -484,7 +485,8 @@
          293.36,
          0.0,
          172.9
-      ]
+      ],
+      "symmetrical": true
    },
    {
       "name": "JRCFIB2018F",
