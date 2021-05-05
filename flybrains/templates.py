@@ -14,6 +14,7 @@
 """Module constructing templatebrains"""
 
 import json
+import navis
 import os
 
 import trimesh as tm
@@ -74,11 +75,18 @@ class FlyTemplateBrain(TemplateBrain):
             dims = "NA"
 
         if getattr(self, 'voxdims'):
+            units = getattr(self, 'units', None)
+
+            if not units:
+                units = ['dimensionless', 'dimensionless', 'dimensionless']
+            elif not navis.utils.is_iterable(units):
+                units = [units, units, units]
+
             vxsize = f"""\
             Voxel size:
-              x = {self.voxdims[0]} {self.units[0] if getattr(self, 'units') else ''}
-              y = {self.voxdims[1]} {self.units[1] if getattr(self, 'units') else ''}
-              z = {self.voxdims[2]} {self.units[2] if getattr(self, 'units') else ''}"""
+              x = {self.voxdims[0]} {units[0]}
+              y = {self.voxdims[1]} {units[1]}
+              z = {self.voxdims[2]} {units[2]}"""
         else:
             vxsize = """\
             Voxel size:
