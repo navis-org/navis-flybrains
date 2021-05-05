@@ -495,6 +495,23 @@
       "sex": null,
       "dims": null,
       "voxdims": [
+         8,
+         8,
+         8
+      ],
+      "origin": null,
+      "boundingbox": null,
+      "units": "nanometers",
+      "description": "Nanometer-calibrated version of Janelia FIB hemibrain dataset",
+      "doi": "https://doi.org/10.1101/2020.01.21.911859"
+   },
+   {
+      "name": "JRCFIB2018Fum",
+      "label": "JRCFIB2018Fum",
+      "type": null,
+      "sex": null,
+      "dims": null,
+      "voxdims": [
          0.008,
          0.008,
          0.008
@@ -502,7 +519,7 @@
       "origin": null,
       "boundingbox": null,
       "units": "microns",
-      "description": "Calibrated version of Janelia FIB hemibrain dataset",
+      "description": "Micron-calibrated version of Janelia FIB hemibrain dataset",
       "doi": "https://doi.org/10.1101/2020.01.21.911859"
    },
    {
@@ -512,13 +529,13 @@
       "sex": null,
       "dims": null,
       "voxdims": [
-         1,
-         1,
-         1
+         0.008,
+         0.008,
+         0.008
       ],
       "origin": null,
       "boundingbox": null,
-      "units": "pixels",
+      "units": "voxels",
       "description": "Uncalibrated version of Janelia FIB hemibrain dataset",
       "doi": "https://doi.org/10.1101/2020.01.21.911859"
    },

@@ -26,8 +26,8 @@ from navis.transforms.templates import TemplateBrain
 
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
-           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCVNC2018F', 'VNCIS1', 'FAFB14',
-           'register_templates']
+           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum', 'JRCVNC2018F',
+           'VNCIS1', 'FAFB14', 'register_templates']
 
 # Read in meta data
 fp = os.path.dirname(__file__)
@@ -535,8 +535,8 @@ class _JRCFIB2018F(FlyTemplateBrain):
     HHMI Janelia Research Campus in 2018.
 
     The JRCFIB2018Fraw reference brain is uncalibrated (i.e. has units of raw
-    pixels), whereas JRCFIB2018F has units of microns and voxel dimensions of
-    8x8x8 * 1E-3 microns (i.e. 8 nm isotropic voxels).
+    pixels), whereas JRCFIB2018F and JRCFIB2018Fum have units of nanometers
+    and microns with 8x8x8nm isotropic voxels, respectively.
 
     References
     ----------
@@ -594,47 +594,33 @@ class _JRCFIB2018F(FlyTemplateBrain):
 JRCFIB2018F = _JRCFIB2018F(**template_meta['JRCFIB2018F'])
 
 
-class _JRCFIB2018Fraw(FlyTemplateBrain):
-    """JRCFIB2018F aka hemibrain dataset.
+class _JRCFIB2018Fum(_JRCFIB2018F):
+    @property
+    def mesh(self):
+        """On-demand loading of surface mesh."""
+        if not hasattr(self, '_mesh'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
+            self._mesh = tm.load_mesh(fp)
+            # Convert voxels to microns
+            self._mesh.vertices *= (8 / 1000)
+        return self._mesh
 
-    The JRCFIB2018F reference brain is a stitched FIB SEM volume completed at
-    HHMI Janelia Research Campus in 2018.
+    @property
+    def bbox(self):
+        """On-demand loading of approximate bounding box."""
+        if not hasattr(self, '_mesh_bbox'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}raw_bbox.ply')
+            self._mesh_bbox = tm.load_mesh(fp)
+            # Convert voxels to microns
+            self._mesh_bbox.vertices *= (8 / 1000)
+        return self._mesh_bbox
 
-    The JRCFIB2018Fraw reference brain is uncalibrated (i.e. has units of raw
-    pixels), whereas JRCFIB2018F has units of microns and voxel dimensions of
-    8x8x8 * 1E-3 microns (i.e. 8 nm isotropic voxels).
+JRCFIB2018Fum = _JRCFIB2018Fum(**template_meta['JRCFIB2018Fum'])
 
-    References
-    ----------
-    A Connectome of the Adult Drosophila Central Brain Shan Xu, C; Januszewski,
-    Michal; Lu, Zhiyuan; Takemura, Shin-Ya; Hayworth, Kenneth; Huang, Gary;
-    Shinomiya, Kazunori; Maitin-Shepard, Jeremy; Ackerman, David; Berg, Stuart;
-    Blakely, Tim; Bogovic, John; Clements, Jody; Dolafi, Tom; Hubbard, Philip;
-    Kainmueller, Dagmar; Katz, William; Kawase, Takashi; Khairy, Khaled;
-    Leavitt, Laramie; Li, Peter H; Lindsey, Larry; Neubarth, Nicole;
-    Olbris, Donald J; Otsuna, Hideo; Troutman, Eric T; Umayam, Lowell;
-    Zhao, Ting; Ito, Masayoshi; Goldammer, Jens; Wolff, Tanya; Svirskas, Robert;
-    Schlegel, Philipp; Neace, Erika R; Knecht, Christopher J;
-    Alvarado, Chelsea X; Bailey, Dennis; Ballinger, Samantha; Borycz, Jolanta A;
-    Canino, Brandon; Cheatham, Natasha; Cook, Michael; Dreyer, Marisa;
-    Duclos, Octave; Eubanks, Bryon; Fairbanks, Kelli; Finley, Samantha;
-    Forknall, Nora; Francis, Audrey; Hopkins, Gary Patrick; Joyce, Emily M;
-    Kim, Sungjin; Kirk, Nicole A; Kovalyak, Julie; Lauchie, Shirley A;
-    Lohff, Alanna; Maldonado, Charli; Manley, Emily A; McLin, Sari;
-    Mooney, Caroline; Ndama, Miatta; Ogundeyi, Omotara; Okeoma, Nneoma;
-    Ordish, Christopher; Padilla, Nicholas; Patrick, Christopher;
-    Paterson, Tyler; Phillips, Elliott E; Phillips, Emily M; Rampally, Neha;
-    Ribeiro, Caitlin; Robertson, Madelaine K; Rymer, Jon Thomson; Ryan, Sean M;
-    Sammons, Megan; Scott, Anne K; Scott, Ashley L; Shinomiya, Aya;
-    Smith, Claire; Smith, Kelsey; Smith, Natalie L; Sobeski, Margaret A;
-    Suleiman, Alia; Swift, Jackie; Takemura, Satoko; Talebi, Iris;
-    Tarnogorska, Dorota; Tenshaw, Emily; Tokhi, Temour; Walsh, John J;
-    Yang, Tansy; Horne, Jane Anne; Li, Feng; Parekh, Ruchi; Rivlin, Patricia K;
-    Jayaraman, Vivek; Ito, Kei; Saalfeld, Stephan; George, Reed;
-    Meinertzhagen, Ian; Rubin, Gerald M; Hess, Harald F; Scheffer, Louis K;
-    Jain, Viren; Plaza, Stephen M bioRxiv doi:10.1101/2020.01.21.911859.
 
-    """
+class _JRCFIB2018Fraw(_JRCFIB2018F):
     @property
     def bbox(self):
         """On-demand loading of approximate bounding box."""
