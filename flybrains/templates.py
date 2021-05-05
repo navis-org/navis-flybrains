@@ -630,6 +630,15 @@ JRCFIB2018Fum = _JRCFIB2018Fum(**template_meta['JRCFIB2018Fum'])
 
 class _JRCFIB2018Fraw(_JRCFIB2018F):
     @property
+    def mesh(self):
+        """On-demand loading of surface mesh."""
+        if not hasattr(self, '_mesh'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}.ply')
+            self._mesh = tm.load_mesh(fp)
+        return self._mesh
+
+    @property
     def bbox(self):
         """On-demand loading of approximate bounding box."""
         if not hasattr(self, '_mesh_bbox'):
