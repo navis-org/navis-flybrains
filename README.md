@@ -1,8 +1,8 @@
-[![DOI](https://zenodo.org/badge/323358196.svg)](https://zenodo.org/badge/latestdoi/323358196)
-
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
 </p>
+
+[![DOI](https://zenodo.org/badge/323358196.svg)](https://zenodo.org/badge/latestdoi/323358196)
 
 # navis-flybrains
 Transforms to map between different _Drosophila_ template brains. Intended to be used with [navis](https://github.com/schlegelp/navis).
@@ -91,7 +91,7 @@ Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/sourc
 for navis to learn how to use the data `flybrains` provides.
 
 ## Changes
-- `0.1.9` (05/05/21): fixed mesh normals; fixed JRCFIB2018F units to nm and added JRCFIB2018Fum template; 
+- `0.1.9` (05/05/21): fixed mesh normals; fixed JRCFIB2018F units to nm and added JRCFIB2018Fum template;
 - `0.1.8` (10/04/21): add a simple symmetrization transform for FAFB: `FAFB14sym`
 - `0.1.7` (30/03/21): better deal with systems without nat libraries
 - `0.1.6` (25/03/21): fix bug that led to excessive recursive scanning of directories
