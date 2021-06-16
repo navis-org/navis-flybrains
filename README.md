@@ -1,3 +1,5 @@
+![DOI](https://zenodo.org/badge/323358196.svg)](https://zenodo.org/badge/latestdoi/323358196)
+
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
 </p>
