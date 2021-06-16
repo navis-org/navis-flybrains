@@ -112,7 +112,7 @@ def report():
     Data Home: {get_data_home()}
     """)
 
-    data_home = pathlib.Path(get_data_home())
+    data_home = pathlib.Path(get_data_home()).expanduser()
     # Number of .list CMTK directories
     n_jefferislab = len([p for p in data_home.rglob(f'*.list') if p.is_dir()])
     # Number of .h5 H5 file
@@ -136,9 +136,9 @@ def report():
     else:
         for path in nat_paths:
             # Number of .list CMTK directories
-            n_cmtk = len([p for p in path.rglob(f'*.list') if p.is_dir()])
+            n_cmtk = len([p for p in path.expanduser().rglob('*.list') if p.is_dir()])
             # Number of .h5 H5 file
-            n_h5 = len([p for p in path.rglob(f'*.h5') if p.is_file()])
+            n_h5 = len([p for p in path.expanduser().rglob('*.h5') if p.is_file()])
             rep += dedent(f"""\
             {path}: {n_cmtk} CMTK | {n_h5} H5 transforms
             """)
