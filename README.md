@@ -91,6 +91,7 @@ Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/sourc
 for navis to learn how to use the data `flybrains` provides.
 
 ## Changes
+- `0.1.10` (01/08/21): fix bug that led to warnings during transform registration on Windows systems
 - `0.1.9` (05/05/21): fixed mesh normals; fixed JRCFIB2018F units to nm and added JRCFIB2018Fum template;
 - `0.1.8` (10/04/21): add a simple symmetrization transform for FAFB: `FAFB14sym`
 - `0.1.7` (30/03/21): better deal with systems without nat libraries
