@@ -194,6 +194,12 @@ def register_transforms():
                            [transforms.h5reg.H5transform, transforms.cmtk.CMTKtransform]):
             for hit in path.rglob(f'*{ext}'):
                 if hit.is_dir() or hit.is_file():
+                    # These files are inside the CMTK folders and show as
+                    # symlinks in OSX/Linux but as files (?) in Windows
+                    # Hence we need to manually exclude them.
+                    if hit.name in ('orig.list', 'original.list'):
+                        continue
+
                     # Register this transform
                     try:
                         if 'mirror' in hit.name or 'imgflip' in hit.name:
