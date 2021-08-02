@@ -100,7 +100,7 @@ def download_jefferislab_transforms(repos=("BridgingRegistrations",
     data_home :         str
                         Directory to download files to. If not specified, it
                         tries to read from the ``FLYBRAINS_DATA`` environment
-                        variable and defaults to ``~/flybrain-data``. 
+                        variable and defaults to ``~/flybrain-data``.
 
     See Also
     --------
@@ -193,7 +193,7 @@ def download_saalfeldlab_transforms(data_home=None, skip_existing=True):
       - JRC2018U <-> JRC2018F
       - JRC2018F <-> JFRC2010
 
-    Note that these transforms are fairly large: between 550Mb and 1.4Gb/file.
+    Note that these transforms are fairly large: between 550Mb and 1.4Gb each.
 
     Parameters
     ----------
@@ -254,25 +254,39 @@ def download_from_url(url, dst, resume=False):
                 Filesize in bytes.
 
     """
-    file_size = int(requests.head(url, allow_redirects=True).headers["Content-Length"])
-    if os.path.exists(dst) and resume:
-        first_byte = os.path.getsize(dst)
-        mode = 'ab'
+    try:
+        file_size = int(requests.head(url, allow_redirects=True).headers["Content-Length"])
+    except KeyError:
+        print(f'Failed to fetch file size for {str(dst).split("/")[-1]}: '
+              'download progress bar will be unavailable.')
+        file_size = None
+
+    if file_size:
+        if os.path.exists(dst) and resume:
+            first_byte = os.path.getsize(dst)
+            mode = 'ab'
+        else:
+            first_byte = 0
+            mode = 'wb'
+        if first_byte >= file_size:
+            return file_size
+        header = {"Range": f"bytes={first_byte}-{file_size}"}
+        with tqdm(total=file_size, initial=first_byte,
+                  unit='B', unit_scale=True, desc=os.path.basename(dst)) as pbar:
+            req = requests.get(url, headers=header, stream=True, allow_redirects=True)
+            with open(dst, mode) as f:
+                for chunk in req.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+                        pbar.update(1024)
+
     else:
-        first_byte = 0
-        mode = 'wb'
-    if first_byte >= file_size:
-        return file_size
-    header = {"Range": f"bytes={first_byte}-{file_size}"}
-    with tqdm(total=file_size, initial=first_byte,
-              unit='B', unit_scale=True, desc=os.path.basename(dst)) as pbar:
-        req = requests.get(url, headers=header, stream=True, allow_redirects=True)
-        with open(dst, mode) as f:
-            for chunk in req.iter_content(chunk_size=1024):
-                if chunk:
-                    f.write(chunk)
-                    pbar.update(1024)
-        return file_size
+        req = requests.get(url, allow_redirects=True)
+        file_size = len(req.content)
+        with open(dst, 'wb') as f:
+            f.write(req.content)
+
+    return file_size
 
 
 def get_data_home(data_home: Optional[str] = None) -> str:
