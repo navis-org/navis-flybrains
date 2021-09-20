@@ -489,8 +489,9 @@ class _JRC2018F(FlyTemplateBrain):
     ----------
     An unbiased template of the Drosophila brain and ventral nerve cord.
     John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
-    Jennifer Jeter, Geoffrey W Meissner, Aljoscha Nern, Jennifer Colonell,
-    Oz Malkesman, Kei Ito, Stephan Saalfeld bioRxiv 376384; doi: doi:10.1101/376384
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
 
     """
 
@@ -528,8 +529,9 @@ class _JRC2018U(FlyTemplateBrain):
     ----------
     An unbiased template of the Drosophila brain and ventral nerve cord.
     John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
-    Jennifer Jeter, Geoffrey W Meissner, Aljoscha Nern, Jennifer Colonell,
-    Oz Malkesman, Kei Ito, Stephan Saalfeld bioRxiv 376384; doi: doi:10.1101/376384
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
 
     """
 
@@ -685,9 +687,9 @@ class _JRCVNC2018F(FlyTemplateBrain):
     ----------
     An unbiased template of the Drosophila brain and ventral nerve cord.
     John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
-    Jennifer Jeter, Geoffrey W Meissner, Aljoscha Nern, Jennifer Colonell,
-    Oz Malkesman, Kei Ito, Stephan Saalfeld bioRxiv 376384;
-    doi: doi:10.1101/376384
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
 
     """
 

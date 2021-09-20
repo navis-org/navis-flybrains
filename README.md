@@ -123,7 +123,7 @@ As (partial) reference for the Saalfeld lab registrations, please see:
 ```
 An unbiased template of the Drosophila brain and ventral nerve cord.
 John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell, Oz Malkesman, Kei Ito, Stephan Saalfeld
-bioRxiv 376384; doi: https://doi.org/10.1101/376384
+PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
 ```
 
 For references of individual template brains, please see their docstrings:
