@@ -21,7 +21,7 @@ from navis import utils
 
 import git
 
-__all__ = ['download_jefferislab_transforms', 'download_saalfeldlab_transforms']
+__all__ = ['download_vfb_transforms', 'download_jefferislab_transforms', 'download_saalfeldlab_transforms']
 
 def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
                                     update_existing=True,
