@@ -28,7 +28,7 @@ from navis.transforms.templates import TemplateBrain
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
            'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum', 'JRCVNC2018F',
-           'VNCIS1', 'FAFB14', 'register_templates']
+           'VNCIS1', 'FAFB14', 'FANC', 'register_templates']
 
 # Read in meta data
 fp = os.path.dirname(__file__)
@@ -750,11 +750,19 @@ class _FAFB14(FlyTemplateBrain):
 FAFB14 = _FAFB14(**template_meta['FAFB14'])
 
 
+class _FANC(FlyTemplateBrain):
+    """Female Adult Nerve Cord
+
+    """
+
+FANC = _FANC(**template_meta['FANC'])
+
+
 def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
-                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14]
+                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14, FANC]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)

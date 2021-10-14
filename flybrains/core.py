@@ -325,3 +325,18 @@ def register_transforms():
                                            source='FAFB14',
                                            target='FAFB14sym',
                                            transform_type='bridging')
+    tr = transforms.base.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANC',
+                                           target='FANCnm',
+                                           transform_type='bridging')
+
+    # Add FANC mirror transform based on subsampling a FANC -> MANCsym transform
+    fp = os.path.join(data_filepath, 'FANC_mirror_landmarks.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.thinplate.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
+                                           lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANC',
+                                           target=None,
+                                           transform_type='mirror')
