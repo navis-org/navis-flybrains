@@ -251,21 +251,21 @@ def register_transforms():
                         warnings.warn(f'Error registering {hit} as transform: {str(e)}')
 
     # Add transform between JRCFIB2018Fraw (8nm voxel) and JRCFIB2018F (nm)
-    tr = transforms.affine.AffineTransform(np.diag([8, 8, 8, 1]))
+    tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
     transforms.registry.register_transform(transform=tr,
                                            source='JRCFIB2018Fraw',
                                            target='JRCFIB2018F',
                                            transform_type='bridging')
 
     # Add transform between JRCFIB2018F (nm) and JRCFIB2018Fum (um)
-    tr = transforms.affine.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
+    tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
     transforms.registry.register_transform(transform=tr,
                                            source='JRCFIB2018Fum',
                                            target='JRCFIB2018F',
                                            transform_type='bridging')
 
     # Add transform between FAFB14um and FAFB14 (nm)
-    tr = transforms.affine.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
+    tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB14um',
                                            target='FAFB14',
@@ -300,7 +300,7 @@ def register_transforms():
                                            transform_type='bridging')
 
     # Bogovic et al seem to have a difference in Z calibration
-    tr = transforms.affine.AffineTransform(np.diag([1, 1, 1/0.6220880, 1]))
+    tr = transforms.AffineTransform(np.diag([1, 1, 1/0.6220880, 1]))
     transforms.registry.register_transform(transform=tr,
                                            source='JFRC2',
                                            target='JFRC2010',
