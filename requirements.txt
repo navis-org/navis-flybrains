@@ -1,4 +1,4 @@
 gitpython
-navis>=1.0.0
+navis>=0.6.0
 numpy
 pandas
