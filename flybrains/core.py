@@ -169,6 +169,44 @@ def inject_paths():
     transforms.registry.scan_paths()
 
 
+def _FANCnm_JRCVNC2018F_pre(points):
+    """Apply necessary pre-transforms for FANC -> JRCVNC2018F elastix transform."""
+    # Dark magic transforms see:
+    # https://github.com/htem/GridTape_VNC_paper/blob/main/template_registration_pipeline/register_EM_dataset_to_template/README.md
+    points -= (533.2, 533.2, 945)  # (1.24, 1.24, 2.1) vox at (430, 430, 450)nm/vox
+    points /= (430, 430, 450)
+    points *= (300, 300, 400)
+    points[:, 2] = 435*400 - points[:, 2]  # z flipping a stack with 436 slices
+
+    # Convert to microns
+    points /= 1000
+
+    return points
+
+
+def _FANCnm_JRCVNC2018F_reflect(points):
+    """Apply reflect."""
+    # Unreflect
+    template_plane_of_symmetry_x_microns = 329 * 0.4
+    points[:, 0] = template_plane_of_symmetry_x_microns * 2 - points[:, 0]
+
+    return points
+
+
+def _JRCVNC2018F_FANCnm_post(points):
+    """Apply necessary post-transforms for JRCVNC2018F -> FANCnm elastix transform."""
+    points *= 1000  # Convert microns to nm so that the math below works
+
+    # Dark magic transforms see:
+    # https://github.com/htem/GridTape_VNC_paper/blob/main/template_registration_pipeline/register_EM_dataset_to_template/README.md
+    points[:, 2] = 435*400 - points[:, 2]  # z flipping a stack with 436 slices
+    points /= (300, 300, 400)
+    points *= (430, 430, 450)
+    points += (533.2, 533.2, 945)  # (1.24, 1.24, 2.1) vox at (430, 430, 450)nm/vox
+
+    return points
+
+
 def register_transforms():
     """Register transforms with navis."""
     # These are the paths we need to scan
@@ -272,28 +310,28 @@ def register_transforms():
                                            transform_type='bridging')
 
     # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
-    tr = transforms.base.AliasTransform()
+    tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrain',
                                            target='JRCFIB2018F',
                                            transform_type='bridging')
 
     # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
-    tr = transforms.base.AliasTransform()
+    tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrainraw',
                                            target='JRCFIB2018Fraw',
                                            transform_type='bridging')
 
     # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
-    tr = transforms.base.AliasTransform()
+    tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrainum',
                                            target='JRCFIB2018Fum',
                                            transform_type='bridging')
 
     # Add alias transform between FAFB and FAFB14 (they are synonymous)
-    tr = transforms.base.AliasTransform()
+    tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB',
                                            target='FAFB14',
@@ -309,8 +347,8 @@ def register_transforms():
     # Add a simple mirror transform for FAFB14
     fp = os.path.join(data_filepath, 'FAFB14_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
-    tr = transforms.thinplate.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
-                                           lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
+    tr = transforms.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
+                                 lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB14',
                                            target=None,
@@ -319,13 +357,13 @@ def register_transforms():
     # Add a simple symmetrization transform for FAFB14
     fp = os.path.join(data_filepath, 'FAFB14_symmetrize_landmarks_nm.csv')
     lm = pd.read_csv(fp)
-    tr = transforms.thinplate.TPStransform(lm[['x', 'y', 'z']].values,
-                                           lm[['x_sym', 'y_sym', 'z_sym']].values)
+    tr = transforms.TPStransform(lm[['x', 'y', 'z']].values,
+                                 lm[['x_sym', 'y_sym', 'z_sym']].values)
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB14',
                                            target='FAFB14sym',
                                            transform_type='bridging')
-    tr = transforms.base.AliasTransform()
+    tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='FANC',
                                            target='FANCnm',
@@ -334,9 +372,75 @@ def register_transforms():
     # Add FANC mirror transform based on subsampling a FANC -> MANCsym transform
     fp = os.path.join(data_filepath, 'FANC_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
-    tr = transforms.thinplate.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
-                                           lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
+    tr = transforms.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
+                                 lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
     transforms.registry.register_transform(transform=tr,
                                            source='FANC',
                                            target=None,
                                            transform_type='mirror')
+
+    # Some general notes for the Elastix transform between FANC and JRCVNC2018F:
+    # 1. Elastix transforms are not invertible - hence there are two separate
+    #    transforms for forward and reverse directions
+    # 2. Both directions require some pre-/postprocessing namely unit
+    #    conversion, some offset correction and an inversion across the x-axis.
+    #    These extra steps are represented by two intermediate template spaces:
+    #    FANCum_fixed and JRCVNC2018F_reflected. The bridging path is hence:
+    #    FANC <-> FANC_fixed <-(elastix)-> JRCVNC2018F_reflected <-> JRCVNC2018F
+    # 3. This transform is technically for FANC v3 but according to Jasper can
+    #    also be applied to v4.
+
+    # First up: forward FANC (nm) -> JRCVNC2018F
+    # Preflight for FANCnm (v3) -> JRCVNC2018F
+    tr = transforms.FunctionTransform(_FANCnm_JRCVNC2018F_pre)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANC',
+                                           target='FANCum_fixed',
+                                           transform_type='bridging')
+
+    # Elastix FANC_fixed -> JRCVNC2018F (reflected) transform
+    fp = os.path.join(data_filepath, 'TransformParameters.FixedFANC.txt')
+    tr = transforms.ElastixTransform(fp)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANCum_fixed',
+                                           target='JRCVNC2018F_reflected',
+                                           transform_type='bridging')
+
+    # Unreflect
+    tr = transforms.FunctionTransform(_FANCnm_JRCVNC2018F_reflect)
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCVNC2018F_reflected',
+                                           target='JRCVNC2018F',
+                                           transform_type='bridging')
+
+    # Now the reverse: JRCVNC2018F -> FANC (nm)
+    # First reflect
+    tr = transforms.FunctionTransform(_FANCnm_JRCVNC2018F_reflect)
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCVNC2018F',
+                                           target='JRCVNC2018F_reflected',
+                                           transform_type='bridging')
+
+    # Second apply Elastix FANC_fixed -> JRCVNC2018F transform
+    fp1 = os.path.join(data_filepath, 'TransformParameters.FixedTemplate.Bspline.txt')
+    fp2 = os.path.join(data_filepath, 'TransformParameters.FixedTemplate.affine.txt')
+    tr = transforms.ElastixTransform(fp1, copy_files=[fp2])
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCVNC2018F_reflected',
+                                           target='FANCum_fixed',
+                                           transform_type='bridging')
+
+    # Postflight for JRCVNC2018F -> FANCnm (v3)
+    tr = transforms.FunctionTransform(_JRCVNC2018F_FANCnm_post)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANCum_fixed',
+                                           target='FANC',
+                                           transform_type='bridging')
+
+    # To help with cases where data is in FANC voxel space:
+    # Add transform between FANC (nm) and FANCraw (voxels)
+    tr = transforms.AffineTransform(np.diag([4.3, 4.3, 45, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANCraw',
+                                           target='FANC',
+                                           transform_type='bridging')

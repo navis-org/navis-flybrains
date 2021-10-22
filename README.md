@@ -24,6 +24,10 @@ pip3 install flybrains
 In order to use the Jefferis lab transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
 
+For the FANC to JRCVNC2018F transform, you will need to download
+[elastix](https://elastix.lumc.nl/index.php) and make sure that the path
+to the binaries is in your `PATH` variable.
+
 ## Bridging transforms
 
 <p align="center">
@@ -91,6 +95,8 @@ Please see the [transform tutorial](https://navis.readthedocs.io/en/latest/sourc
 for navis to learn how to use the data `flybrains` provides.
 
 ## Changes
+- `0.1.14` (21/10/21): added FANC <-> JRCVNC2018F transform (requires Elastix and navis >=1.0.0)
+- `0.1.13` (14/10/21): add template and mirror transform for FANC
 - `0.1.12` (18/09/21): fixed directionality of Jefferis lab CMTK transforms
 - `0.1.11` (02/08/21): make downloads work if file size unknown
 - `0.1.10` (01/08/21): fix bug that led to warnings during transform registration on Windows systems
