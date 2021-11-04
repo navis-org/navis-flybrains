@@ -682,5 +682,41 @@
          450,
          197550
       ]
+   },
+   {
+      "name": "D. melanogaster L1 CNS (Seymour)",
+      "label": "Dmel-L1-CNS-Seymour",
+      "type": null,
+      "sex": "female",
+      "dims": [
+         28128,
+         31840,
+         4841
+      ],
+      "voxdims": [
+         3.8,
+         3.8,
+         50
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         121
+      ],
+      "units": [
+         "nanometers",
+         "nanometers",
+         "nanometers"
+      ],
+      "description": "L1 CNS ssTEM at 3.8x3.8x50 nm of whole Drosophila 1st instar larval CNS.",
+      "doi": "10.1038/nature14297",
+      "boundingbox": [
+         0,
+         106886,
+         0,
+         120992,
+         6050,
+         248100
+      ]
    }
 ]
