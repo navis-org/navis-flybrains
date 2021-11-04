@@ -379,12 +379,42 @@ def register_transforms():
                                            target=None,
                                            transform_type='mirror')
 
+    # Add a FANC-MANC transform. These landmarks are created from the
+    # CMTK transforms between FANC -> MANCsym -> MANC
+    fp = os.path.join(data_filepath, 'MANC_FANC_landmarks_nm.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(lm[['x_manc', 'y_manc', 'z_manc']].values,
+                                 lm[['x_fanc', 'y_fanc', 'z_fanc']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='MANC',
+                                           target='FANC',
+                                           transform_type='bridging')
+
+    # Add transform between raw (voxel) and nanometer space for MANC and FANC
+    tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='MANCraw',
+                                           target='MANC',
+                                           transform_type='bridging')
+    tr = transforms.AffineTransform(np.diag([4.3, 4.3, 45, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='FANCraw',
+                                           target='FANC',
+                                           transform_type='bridging')
+
+    # Add alias transform between MANC/FANC and MANC/FANCnm (they are synonymous)
+    tr = transforms.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='MANC',
+                                           target='MANCnm',
+                                           transform_type='bridging')
+
     # Some general notes for the Elastix transform between FANC and JRCVNC2018F:
     # 1. Elastix transforms are not invertible - hence there are two separate
     #    transforms for forward and reverse directions
-    # 2. Both directions require some pre-/postprocessing namely unit
-    #    conversion, some offset correction and an inversion across the x-axis.
-    #    These extra steps are represented by two intermediate template spaces:
+    # 2. Both directions require some pre-/postprocessing: unit conversion,
+    #    some offset correction and an inversion across the x-axis.
+    #    These extra steps are realized via two intermediate template spaces:
     #    FANCum_fixed and JRCVNC2018F_reflected. The bridging path is hence:
     #    FANC <-> FANC_fixed <-(elastix)-> JRCVNC2018F_reflected <-> JRCVNC2018F
     # 3. This transform is technically for FANC v3 but according to Jasper can
