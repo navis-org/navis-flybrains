@@ -29,7 +29,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
                                     data_home=None):
     """Download VirtualFlyBrain.org (VFB) CMTK transforms.
 
-    BridgingRegistrations (~5Mb):
+    BridgingRegistrations (~6Mb):
       - JRC2018VU-JRC2018VU: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
       - JRC2018VM-JRC2018VU: JRC2018_VNC_MALE_4iso -> JRC2018_VNC_UNISEX_4iso
       - Court2017VNS-JRC2018VF: DrosAdultVNSdomains_Court2017_template_Neuropil_LPS -> JRC2018_VNC_FEMALE_4iso_LPS
