@@ -857,7 +857,7 @@ def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
-                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14, FANC, JRCVNC2018U, JRCVNC2018F, JRCVNC2018M, DmelL1CNS_Seymour]
+                 JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1, FAFB14, FANC, DmelL1CNS_Seymour]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
