@@ -696,6 +696,91 @@ class _JRCVNC2018F(FlyTemplateBrain):
 JRCVNC2018F = _JRCVNC2018F(**template_meta['JRCVNC2018F'])
 
 
+class _JRCVNC2018M(FlyTemplateBrain):
+    """JRC2018 reference ventral nerve chords.
+
+    The JRCVNC2018M reference VNC is an average template VNC constructed from
+    VNCs labelled with brp-SNAP, dehydrated, and mounted in DPX and imaged at
+    0.19 x 0.19 x 0.38 microns. The image was downsampled to result in a 0.4
+    micron isotropic voxel size, which we take to be the standard JRCVNC2018F
+    space.
+
+    The JRCVNC2018U reference VNC was constructed as for JRCVNC2018F VNC but
+    pooling both male and female brains.
+
+    The JRCVNC2018M mesh, was generated in Amira from a 2 micron downsampled,
+    Lanczos filtered version of the respective template VNC. A surface was then
+    generated with a threshold level of 2800 and then smoothed and downsampled.
+
+    The JRCVNC2018U mesh, was generated in Amira from a 2 micron downsampled,
+    Lanczos filtered 8 bit version of the respective template VNC. A surface was
+    then generated with a threshold level of 20 and then smoothed and
+    downsampled.
+
+    Details
+    -------
+    For the VNC, Bogovic and Saalfeld used 36 female individuals (72 images
+    including left-right flips) for the female template, 39 male individuals
+    (78 image with left-right flips) for the male template, and the union of
+    both for the unisex brain template: 75 individuals (150 images with
+    left-right flips).
+
+    Downloaded from https://www.janelia.org/open-science/jrc-2018-brain-templates
+
+    References
+    ----------
+    An unbiased template of the Drosophila brain and ventral nerve cord.
+    John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
+    """
+
+JRCVNC2018M = _JRCVNC2018M(**template_meta['JRCVNC2018M'])
+
+class _JRCVNC2018U(FlyTemplateBrain):
+    """JRC2018 reference ventral nerve chords.
+
+    The JRCVNC2018U reference VNC is an average template VNC constructed from
+    VNCs labelled with brp-SNAP, dehydrated, and mounted in DPX and imaged at
+    0.19 x 0.19 x 0.38 microns. The image was downsampled to result in a 0.4
+    micron isotropic voxel size, which we take to be the standard JRCVNC2018F
+    space.
+
+    The JRCVNC2018U reference VNC was constructed as for JRCVNC2018F/M VNCs but
+    pooling both male and female brains.
+
+    The JRCVNC2018F mesh, was generated in Amira from a 2 micron downsampled,
+    Lanczos filtered version of the respective template VNC. A surface was then
+    generated with a threshold level of 2800 and then smoothed and downsampled.
+
+    The JRCVNC2018U mesh, was generated in Amira from a 2 micron downsampled,
+    Lanczos filtered 8 bit version of the respective template VNC. A surface was
+    then generated with a threshold level of 20 and then smoothed and
+    downsampled.
+
+    Details
+    -------
+    For the VNC, Bogovic and Saalfeld used 36 female individuals (72 images
+    including left-right flips) for the female template, 39 male individuals
+    (78 image with left-right flips) for the male template, and the union of
+    both for the unisex brain template: 75 individuals (150 images with
+    left-right flips).
+
+    Downloaded from https://www.janelia.org/open-science/jrc-2018-brain-templates
+
+    References
+    ----------
+    An unbiased template of the Drosophila brain and ventral nerve cord.
+    John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
+    """
+
+JRCVNC2018U = _JRCVNC2018U(**template_meta['JRCVNC2018U'])
+
+
 class _VNCIS1(FlyTemplateBrain):
     """VNCIS1 reference neuropil.
 
@@ -757,26 +842,6 @@ class _FANC(FlyTemplateBrain):
 
 FANC = _FANC(**template_meta['FANC'])
 
-class _JRCVNC2018F(FlyTemplateBrain):
-    """Female Adult Nerve Cord
-
-    """
-
-JRCVNC2018F = _JRCVNC2018F(**template_meta['JRCVNC2018F'])
-
-class _JRCVNC2018M(FlyTemplateBrain):
-    """Male Adult Nerve Cord
-
-    """
-
-JRCVNC2018M = _JRCVNC2018M(**template_meta['JRCVNC2018M'])
-
-class _JRCVNC2018U(FlyTemplateBrain):
-    """Unisex Adult Nerve Cord
-
-    """
-
-JRCVNC2018U = _JRCVNC2018U(**template_meta['JRCVNC2018U'])
 
 class _DmelL1CNS_Seymour(FlyTemplateBrain):
     """L1 CNS ssTEM at 3.8x3.8x50 nm of whole Drosophila 1st instar larval CNS.
