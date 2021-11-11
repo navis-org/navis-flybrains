@@ -21,7 +21,7 @@ pip3 install flybrains
 ```
 
 ### External dependencies
-In order to use the Jefferis lab transforms, you will need to have
+In order to use the Jefferis lab or VFB transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
 
 For the FANC to JRCVNC2018F transform, you will need to download
