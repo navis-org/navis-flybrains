@@ -33,7 +33,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
       - JRCVNC2018U_JRCVNC2018U: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
       - JRCVNC2018M_JRCVNC2018U: JRC2018_VNC_MALE_4iso -> JRC2018_VNC_UNISEX_4iso
       - COURT2017VNS_JRCVNC2018F: DrosAdultVNSdomains_Court2017_template_Neuropil_LPS -> JRC2018_VNC_FEMALE_4iso_LPS
-      - ITO2017VNCF_JRCVNC2018U: 20x_flyVNCtemplate_Female_symmetric -> JRC2018_VNC_UNISEX_4iso
+      - COURT2018VNS_JRCVNC2018U: 20x_flyVNCtemplate_Female_symmetric -> JRC2018_VNC_UNISEX_4iso
 
 
     Parameters
