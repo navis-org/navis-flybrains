@@ -47,7 +47,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
                         If False, these will be skipped.
     use_ssh :           bool
                         If True, will use SSH to clone the Github repositories
-                        containing the Jefferis lab registrations. See
+                        containing the VFB registrations. See
                         `here <https://docs.github.com/en/free-pro-team@latest
                         /github/authenticating-to-github/connecting-to-github-
                         with-sshhttps://docs.github.com/en/free-pro-team@latest
