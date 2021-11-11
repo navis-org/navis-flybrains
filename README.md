@@ -50,6 +50,10 @@ bridging transforms to map between template brains.
 # - see docstring for details
 >>> flybrains.download_saalfeldlab_transforms()
 
+# This downloads (or updates) various CMTK bridging and mirror transforms
+# generated or collated by VirtualFlyBrain.org - see docstring for details
+>>> flybrains.download_vfb_transforms()
+
 # Register the transforms - this is only necessary if you just downloaded them
 >>> flybrains.register_transforms()
 ```
