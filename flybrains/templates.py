@@ -757,6 +757,26 @@ class _FANC(FlyTemplateBrain):
 
 FANC = _FANC(**template_meta['FANC'])
 
+class _JRCVNC2018F(FlyTemplateBrain):
+    """Female Adult Nerve Cord
+
+    """
+
+JRCVNC2018F = _JRCVNC2018F(**template_meta['JRCVNC2018F'])
+
+class _JRCVNC2018M(FlyTemplateBrain):
+    """Male Adult Nerve Cord
+
+    """
+
+JRCVNC2018M = _JRCVNC2018M(**template_meta['JRCVNC2018M'])
+
+class _JRCVNC2018U(FlyTemplateBrain):
+    """Unisex Adult Nerve Cord
+
+    """
+
+JRCVNC2018U = _JRCVNC2018U(**template_meta['JRCVNC2018U'])
 
 class _DmelL1CNS_Seymour(FlyTemplateBrain):
     """L1 CNS ssTEM at 3.8x3.8x50 nm of whole Drosophila 1st instar larval CNS.
@@ -772,7 +792,7 @@ def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
-                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14, FANC, DmelL1CNS_Seymour]
+                 JRCFIB2018Fraw, JRCVNC2018F, VNCIS1, FAFB14, FANC, JRCVNC2018U, JRCVNC2018F, JRCVNC2018M, DmelL1CNS_Seymour]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
