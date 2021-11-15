@@ -21,8 +21,59 @@ from navis import utils
 
 import git
 
-__all__ = ['download_jefferislab_transforms', 'download_saalfeldlab_transforms']
+__all__ = ['download_vfb_transforms', 'download_jefferislab_transforms', 'download_saalfeldlab_transforms']
 
+def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
+                                    update_existing=True,
+                                    use_ssh=False,
+                                    data_home=None):
+    """Download VirtualFlyBrain.org (VFB) CMTK transforms.
+
+    BridgingRegistrations (~6Mb):
+      - JRCVNC2018U_JRCVNC2018U: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
+      - JRCVNC2018M_JRCVNC2018U: JRC2018_VNC_MALE_4iso -> JRC2018_VNC_UNISEX_4iso
+      - COURT2017VNS_JRCVNC2018F: DrosAdultVNSdomains_Court2017_template_Neuropil_LPS -> JRC2018_VNC_FEMALE_4iso_LPS
+      - COURT2018VNS_JRCVNC2018U: 20x_flyVNCtemplate_Female_symmetric -> JRC2018_VNC_UNISEX_4iso
+
+
+    Parameters
+    ----------
+    repos :             "BridgingRegistrations" list thereof
+                        Which registrations to download. These are Github
+                        repositories (e.g. ``VirtualFlyBrain/VfbBridgingRegistrations``)
+                        which will be cloned into ``~/flybrain-data/``.
+    update_existing :   bool
+                        If True, already downloaded transforms will be updated.
+                        If False, these will be skipped.
+    use_ssh :           bool
+                        If True, will use SSH to clone the Github repositories
+                        containing the VFB registrations. See
+                        `here <https://docs.github.com/en/free-pro-team@latest
+                        /github/authenticating-to-github/connecting-to-github-
+                        with-sshhttps://docs.github.com/en/free-pro-team@latest
+                        /github/authenticating-to-github/connecting-to-
+                        github-with-ssh>`_ for an explanation on how to generate
+                        and configure SSH access to Github.
+    data_home :         str
+                        Directory to download files to. If not specified, it
+                        tries to read from the ``FLYBRAINS_DATA`` environment
+                        variable and defaults to ``~/flybrain-data``.
+
+    See Also
+    --------
+    :func:`~flybrains.update_transforms``
+                Use to update already downloaded transforms.
+
+    """
+    data_home = get_data_home(data_home)
+    repos = utils.make_iterable(repos)
+
+    print(f'Downloading VFB transforms into {data_home}')
+    for repo in tqdm(repos, desc='Repos', leave=False):
+        download_reg_repo(f'VirtualFlyBrain/{repo}',
+                          use_ssh=use_ssh,
+                          data_home=data_home,
+                          update_existing=update_existing)
 
 def download_jefferislab_transforms(repos=("BridgingRegistrations",
                                            "MirrorRegistrations",
