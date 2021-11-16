@@ -565,7 +565,7 @@
          "microns"
       ],
       "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
-      "doi": "https://doi.org/10.1101/376384",
+      "doi": "10.1371/journal.pone.0236495",
       "boundingbox": [
          0.0,
          263.6,
@@ -601,7 +601,7 @@
          "microns"
       ],
       "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
-      "doi": "https://doi.org/10.1101/376384",
+      "doi": "10.1371/journal.pone.0236495",
       "boundingbox": [
          0.0,
          263.2,
@@ -637,7 +637,7 @@
          "microns"
       ],
       "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
-      "doi": "https://doi.org/10.1101/376384",
+      "doi": "10.1371/journal.pone.0236495",
       "boundingbox": [
          0.0,
          263.6,
@@ -645,6 +645,78 @@
          515.6,
          0.0,
          152.4
+      ]
+   },
+   {
+      "name": "COURT2017VNS",
+      "label": "COURT2017VNS",
+      "type": "Single brain template VNS/VNC",
+      "sex": "F",
+      "dims": [
+         512,
+         1024,
+         270
+      ],
+      "voxdims": [
+         0.4612588,
+         0.4612588,
+         0.46
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "description": "Single Brain template VNS/VNC. Selected from samples provided by Wyatt Korff at Janelia Research Campus with a neuropil background stain (NC82) and imaged by confocal microscope. \n The sample was adjusted to align with the image axis.",
+      "doi": "10.1101/122952",
+      "boundingbox": [
+         0.0,
+         235.7032468,
+         0.0,
+         471.8677524,
+         0.0,
+         123.74
+      ]
+   },
+   {
+      "name": "COURT2018VNS",
+      "label": "COURT2018VNS",
+      "type": "Single brain template VNS/VNC",
+      "sex": "F",
+      "dims": [
+         512,
+         1024,
+         220
+      ],
+      "voxdims": [
+         0.4612588,
+         0.4612588,
+         0.7
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "description": "Single Brain template VNS/VNC. COURT2017VNS warped to make the sample symetrical along the midline by Hideo Otsuna an Janelia Research Campus.",
+      "doi": "10.1371/journal.pone.0236495",
+      "boundingbox": [
+         0.0,
+         235.7032468,
+         0.0,
+         471.8677524,
+         0.0,
+         153.3
       ]
    },
    {
