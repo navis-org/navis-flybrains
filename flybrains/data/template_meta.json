@@ -576,6 +576,78 @@
       ]
    },
    {
+      "name": "JRCVNC2018M",
+      "label": "JRCVNC2018M",
+      "type": "Average template VNC",
+      "sex": "M",
+      "dims": [
+         659,
+         1342,
+         401
+      ],
+      "voxdims": [
+         0.4,
+         0.4,
+         0.4
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
+      "doi": "https://doi.org/10.1101/376384",
+      "boundingbox": [
+         0.0,
+         263.2,
+         0.0,
+         536.4,
+         0.0,
+         160.0
+      ]
+   },
+   {
+      "name": "JRCVNC2018U",
+      "label": "JRCVNC2018U",
+      "type": "Average template VNC",
+      "sex": "U",
+      "dims": [
+         660,
+         1290,
+         382
+      ],
+      "voxdims": [
+         0.4,
+         0.4,
+         0.4
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "description": "Average template VNC constructed from VNC labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
+      "doi": "https://doi.org/10.1101/376384",
+      "boundingbox": [
+         0.0,
+         263.6,
+         0.0,
+         515.6,
+         0.0,
+         152.4
+      ]
+   },
+   {
       "name": "VNCIS1",
       "label": "VNCIS1",
       "type": "Average",
