@@ -21,12 +21,14 @@ from navis import utils
 
 import git
 
-__all__ = ['download_vfb_transforms', 'download_jefferislab_transforms', 'download_saalfeldlab_transforms']
+__all__ = ['download_vfb_transforms', 'download_jefferislab_transforms',
+           'download_saalfeldlab_transforms']
+
 
 def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
-                                    update_existing=True,
-                                    use_ssh=False,
-                                    data_home=None):
+                                   update_existing=True,
+                                   use_ssh=False,
+                                   data_home=None):
     """Download VirtualFlyBrain.org (VFB) CMTK transforms.
 
     BridgingRegistrations (~6Mb):
@@ -74,6 +76,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
                           use_ssh=use_ssh,
                           data_home=data_home,
                           update_existing=update_existing)
+
 
 def download_jefferislab_transforms(repos=("BridgingRegistrations",
                                            "MirrorRegistrations",

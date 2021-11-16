@@ -28,7 +28,11 @@ from navis.transforms.templates import TemplateBrain
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
            'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum', 'JRCVNC2018F',
-           'VNCIS1', 'FAFB14', 'FANC', 'DmelL1CNS_Seymour', 'register_templates']
+           'JRCVNC2018M',
+           'JRCVNC2018U',
+           'VNCIS1', 'FAFB14', 'FANC', 'DmelL1CNS_Seymour',
+           'COURT2017VNS', 'COURT2018VNS',
+           'register_templates']
 
 # Read in meta data
 fp = os.path.dirname(__file__)
@@ -738,6 +742,7 @@ class _JRCVNC2018M(FlyTemplateBrain):
 
 JRCVNC2018M = _JRCVNC2018M(**template_meta['JRCVNC2018M'])
 
+
 class _JRCVNC2018U(FlyTemplateBrain):
     """JRC2018 reference ventral nerve chords.
 
@@ -834,42 +839,45 @@ class _FAFB14(FlyTemplateBrain):
 
 FAFB14 = _FAFB14(**template_meta['FAFB14'])
 
+
 class _COURT2017VNS(FlyTemplateBrain):
-    """Female Adult Nervous System (NC82)
-    
-    Original image provided by Wyatt Korff at Janelia Research Campus with a neuropil background stain (NC82). 
-    The sample was adjusted to align with the image axis
-       
+    """Female Adult Nervous System (NC82).
+
+    Original image provided by Wyatt Korff at Janelia Research Campus with a
+    neuropil background stain (NC82). The sample was adjusted to align with the
+    image axis.
+
     References
     ----------
     Court RC.
     Dissecting the ventral nervous system in Drosophila melanogaster
     PhD Thesis 2017; http://hdl.handle.net/1842/25704
-    
-    Robert Christopher Court, James Armstrong, Jana Börner, Gwyneth Card, 
-    Marta Costa, Michael Dickinson, Carsten Duch, Wyatt Korff, Richard Mann, 
-    David Merritt, Rod Murphey, Shigehiro Namiki, Andrew Seeds, David Shepherd, 
+
+    Robert Christopher Court, James Armstrong, Jana Börner, Gwyneth Card,
+    Marta Costa, Michael Dickinson, Carsten Duch, Wyatt Korff, Richard Mann,
+    David Merritt, Rod Murphey, Shigehiro Namiki, Andrew Seeds, David Shepherd,
     Troy Shirangi, Julie Simpson, James Truman, John Tuthill, Darren Williams
     A Systematic Nomenclature for the Drosophila Ventral Nervous System
-    biorxiv. 2017. doi: https://doi.org/10.1101/122952 
+    biorxiv. 2017. doi: https://doi.org/10.1101/122952
     """
 
 COURT2017VNS = _COURT2017VNS(**template_meta['COURT2017VNS'])
 
 
 class _COURT2018VNS(FlyTemplateBrain):
-    """Female Adult Nervous System 
-    
-    A warped version of Court2017 to staigten the midline to make the template symetric (work done by Hideo Otsuna) leading to JRCVNC2018F.
-       
+    """Female Adult Nervous System.
+
+    A warped version of Court2017 to straighten the midline to make the template
+    symmetric (work done by Hideo Otsuna) leading to JRCVNC2018F.
+
     References
     ----------
-    Robert Court, Shigehiro Namiki, J Douglas Armstrong, Jana Börner, Gwyneth Card, 
-    Marta Costa, Michael Dickinson, Carsten Duch, Wyatt Korff, Richard Mann, 
-    David Merritt, Rod K Murphey, Andrew Seeds, Troy Shirangi, Julie H. Simpson, 
+    Robert Court, Shigehiro Namiki, J Douglas Armstrong, Jana Börner, Gwyneth Card,
+    Marta Costa, Michael Dickinson, Carsten Duch, Wyatt Korff, Richard Mann,
+    David Merritt, Rod K Murphey, Andrew Seeds, Troy Shirangi, Julie H. Simpson,
     James W Truman, John Tuthill, Darren Williams, David Shepherd
     biorxiv. 2020. doi: https://doi.org/10.1101/122952
-    
+
     An unbiased template of the Drosophila brain and ventral nerve cord.
     John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
     Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
@@ -880,19 +888,18 @@ class _COURT2018VNS(FlyTemplateBrain):
 COURT2018VNS = _COURT2018VNS(**template_meta['COURT2018VNS'])
 
 
-
 class _FANC(FlyTemplateBrain):
     """Female Adult Nerve Cord
-    
-    Using a serial-section electron microscopy (EM) to acquire a synapse-resolution 
+
+    Using a serial-section electron microscopy (EM) to acquire a synapse-resolution
     dataset containing the ventral nerve cord (VNC) of an adult female Drosophila melanogaster.
-    
+
     References
     ----------
     Reconstruction of motor control circuits in adult Drosophila using automated transmission electron microscopy
-    Jasper S Phelps, David Grant Colburn Hildebrand, Brett J Graham, Aaron T Kuan, 
-    Logan A Thomas, Tri M Nguyen, Julia Buhmann, Anthony W Azevedo, Anne Sustar, 
-    Sweta Agrawal, Mingguan Liu, Brendan L Shanny, Jan Funke, John C Tuthill, 
+    Jasper S Phelps, David Grant Colburn Hildebrand, Brett J Graham, Aaron T Kuan,
+    Logan A Thomas, Tri M Nguyen, Julia Buhmann, Anthony W Azevedo, Anne Sustar,
+    Sweta Agrawal, Mingguan Liu, Brendan L Shanny, Jan Funke, John C Tuthill,
     Wei-Chung Allen Lee
     Cell 2021 Feb 4;184(3):759-774.e18. doi: 10.1016/j.cell.2020.12.013.
 
@@ -906,6 +913,12 @@ class _DmelL1CNS_Seymour(FlyTemplateBrain):
 
     Imaged and assembled by Rick Fetter and Albert Cardona.
 
+    References
+    ----------
+    A multilevel multimodal circuit enhances action selection in Drosophila.
+    Ohyama, T., Schneider-Mizell, C., Fetter, R. et al. Nature 520, 633–639 (2015).
+    https://doi.org/10.1038/nature14297
+
     """
 
 DmelL1CNS_Seymour = _DmelL1CNS_Seymour(**template_meta['Dmel-L1-CNS-Seymour'])
@@ -915,7 +928,8 @@ def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
-                 JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1, FAFB14, FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
+                 JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
+                 FAFB14, FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
