@@ -708,7 +708,7 @@
          "microns",
          "microns"
       ],
-      "description": "Single Brain template VNS/VNC. COURT2017VNS warped to make the sample symetrical along the midline by Hideo Otsuna an Janelia Research Campus.",
+      "description": "Single Brain template VNS/VNC. COURT2017VNS warped to make the sample symetrical along the midline by Hideo Otsuna at Janelia Research Campus.",
       "doi": "10.1371/journal.pone.0236495",
       "boundingbox": [
          0.0,
