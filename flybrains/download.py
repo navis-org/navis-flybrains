@@ -22,7 +22,7 @@ from navis import utils
 import git
 
 __all__ = ['download_vfb_transforms', 'download_jefferislab_transforms',
-           'download_saalfeldlab_transforms']
+           'download_jrc_transforms', 'download_jrc_vnc_transforms']
 
 
 def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
@@ -32,7 +32,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
     """Download VirtualFlyBrain.org (VFB) CMTK transforms.
 
     BridgingRegistrations (~6Mb):
-      - JRCVNC2018U_JRCVNC2018U: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
+      - JRCVNC2018U_JRCVNC2018F: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
       - JRCVNC2018M_JRCVNC2018U: JRC2018_VNC_MALE_4iso -> JRC2018_VNC_UNISEX_4iso
       - COURT2017VNS_JRCVNC2018F: DrosAdultVNSdomains_Court2017_template_Neuropil_LPS -> JRC2018_VNC_FEMALE_4iso_LPS
       - COURT2018VNS_JRCVNC2018U: 20x_flyVNCtemplate_Female_symmetric -> JRC2018_VNC_UNISEX_4iso
@@ -236,14 +236,17 @@ def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=
         git.Repo.clone_from(url, clone_to, progress=update_pbar)
 
 
-def download_saalfeldlab_transforms(data_home=None, skip_existing=True):
-    """Download the h5 transforms from the Saalfeld lab.
+def download_jrc_transforms(data_home=None, skip_existing=True):
+    """Download H5 transforms between the Janelia Research Campus (JRC) brain templates.
+
+    Generated and kindly provided by the Saalfeld lab (Janelia):
+    https://www.janelia.org/open-science/jrc-2018-brain-templates
 
     Includes:
       - JRC2018 <-> FAFB
       - JRC2018F <-> JFRC2013
       - JRC2018F <-> FCWB
-      - JRC2018F <-> JRCFIB2018F
+      - JRC2018F <-> JRCFIB2018F (hemibrain)
       - JRC2018U <-> JRC2018F
       - JRC2018F <-> JFRC2010
 
@@ -280,7 +283,49 @@ def download_saalfeldlab_transforms(data_home=None, skip_existing=True):
         'JRC2018F_JFRC2010.h5'
       )
 
-    print(f'Downloading Saalfeld lab transforms into {data_home}')
+    print(f'Downloading JRC (Saalfeld lab) brain transforms into {data_home}')
+    for url, file in tqdm(zip(urls, filenames), leave=False,
+                          total=len(urls), desc='Transforms'):
+        dst = os.path.join(data_home, file)
+        if skip_existing and os.path.exists(dst):
+            continue
+        _ = download_from_url(url, dst)
+
+
+def download_jrc_vnc_transforms(data_home=None, skip_existing=True):
+    """Download H5 transforms between the Janelia Research Campus (JRC) VNC templates.
+
+    Generated and kindly provided by the Saalfeld lab (Janelia):
+    https://www.janelia.org/open-science/jrc-2018-brain-templates
+
+    Includes:
+      - JRCVNC2018U <-> JRCVNC2018F (110Mb)
+      - JRCVNC2018U <-> JRCVNC2018M (150Mb)
+
+    Parameters
+    ----------
+    data_home :     str
+                    Directory to download files to. If not specified, it tries to
+                    read from the ``FLYBRAINS_DATA`` environment variable and
+                    defaults to ``~/flybrain-data``.
+    skip_existing : bool
+                    If True, existing files will be skipped. If False, they
+                    will be overwritten.
+
+    """
+    data_home = get_data_home(data_home)
+    urls = (
+        "28909212?private_link=c4589cef9180e1dd4ee1",
+        "28908795?private_link=42ad71eb14e7dd51e81a")
+    urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
+
+    # Note that we are renaming the files upon download!
+    filenames = (
+        'JRCVNC2018U_JRCVNC2018F.h5',  # originally: JRC2018VncU_JRC2018VncF.h5
+        'JRCVNC2018M_JRCVNC2018U.h5',  # originally: JRC2018VncM_JRC2018VncU.h5
+      )
+
+    print(f'Downloading JRC (Saalfeld lab) VNC transforms into {data_home}')
     for url, file in tqdm(zip(urls, filenames), leave=False,
                           total=len(urls), desc='Transforms'):
         dst = os.path.join(data_home, file)

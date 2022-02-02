@@ -114,13 +114,13 @@ def report():
 
     data_home = pathlib.Path(get_data_home()).expanduser()
     # Number of .list CMTK directories
-    n_jefferislab = len([p for p in data_home.rglob(f'*.list') if p.is_dir()])
+    n_cmtk = len([p for p in data_home.rglob(f'*.list') if p.is_dir()])
     # Number of .h5 H5 file
-    n_saalfeld = len([p for p in data_home.rglob(f'*.h5') if p.is_file()])
+    n_h5 = len([p for p in data_home.rglob(f'*.h5') if p.is_file()])
 
     rep += dedent(f"""
-    Jefferis lab registrations: {n_jefferislab} of 41
-    Saalfeld lab registrations: {n_saalfeld} of 6
+    CMTK registrations (Jefferis lab/VFB): {n_cmtk} of 45
+    H5 registrations (JRC/Saalfeld lab): {n_h5} of 8
     """)
 
     nat_paths = get_nat_regdirs(verbose=False)
