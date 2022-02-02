@@ -249,13 +249,6 @@ def register_transforms():
                             source = hit.name.split('_')[0]
                             target = hit.name.split('_')[1].split('.')[0]
 
-                            # Somewhat confusingly it looks like the Jefferis
-                            # lab's CMTK transforms are {source}_{target} but
-                            # the Saalfeld lab's H5 transforms are
-                            # {target}_{source}.
-                            if ext == '.h5':
-                                source, target = target, source
-
                         # "FAFB" refers to FAFB14 and requires microns
                         # we will change its label to make this explicit
                         # and later add a bridging transform
@@ -271,12 +264,6 @@ def register_transforms():
 
                         if source == 'JRCFIB2018F':
                             source = 'JRCFIB2018Fum'
-
-                        # For reasons I have not yet figured out, source
-                        # and target appear to be swapped for the h5 regfiles.
-                        # Need to ask Greg about this.
-                        if ext == '.h5' and target:
-                            source, target = target, source
 
                         # Initialize the transform
                         transform = tr(hit)
