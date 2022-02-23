@@ -63,7 +63,7 @@ bridging transforms to map between template brains/nerve cords.
 # generated or collated by VirtualFlyBrain.org - see docstring for details
 >>> flybrains.download_vfb_transforms()
 
-# Register the transforms - this is only necessary if you just downloaded thems
+# Register the transforms - this is only necessary if you just downloaded them
 # Alternatively just restart your Python session and import flybrains
 >>> flybrains.register_transforms()
 ```
