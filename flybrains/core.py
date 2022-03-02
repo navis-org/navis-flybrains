@@ -207,9 +207,12 @@ def _JRCVNC2018F_FANCnm_post(points):
     return points
 
 
-def search_register_path(path):
+def search_register_path(path, verbose=False):
     """Search a single path for transforms and register them."""
     path = pathlib.Path(path).expanduser()
+
+    if verbose:
+        print(f'Searching {path}')
 
     # Find transform files/directories
     for ext, tr in zip(['.h5', '.list'],
@@ -251,6 +254,10 @@ def search_register_path(path):
 
                     # Initialize the transform
                     transform = tr(hit)
+
+                    if verbose:
+                        print(f'Registering {hit} ({tr.__name__}) '
+                              f'as "{source}" -> "{target}"')
 
                     transforms.registry.register_transform(transform=transform,
                                                            source=source,
