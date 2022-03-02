@@ -282,6 +282,9 @@ def register_transforms():
 
     # Go over all paths and add transforms
     for path in search_paths:
+        # Do not (re-)move this line! Otherwise is_dir() might fail
+        path = pathlib.Path(path).expanduser()
+
         # Skip if path does not exist
         if not path.is_dir():
             return
