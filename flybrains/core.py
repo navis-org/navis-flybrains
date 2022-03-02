@@ -207,6 +207,59 @@ def _JRCVNC2018F_FANCnm_post(points):
     return points
 
 
+def search_register_path(path):
+    """Search a single path for transforms and register them."""
+    path = pathlib.Path(path).expanduser()
+
+    # Find transform files/directories
+    for ext, tr in zip(['.h5', '.list'],
+                       [transforms.h5reg.H5transform, transforms.cmtk.CMTKtransform]):
+        for hit in path.rglob(f'*{ext}'):
+            if hit.is_dir() or hit.is_file():
+                # These files are inside the CMTK folders and show as
+                # symlinks in OSX/Linux but as files (?) in Windows
+                # Hence we need to manually exclude them.
+                if hit.name in ('orig.list', 'original.list'):
+                    continue
+
+                # Register this transform
+                try:
+                    if 'mirror' in hit.name or 'imgflip' in hit.name:
+                        transform_type = 'mirror'
+                        source = hit.name.split('_')[0]
+                        target = None
+                    else:
+                        transform_type = 'bridging'
+                        source = hit.name.split('_')[0]
+                        target = hit.name.split('_')[1].split('.')[0]
+
+                    # "FAFB" refers to FAFB14 and requires microns
+                    # we will change its label to make this explicit
+                    # and later add a bridging transform
+                    if target == 'FAFB':
+                        target = 'FAFB14um'
+
+                    if source == 'FAFB':
+                        source = 'FAFB14um'
+
+                    # "JRCFIB2018F" likewise requires microns
+                    if target == 'JRCFIB2018F':
+                        target = 'JRCFIB2018Fum'
+
+                    if source == 'JRCFIB2018F':
+                        source = 'JRCFIB2018Fum'
+
+                    # Initialize the transform
+                    transform = tr(hit)
+
+                    transforms.registry.register_transform(transform=transform,
+                                                           source=source,
+                                                           target=target,
+                                                           transform_type=transform_type)
+                except BaseException as e:
+                    warnings.warn(f'Error registering {hit} as transform: {str(e)}')
+
+
 def register_transforms():
     """Register transforms with navis."""
     # These are the paths we need to scan
@@ -222,58 +275,11 @@ def register_transforms():
 
     # Go over all paths and add transforms
     for path in search_paths:
-        path = pathlib.Path(path).expanduser()
         # Skip if path does not exist
         if not path.is_dir():
-            continue
+            return
 
-        # Find transform files/directories
-        for ext, tr in zip(['.h5', '.list'],
-                           [transforms.h5reg.H5transform, transforms.cmtk.CMTKtransform]):
-            for hit in path.rglob(f'*{ext}'):
-                if hit.is_dir() or hit.is_file():
-                    # These files are inside the CMTK folders and show as
-                    # symlinks in OSX/Linux but as files (?) in Windows
-                    # Hence we need to manually exclude them.
-                    if hit.name in ('orig.list', 'original.list'):
-                        continue
-
-                    # Register this transform
-                    try:
-                        if 'mirror' in hit.name or 'imgflip' in hit.name:
-                            transform_type = 'mirror'
-                            source = hit.name.split('_')[0]
-                            target = None
-                        else:
-                            transform_type = 'bridging'
-                            source = hit.name.split('_')[0]
-                            target = hit.name.split('_')[1].split('.')[0]
-
-                        # "FAFB" refers to FAFB14 and requires microns
-                        # we will change its label to make this explicit
-                        # and later add a bridging transform
-                        if target == 'FAFB':
-                            target = 'FAFB14um'
-
-                        if source == 'FAFB':
-                            source = 'FAFB14um'
-
-                        # "JRCFIB2018F" likewise requires microns
-                        if target == 'JRCFIB2018F':
-                            target = 'JRCFIB2018Fum'
-
-                        if source == 'JRCFIB2018F':
-                            source = 'JRCFIB2018Fum'
-
-                        # Initialize the transform
-                        transform = tr(hit)
-
-                        transforms.registry.register_transform(transform=transform,
-                                                               source=source,
-                                                               target=target,
-                                                               transform_type=transform_type)
-                    except BaseException as e:
-                        warnings.warn(f'Error registering {hit} as transform: {str(e)}')
+        search_register_path(path)
 
     # Add transform between JRCFIB2018Fraw (8nm voxel) and JRCFIB2018F (nm)
     tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
