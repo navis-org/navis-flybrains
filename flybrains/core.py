@@ -287,7 +287,7 @@ def register_transforms():
 
         # Skip if path does not exist
         if not path.is_dir():
-            return
+            continue
 
         search_register_path(path)
 
