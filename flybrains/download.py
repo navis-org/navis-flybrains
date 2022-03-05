@@ -67,7 +67,7 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
                 Use to update already downloaded transforms.
 
     """
-    data_home = get_data_home(data_home)
+    data_home = get_data_home(data_home, create=True)
     repos = utils.make_iterable(repos)
 
     print(f'Downloading VFB transforms into {data_home}')
@@ -162,7 +162,7 @@ def download_jefferislab_transforms(repos=("BridgingRegistrations",
                 Use to update already downloaded transforms.
 
     """
-    data_home = get_data_home(data_home)
+    data_home = get_data_home(data_home, create=True)
     repos = utils.make_iterable(repos)
 
     print(f'Downloading Jefferis lab transforms into {data_home}')
@@ -186,7 +186,7 @@ def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=
                 defaults to ``~/flybrain-data``.
 
     """
-    data_home = get_data_home(data_home)
+    data_home = get_data_home(data_home, create=True)
 
     if use_ssh:
         url = f'git@github.com:{repo}'
@@ -263,7 +263,7 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
                     will be overwritten.
 
     """
-    data_home = get_data_home(data_home)
+    data_home = get_data_home(data_home, create=True)
     urls = (
         "14362754?private_link=3a8b1d84c5e197edc97c",
         "14368703?private_link=2a684586d5014e31076c",
@@ -313,7 +313,7 @@ def download_jrc_vnc_transforms(data_home=None, skip_existing=True):
                     will be overwritten.
 
     """
-    data_home = get_data_home(data_home)
+    data_home = get_data_home(data_home, create=True)
     urls = (
         "28909212?private_link=c4589cef9180e1dd4ee1",
         "28908795?private_link=42ad71eb14e7dd51e81a")
@@ -388,7 +388,7 @@ def download_from_url(url, dst, resume=False):
     return file_size
 
 
-def get_data_home(data_home: Optional[str] = None) -> str:
+def get_data_home(data_home: Optional[str] = None, create=False) -> str:
     """Return a path to the cache directory for transforms.
 
     If the ``data_home`` argument is not specified, it tries to read from the
@@ -399,7 +399,7 @@ def get_data_home(data_home: Optional[str] = None) -> str:
                                    os.path.join('~', 'flybrain-data'))
 
     data_home = os.path.expanduser(data_home)
-    if not os.path.exists(data_home):
+    if not os.path.exists(data_home) and create:
         os.makedirs(data_home)
 
     return data_home
