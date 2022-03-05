@@ -214,6 +214,10 @@ def search_register_path(path, verbose=False):
     if verbose:
         print(f'Searching {path}')
 
+    # Skip if this isn't an actual path
+    if not path.is_dir():
+        return
+
     # Find transform files/directories
     for ext, tr in zip(['.h5', '.list'],
                        [transforms.h5reg.H5transform, transforms.cmtk.CMTKtransform]):
