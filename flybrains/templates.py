@@ -40,7 +40,7 @@ fp = os.path.dirname(__file__)
 meta_filepath = os.path.join(fp, 'data/template_meta.json')
 mesh_filepath = os.path.join(fp, 'meshes')
 
-with open(meta_filepath, 'r') as f:
+with open(meta_filepath, 'r', encoding='utf-8') as f:
     template_meta = json.load(f)
 
 # Index by short label
