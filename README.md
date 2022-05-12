@@ -139,7 +139,8 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
-- `0.2.0` (02/02/22): added VirtualFlyBrain.orgs's (CMTK) and Janelia's (H5) VNC transforms; renamed some download function
+- `0.2.4` (12/05/22): added `FLYWIRE` template brain and landmark-based mirror transform
+- `0.2.0` (02/02/22): added VirtualFlyBrain.org's (CMTK) and Janelia's (H5) VNC transforms; renamed some download function
 - `0.1.14` (21/10/21): added FANC <-> JRCVNC2018F transform (requires Elastix and navis >=1.0.0)
 - `0.1.13` (14/10/21): add template and mirror transform for FANC
 - `0.1.12` (18/09/21): fixed directionality of Jefferis lab CMTK transforms
