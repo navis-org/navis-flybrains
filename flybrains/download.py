@@ -356,34 +356,27 @@ def download_from_url(url, dst, resume=False):
     try:
         file_size = int(requests.head(url, allow_redirects=True).headers["Content-Length"])
     except KeyError:
-        print(f'Failed to fetch file size for {str(dst).split("/")[-1]}: '
-              'download progress bar will be unavailable.')
         file_size = None
 
-    if file_size:
-        if os.path.exists(dst) and resume:
-            first_byte = os.path.getsize(dst)
-            mode = 'ab'
-        else:
-            first_byte = 0
-            mode = 'wb'
-        if first_byte >= file_size:
-            return file_size
-        header = {"Range": f"bytes={first_byte}-{file_size}"}
-        with tqdm(total=file_size, initial=first_byte,
-                  unit='B', unit_scale=True, desc=os.path.basename(dst)) as pbar:
-            req = requests.get(url, headers=header, stream=True, allow_redirects=True)
-            with open(dst, mode) as f:
-                for chunk in req.iter_content(chunk_size=1024):
-                    if chunk:
-                        f.write(chunk)
-                        pbar.update(1024)
-
+    if file_size and os.path.exists(dst) and resume:
+        first_byte = os.path.getsize(dst)
+        mode = 'ab'
     else:
-        req = requests.get(url, allow_redirects=True)
-        file_size = len(req.content)
-        with open(dst, 'wb') as f:
-            f.write(req.content)
+        first_byte = 0
+        mode = 'wb'
+
+    if file_size and first_byte >= file_size:
+        return file_size
+
+    header = {"Range": f"bytes={first_byte}-{file_size}"}
+    with tqdm(total=file_size, initial=first_byte,
+              unit='B', unit_scale=True, desc=os.path.basename(dst)) as pbar:
+        req = requests.get(url, headers=header, stream=True, allow_redirects=True)
+        with open(dst, mode) as f:
+            for chunk in req.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+                    pbar.update(1024)
 
     return file_size
 
