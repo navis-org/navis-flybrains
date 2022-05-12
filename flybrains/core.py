@@ -360,6 +360,11 @@ def register_transforms():
                                            source='FAFB14',
                                            target=None,
                                            transform_type='mirror')
+    # Add "FAFB" as synonym to "FAFB14" since this is as alias on the chart
+    transforms.registry.register_transform(transform=tr,
+                                           source='FAFB',
+                                           target=None,
+                                           transform_type='mirror')
 
     # Add a simple symmetrization transform for FAFB14
     fp = os.path.join(data_filepath, 'FAFB14_symmetrize_landmarks_nm.csv')

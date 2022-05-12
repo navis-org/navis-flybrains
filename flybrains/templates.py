@@ -30,7 +30,9 @@ __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum', 'JRCVNC2018F',
            'JRCVNC2018M',
            'JRCVNC2018U',
-           'VNCIS1', 'FAFB14', 'FANC', 'DmelL1CNS_Seymour',
+           'VNCIS1',
+           'FAFB14', 'FAFB',
+           'FANC', 'DmelL1CNS_Seymour',
            'COURT2017VNS', 'COURT2018VNS',
            'register_templates']
 
@@ -837,7 +839,7 @@ class _FAFB14(FlyTemplateBrain):
 
     """
 
-FAFB14 = _FAFB14(**template_meta['FAFB14'])
+FAFB14 = FAFB = _FAFB14(**template_meta['FAFB14'])
 
 
 class _COURT2017VNS(FlyTemplateBrain):
@@ -929,7 +931,8 @@ def register_templates():
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
                  JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
-                 FAFB14, FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
+                 FAFB14, FAFB,
+                 FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
