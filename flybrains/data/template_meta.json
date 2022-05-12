@@ -826,6 +826,42 @@
       ]
    },
    {
+      "name": "FlyWire",
+      "label": "FLYWIRE",
+      "type": null,
+      "sex": "female",
+      "dims": [
+         165372,
+         80745,
+         6730
+      ],
+      "voxdims": [
+         4,
+         4,
+         40
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "nanometers",
+         "nanometers",
+         "nanometers"
+      ],
+      "description": "Re-aligned version of the FAFB SSTEM volume comprising an entire female Drosophila brain.",
+      "doi": "https://doi.org/10.1038/s41592-021-01330-0",
+      "boundingbox": [
+         192200,
+         853686,
+         75853,
+         398832,
+         2007,
+         271205
+      ]
+   },
+   {
       "name": "Female Adult Nerve Cord",
       "label": "FANC",
       "type": null,

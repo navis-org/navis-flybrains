@@ -32,6 +32,7 @@ __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'JRCVNC2018U',
            'VNCIS1',
            'FAFB14', 'FAFB',
+           'FLYWIRE',
            'FANC', 'DmelL1CNS_Seymour',
            'COURT2017VNS', 'COURT2018VNS',
            'register_templates']
@@ -842,6 +843,35 @@ class _FAFB14(FlyTemplateBrain):
 FAFB14 = FAFB = _FAFB14(**template_meta['FAFB14'])
 
 
+class _FLYWIRE(FlyTemplateBrain):
+    """Re-aligned version of the Full Adult Fly Brain (FAFB) SSTEM volume.
+
+    The original volume was imaged by Zhen et al. (2018). Dorkenwald et al.
+    (2022) re-aligned the volume to help with automatic segmentation. On
+    average the offset between FAFB14 and FlyWire is less than a micron.
+
+    The neuropil mesh was created by transforming the FAFB14 mesh into FlyWire
+    space (effectively applying the FAFB14->FlyWire re-alignment vector field).
+
+    References
+    ----------
+    Dorkenwald, S., McKellar, C.E., Macrina, T. et al.
+    FlyWire: online community for whole-brain connectomics.
+    Nat Methods 19, 119–128 (2022).
+    https://doi.org/10.1038/s41592-021-01330-0
+
+    Zheng Z, Lauritzen JS, Perlman E, Robinson CG, Nichols M, Milkie D,
+    Torrens O, Price J, Fisher CB, Sharifi N, Calle-Schuler SA, Kmecova L,
+    Ali IJ, Karsh B, Trautman ET, Bogovic JA, Hanslovsky P, Jefferis GSXE,
+    Kazhdan M, Khairy K, Saalfeld S, Fetter RD, Bock DD.
+    A Complete Electron Microscopy Volume of the Brain of Adult Drosophila
+    melanogaster. Cell. 2018 Jul 26;174(3):730-743.e22.
+    doi: 10.1016/j.cell.2018.06.019.
+    """
+
+FLYWIRE = _FLYWIRE(**template_meta['FLYWIRE'])
+
+
 class _COURT2017VNS(FlyTemplateBrain):
     """Female Adult Nervous System (NC82).
 
@@ -932,6 +962,7 @@ def register_templates():
                  JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
                  JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
                  FAFB14, FAFB,
+                 FLYWIRE,
                  FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
