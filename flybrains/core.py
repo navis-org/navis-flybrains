@@ -392,6 +392,28 @@ def register_transforms():
                                            target='FANCnm',
                                            transform_type='bridging')
 
+    # Add a male CNS <-> FAFB transform
+    fp = os.path.join(data_filepath, 'maleCNS_brain_FAFB_landmarks_nm.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(lm[['fafb_x', 'fafb_y', 'fafb_z']].values,
+                                 lm[['cns_x', 'cns_y', 'cns_z']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FAFB14',
+                                           target='JRCFIB2022M',
+                                           transform_type='bridging')
+    tr = transforms.AliasTransform()
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCFIB2022M',
+                                           target='JRCFIB2022Mnm',
+                                           transform_type='bridging')
+
+    # Add transform between voxel and nm space
+    tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCFIB2022Mraw',
+                                           target='JRCFIB2022M',
+                                           transform_type='bridging')
+
     # Add FANC mirror transform based on subsampling a FANC -> MANCsym transform
     fp = os.path.join(data_filepath, 'FANC_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
