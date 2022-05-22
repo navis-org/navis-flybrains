@@ -368,7 +368,7 @@ def register_transforms():
 
     # Add mirror transform for FlyWire
     # These landmarks were created by xforming those for FAFB14 to FlyWire space
-    fp = os.path.join(data_filepath, 'FlyWire_mirror_landmarks.csv')
+    fp = os.path.join(data_filepath, 'FLYWIRE_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
     tr = transforms.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
                                  lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
