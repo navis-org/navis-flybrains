@@ -270,6 +270,7 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         "14369093?private_link=d5965dad295e46241ae1",
         "21749535?private_link=ca603876efb33fdf3028",
         "14371574?private_link=b7120207f38b35f1e372",
+        "14371574?private_link=2afde323b12274d3243b",
         "14368358?private_link=b29e25b6e47ccf9187a8"
             )
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
@@ -280,6 +281,7 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         'JRC2018F_FCWB.h5',
         'JRC2018F_JRCFIB2018F.h5',
         'JRC2018U_JRC2018F.h5',
+        'JRC2018U_JRC2018M.h5',
         'JRC2018F_JFRC2010.h5'
       )
 
