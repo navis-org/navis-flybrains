@@ -452,6 +452,44 @@
       "symmetrical": true
    },
    {
+      "name": "JRC2018M",
+      "label": "JRC2018M",
+      "type": "Average template brain",
+      "sex": "M",
+      "dims": [
+         1561,
+         744,
+         546
+      ],
+      "voxdims": [
+         0.38,
+         0.38,
+         0.38
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "_navis_units": "1 micron",
+      "description": "Average template brain constructed from brains labelled with brp-SNAP presynaptic marker,\n    dehydrated, and mounted in DPX and then imaged by confocal microscope.",
+      "doi": "https://doi.org/10.1101/376384",
+      "boundingbox": [
+         0.0,
+         593.18,
+         0.0,
+         282.72,
+         0.0,
+         207.48
+      ],
+      "symmetrical": true
+   },
+   {
       "name": "JRC2018U",
       "label": "JRC2018U",
       "type": "Average template brain",

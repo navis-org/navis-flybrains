@@ -26,9 +26,12 @@ from navis.transforms.templates import TemplateBrain
 
 
 __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
-           'Dsim', 'Dvir', 'JFRC2013', 'JFRC2013DS', 'JRC2018F', 'JRC2018U',
-           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum', 'JRCVNC2018F',
+           'Dsim', 'Dvir',
+           'JFRC2013', 'JFRC2013DS',
+           'JRC2018F', 'JRC2018U', 'JRC2018M',
+           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum',
            'JRCFIB2022M',
+           'JRCVNC2018F',
            'JRCVNC2018M',
            'JRCVNC2018U',
            'VNCIS1',
@@ -551,6 +554,46 @@ class _JRC2018U(FlyTemplateBrain):
 JRC2018U = _JRC2018U(**template_meta['JRC2018U'])
 
 
+class _JRC2018M(FlyTemplateBrain):
+    """JRC2018M reference brain.
+
+    The JRC2018M reference brain is an average template brain constructed from
+    brains labelled with brp-SNAP, dehydrated, and mounted in DPX and imaged at
+    0.19 x 0.19 x 0.38 microns. The image was downsampled in XY to result in a
+    0.38 micron isotropic voxel size, which we take to be the standard JRC2018M
+    space.
+
+    The JRC2018M reference brain was constructed as for JRC2018F brain but from
+    male instead of female brains.
+
+    JRC2018M mesh was generated using a downsampled, 8 bit version of the
+    template brain. A surface was then generated with a threshold level of 40
+    which was subsequently smoothed, downsampled and minimally cleaned-up
+    in Blender.
+
+    Details
+    -------
+    For the central brain, Bogovic and Saalfeld used 36 female individuals (72
+    images including left-right flips) for the female template, 26 male
+    individuals (52 image with left-right flips) for the male template, and the
+    union of both for the unisex brain template: 62 individuals (124 images with
+    left-right flips).
+
+    Downloaded from https://www.janelia.org/open-science/jrc-2018-brain-templates
+
+    References
+    ----------
+    An unbiased template of the Drosophila brain and ventral nerve cord.
+    John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito,
+    Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell,
+    Oz Malkesman, Kei Ito, Stephan Saalfeld.
+    PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
+
+    """
+
+JRC2018M = _JRC2018M(**template_meta['JRC2018M'])
+
+
 class _JRCFIB2018F(FlyTemplateBrain):
     """JRCFIB2018F aka "hemibrain" dataset.
 
@@ -982,11 +1025,11 @@ DmelL1CNS_Seymour = _DmelL1CNS_Seymour(**template_meta['Dmel-L1-CNS-Seymour'])
 def register_templates():
     """Register template brains with navis."""
     templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
-                 JFRC2013, JFRC2013DS, JRC2018F, JRC2018U, JRCFIB2018F,
-                 JRCFIB2018Fraw, JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
-                 FAFB14, FAFB,
-                 FLYWIRE,
-                 JRCFIB2022M,
+                 JFRC2013, JFRC2013DS,
+                 JRC2018F, JRC2018U, JRC2018M,
+                 JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
+                 FAFB14, FAFB, FLYWIRE,
+                 JRCFIB2022M, JRCFIB2018F, JRCFIB2018Fraw,
                  FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
