@@ -42,6 +42,11 @@ to the binaries is in your `PATH` variable.
 It's highly recommended that after install, you download the (optional)
 bridging transforms to map between template brains/nerve cords.
 
+**IMPORTANT**: the URL for the JRC2018F <-> JRC2018M transform (`JRC2018U_JRC2018M.h5`)
+was incorrect in `flybrains` version `0.2.6`. If you downloaded it using that
+version of flybrains you need to manually remove the file, update flybrains and
+download again using a newer version.
+
 > :exclamation: If you already have downloaded these registrations via `nat.jrcbrains` and/or `nat.flybrains` you can skip this: `flybrains` should be able to find the registrations downloaded via R and register them for you (see also code at the bottom).
 
 ```Python
@@ -139,9 +144,12 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.2.7` (05/01/23): fixed `JRC2018M` <-> `JRC2018U` transform download
+- ~~`0.2.6` (06/09/22): added `JRC2018M` <-> `JRC2018U` transform~~ (YANKED)
+- `0.2.5` (22/05/22): added `JRCFIB2022M` mesh and transform to/from `FAFB14`
 - `0.2.4` (12/05/22): added `FLYWIRE` template brain and landmark-based mirror transform
 - `0.2.0` (02/02/22): added VirtualFlyBrain.org's (CMTK) and Janelia's (H5) VNC transforms; renamed some download function
-- `0.1.14` (21/10/21): added FANC <-> JRCVNC2018F transform (requires Elastix and navis >=1.0.0)
+- `0.1.14` (21/10/21): added `FANC` <-> `JRCVNC2018F` transform (requires Elastix and navis >=1.0.0)
 - `0.1.13` (14/10/21): add template and mirror transform for FANC
 - `0.1.12` (18/09/21): fixed directionality of Jefferis lab CMTK transforms
 - `0.1.11` (02/08/21): make downloads work if file size unknown
