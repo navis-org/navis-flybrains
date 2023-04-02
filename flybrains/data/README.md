@@ -58,7 +58,7 @@ male adult nerve cord (MANC) and female adult nerve cord (FANC) VNC data sets.
 These landmarks were manually placed at cross-identifiable locations in both
 datasets.
 
-## `maleCNS_brain_FAFB_landmarks_um.csv`
+## `maleCNS_brain_FAFB_landmarks_nm.csv`
 This file contains landmarks to transform between the brain portion of the
 Janelia full male CNS and the FAFB datasets.
 

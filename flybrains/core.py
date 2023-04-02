@@ -406,11 +406,21 @@ def register_transforms():
                                            source='JRCFIB2022M',
                                            target='JRCFIB2022Mnm',
                                            transform_type='bridging')
-
     # Add transform between voxel and nm space
     tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
     transforms.registry.register_transform(transform=tr,
                                            source='JRCFIB2022Mraw',
+                                           target='JRCFIB2022M',
+                                           transform_type='bridging')
+
+    # Add male CNS <-> FlyWire transform. This was generated from the
+    # CNS <-> FAFB transform by simply xforming the FAFB coordinates
+    fp = os.path.join(data_filepath, 'maleCNS_brain_FLYWIRE_landmarks_nm.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(lm[['flywire_x', 'flywire_y', 'flywire_z']].values,
+                                 lm[['cns_x', 'cns_y', 'cns_z']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='FLYWIRE',
                                            target='JRCFIB2022M',
                                            transform_type='bridging')
 
