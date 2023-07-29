@@ -30,7 +30,7 @@ __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'JFRC2013', 'JFRC2013DS',
            'JRC2018F', 'JRC2018U', 'JRC2018M',
            'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum',
-           'JRCFIB2022M',
+           'JRCFIB2022M', 'JRCFIB2022Mraw',
            'JRCVNC2018F',
            'JRCVNC2018M',
            'JRCVNC2018U',
@@ -725,6 +725,21 @@ class _JRCFIB2022M(FlyTemplateBrain):
 
 JRCFIB2022M = _JRCFIB2022M(**template_meta['JRCFIB2022M'])
 
+class _JRCFIB2022Mraw(_JRCFIB2022M):
+    @property
+    def mesh(self):
+        """On-demand loading of surface mesh."""
+        if not hasattr(self, '_mesh'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'JRCFIB2022M.ply')
+            self._mesh = tm.load_mesh(fp)
+            # Convert nanometers to voxels
+            self._mesh.vertices /= 8
+        return self._mesh
+
+JRCFIB2022Mraw = _JRCFIB2022Mraw(**template_meta['JRCFIB2022Mraw'])
+
+
 class _JRCVNC2018F(FlyTemplateBrain):
     """JRC2018 reference ventral nerve chords.
 
@@ -1029,7 +1044,8 @@ def register_templates():
                  JRC2018F, JRC2018U, JRC2018M,
                  JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
                  FAFB14, FAFB, FLYWIRE,
-                 JRCFIB2022M, JRCFIB2018F, JRCFIB2018Fraw,
+                 JRCFIB2022M,JRCFIB2022Mraw,
+                 JRCFIB2018F, JRCFIB2018Fraw,
                  FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
