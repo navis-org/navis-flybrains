@@ -243,11 +243,12 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
     https://www.janelia.org/open-science/jrc-2018-brain-templates
 
     Includes:
-      - JRC2018 <-> FAFB
+      - JRC2018F <-> FAFB
       - JRC2018F <-> JFRC2013
       - JRC2018F <-> FCWB
       - JRC2018F <-> JRCFIB2018F (hemibrain)
       - JRC2018U <-> JRC2018F
+      - JRC2018U <-> JRC2018M
       - JRC2018F <-> JFRC2010
 
     Note that these transforms are fairly large: between 550Mb and 1.4Gb each.
