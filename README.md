@@ -144,6 +144,7 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.2.9` (08/08/23): added MANC template brain and transform to/from `JRCVNC2018M`
 - `0.2.8` (02/04/23): added transform between `JRCFIB2022M` and `FLYWIRE`
 - `0.2.7` (05/01/23): fixed `JRC2018M` <-> `JRC2018U` transform download
 - ~~`0.2.6` (06/09/22): added `JRC2018M` <-> `JRC2018U` transform~~ (YANKED)
@@ -164,7 +165,7 @@ Most templates come with a mesh e.g. for plotting via navis:
 - `0.1.3` (12/01/21): improved the warp mirror registration for `FAFB14`
 - `0.1.2` (10/01/21): added a warp mirror registration for `FAFB14`
 - `0.1.1` (06/01/21): added `um` (for microns) suffix to `JRCFIB2018F` transforms; added affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms
-- `0.1.0` (03/01/21): first working version  
+- `0.1.0` (03/01/21): first working version
 
 ## Acknowledgements
 Critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
