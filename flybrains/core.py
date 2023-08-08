@@ -256,6 +256,13 @@ def search_register_path(path, verbose=False):
                     if source == 'JRCFIB2018F':
                         source = 'JRCFIB2018Fum'
 
+                    # "MANC" likewise requires microns
+                    if target == 'MANC':
+                        target = 'MANCum'
+
+                    if source == 'MANC':
+                        source = 'MANCum'
+
                     # Initialize the transform
                     transform = tr(hit)
 
@@ -462,6 +469,13 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='MANC',
                                            target='MANCnm',
+                                           transform_type='bridging')
+
+    # Add MANC to MANCum transform
+    tr = transforms.AffineTransform(np.diag([1000, 1000, 1000, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='MANCum',
+                                           target='MANC',
                                            transform_type='bridging')
 
     # Some general notes for the Elastix transform between FANC and JRCVNC2018F:
