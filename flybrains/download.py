@@ -304,6 +304,7 @@ def download_jrc_vnc_transforms(data_home=None, skip_existing=True):
     Includes:
       - JRCVNC2018U <-> JRCVNC2018F (110Mb)
       - JRCVNC2018U <-> JRCVNC2018M (150Mb)
+      - JRCVNC2018M <-> MANC (1Gb)
 
     Parameters
     ----------
@@ -319,13 +320,15 @@ def download_jrc_vnc_transforms(data_home=None, skip_existing=True):
     data_home = get_data_home(data_home, create=True)
     urls = (
         "28909212?private_link=c4589cef9180e1dd4ee1",
-        "28908795?private_link=42ad71eb14e7dd51e81a")
+        "28908795?private_link=42ad71eb14e7dd51e81a",
+        "38827794")
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
 
     # Note that we are renaming the files upon download!
     filenames = (
         'JRCVNC2018U_JRCVNC2018F.h5',  # originally: JRC2018VncU_JRC2018VncF.h5
         'JRCVNC2018M_JRCVNC2018U.h5',  # originally: JRC2018VncM_JRC2018VncU.h5
+        'JRCVNC2018M_MANC.h5',  # originally: JRC2018VncM_MANC.h5
       )
 
     print(f'Downloading JRC (Saalfeld lab) VNC transforms into {data_home}')

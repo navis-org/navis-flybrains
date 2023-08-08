@@ -37,7 +37,9 @@ __all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
            'VNCIS1',
            'FAFB14', 'FAFB',
            'FLYWIRE',
-           'FANC', 'DmelL1CNS_Seymour',
+           'FANC',
+           "MANC", "MANCraw",
+           'DmelL1CNS_Seymour',
            'COURT2017VNS', 'COURT2018VNS',
            'register_templates']
 
@@ -1005,11 +1007,13 @@ class _FANC(FlyTemplateBrain):
     """Female Adult Nerve Cord
 
     Using a serial-section electron microscopy (EM) to acquire a synapse-resolution
-    dataset containing the ventral nerve cord (VNC) of an adult female Drosophila melanogaster.
+    dataset containing the ventral nerve cord (VNC) of an adult female Drosophila
+    melanogaster.
 
     References
     ----------
-    Reconstruction of motor control circuits in adult Drosophila using automated transmission electron microscopy
+    Reconstruction of motor control circuits in adult Drosophila using automated
+    transmission electron microscopy
     Jasper S Phelps, David Grant Colburn Hildebrand, Brett J Graham, Aaron T Kuan,
     Logan A Thomas, Tri M Nguyen, Julia Buhmann, Anthony W Azevedo, Anne Sustar,
     Sweta Agrawal, Mingguan Liu, Brendan L Shanny, Jan Funke, John C Tuthill,
@@ -1019,6 +1023,66 @@ class _FANC(FlyTemplateBrain):
     """
 
 FANC = _FANC(**template_meta['FANC'])
+
+
+class _MANC(FlyTemplateBrain):
+    """Male Adult Nerve Cord.
+
+    A FIBSEM volume containing a ventral nerve cord of an adult male
+    Drosophila melanogaster.
+
+    References
+    ----------
+    A Connectome of the Male Drosophila Ventral Nerve Cord
+    Shin-ya Takemura, Kenneth J Hayworth, Gary B Huang, Michal Januszewski,
+    Zhiyuan Lu, Elizabeth C Marin, Stephan Preibisch, C Shan Xu, John Bogovic,
+    Andrew S Champion, Han SJ Cheong, Marta Costa, Katharina Eichler,
+    William Katz, Christopher Knecht, Feng Li, Billy J Morris, Christopher Ordish,
+    Patricia K Rivlin, Philipp Schlegel, Kazunori Shinomiya, Tomke Stürner,
+    Ting Zhao, Griffin Badalamente, Dennis Bailey, Paul Brooks, Brandon S Canino,
+    Jody Clements, Michael Cook, Octave Duclos, Christopher R Dunne, Kelli Fairbanks,
+    Siqi Fang, Samantha Finley-May, Audrey Francis, Reed George, Marina Gkantia,
+    Kyle Harrington, Gary Patrick Hopkins, Joseph Hsu, Philip M Hubbard,
+    Alexandre Javier, Dagmar Kainmueller, Wyatt Korff, Julie Kovalyak,
+    Dominik Krzemiński, Shirley A Lauchie, Alanna Lohff, Charli Maldonado,
+    Emily A Manley, Caroline Mooney, Erika Neace, Matthew Nichols, Omotara Ogundeyi,
+    Nneoma Okeoma, Tyler Paterson, Elliott Phillips, Emily M Phillips,
+    Caitlin Ribeiro, Sean M Ryan, Jon Thomson Rymer, Anne K Scott, Ashley L Scott,
+    David Shepherd, Aya Shinomiya, Claire Smith, Natalie Smith, Alia Suleiman,
+    Satoko Takemura, Iris Talebi, Imaan FM Tamimi, Eric T Trautman, Lowell Umayam,
+    John J Walsh, Tansy Yang, Gerald M Rubin, Louis K Scheffer, Jan Funke,
+    Stephan Saalfeld, Harald F Hess, Stephen M Plaza, Gwyneth M Card,
+    Gregory SXE Jefferis, Stuart Berg
+    bioRxiv 2023.06.05.543757; doi: https://doi.org/10.1101/2023.06.05.543757
+
+    """
+    @property
+    def mesh(self):
+        """On-demand loading of surface mesh."""
+        if not hasattr(self, '_mesh'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
+            self._mesh = tm.load_mesh(fp)
+            # Convert voxels to nanometers
+            if self.units[0] == 'nm':
+                self._mesh.vertices *= 8
+        return self._mesh
+
+
+# MANC in nanometers
+MANC = _MANC(**template_meta['MANC'])
+MANC.boundingbox = [b * 8 for b in MANC.boundingbox]
+MANC.dims = [b * 8 for b in MANC.dims]
+MANC.units = ['nm', 'nm', 'nm']
+
+
+class _MANCraw(FlyTemplateBrain):
+    """Male Adult Nerve Cord."""
+
+
+# MANC in raw voxels (original)
+MANCraw = _MANCraw(**template_meta['MANC'])
+MANCraw.label = 'MANCraw'
 
 
 class _DmelL1CNS_Seymour(FlyTemplateBrain):
@@ -1046,7 +1110,9 @@ def register_templates():
                  FAFB14, FAFB, FLYWIRE,
                  JRCFIB2022M,JRCFIB2022Mraw,
                  JRCFIB2018F, JRCFIB2018Fraw,
-                 FANC, DmelL1CNS_Seymour, COURT2017VNS, COURT2018VNS]
+                 FANC, MANC, MANCraw,
+                 DmelL1CNS_Seymour,
+                 COURT2017VNS, COURT2018VNS]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
