@@ -263,6 +263,10 @@ def search_register_path(path, verbose=False):
                     if source == 'MANC':
                         source = 'MANCum'
 
+                    # "Seymour" likewise requires microns
+                    if source == 'DmelL1CNS_Seymour':
+                        source = 'DmelL1CNS_Seymourum'
+                        
                     # Initialize the transform
                     transform = tr(hit)
 
@@ -342,6 +346,13 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrainum',
                                            target='JRCFIB2018Fum',
+                                           transform_type='bridging')
+
+    # Add transform between DmelL1CNS_Seymour (nm) and DmelL1CNS_Seymourum (um)
+    tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='DmelL1CNS_Seymourum',
+                                           target='DmelL1CNS_Seymour',
                                            transform_type='bridging')
 
     # Add alias transform between FAFB and FAFB14 (they are synonymous)
