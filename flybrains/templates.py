@@ -951,6 +951,15 @@ class _FLYWIRE(FlyTemplateBrain):
     melanogaster. Cell. 2018 Jul 26;174(3):730-743.e22.
     doi: 10.1016/j.cell.2018.06.019.
     """
+    @property
+    def mesh_whole_brain(self):
+        """On-demand loading of whole brain mesh."""
+        if not hasattr(self, '_mesh_whole_brain'):
+            fp = os.path.join(mesh_filepath, f'{self.label}_whole_brain.ply')
+
+            self._mesh_whole_brain = tm.load_mesh(fp)
+
+        return self._mesh_whole_brain
 
 FLYWIRE = _FLYWIRE(**template_meta['FLYWIRE'])
 
