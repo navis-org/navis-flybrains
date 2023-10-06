@@ -25,22 +25,25 @@ __all__ = ['download_vfb_transforms', 'download_jefferislab_transforms',
            'download_jrc_transforms', 'download_jrc_vnc_transforms']
 
 
-def download_vfb_transforms(repos=("VfbBridgingRegistrations"),
+def download_vfb_transforms(repos=("VfbBridgingRegistrations", ),
                                    update_existing=True,
                                    use_ssh=False,
                                    data_home=None):
     """Download VirtualFlyBrain.org (VFB) CMTK transforms.
 
     BridgingRegistrations (~6Mb):
-      - JRCVNC2018U_JRCVNC2018F: JRC2018-VNC-UNISEX-4iso -> JRC2018-VNC-FEMALE-4iso
-      - JRCVNC2018M_JRCVNC2018U: JRC2018_VNC_MALE_4iso -> JRC2018_VNC_UNISEX_4iso
       - COURT2017VNS_JRCVNC2018F: DrosAdultVNSdomains_Court2017_template_Neuropil_LPS -> JRC2018_VNC_FEMALE_4iso_LPS
       - COURT2018VNS_JRCVNC2018U: 20x_flyVNCtemplate_Female_symmetric -> JRC2018_VNC_UNISEX_4iso
 
+    Important
+    ---------
+    The VFB CMTK transforms _between_ JRCVNC2018 template brains were removed
+    in version 0.2.10 as they no longer available for download. Please use the
+    JRC H5 transforms from the Saalfeld lab instead.
 
     Parameters
     ----------
-    repos :             "BridgingRegistrations" list thereof
+    repos :             "VfbBridgingRegistrations" | list of str
                         Which registrations to download. These are Github
                         repositories (e.g. ``VirtualFlyBrain/VfbBridgingRegistrations``)
                         which will be cloned into ``~/flybrain-data/``.
@@ -250,8 +253,9 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
       - JRC2018U <-> JRC2018F
       - JRC2018U <-> JRC2018M
       - JRC2018F <-> JFRC2010
+      - JRC2018M <-> JRCFIB2022M (maleCNS)
 
-    Note that these transforms are fairly large: between 550Mb and 1.4Gb each.
+    Note that these transforms are fairly large: between 550Mb and 2Gb each.
 
     Parameters
     ----------
