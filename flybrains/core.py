@@ -256,6 +256,13 @@ def search_register_path(path, verbose=False):
                     if source == 'JRCFIB2018F':
                         source = 'JRCFIB2018Fum'
 
+                    # "JRCFIB2022M" likewise requires microns
+                    if target == 'JRCFIB2022M':
+                        target = 'JRCFIB2022Mum'
+
+                    if source == 'JRCFIB2022M':
+                        source = 'JRCFIB2022Mum'
+
                     # "MANC" likewise requires microns
                     if target == 'MANC':
                         target = 'MANCum'
@@ -398,6 +405,14 @@ def register_transforms():
                                            source='FANC',
                                            target='FANCnm',
                                            transform_type='bridging')
+
+    # Add transform between JRCFIB2022M (nm) and JRCFIB2022Mum (um)
+    tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCFIB2022Mum',
+                                           target='JRCFIB2022M',
+                                           transform_type='bridging',
+                                           weight=.1)
 
     # Add a male CNS <-> FAFB transform
     fp = os.path.join(data_filepath, 'maleCNS_brain_FAFB_landmarks_nm.csv')
