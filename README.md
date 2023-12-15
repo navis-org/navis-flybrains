@@ -25,6 +25,11 @@ You can install `flybrains` from PyPI:
 pip3 install flybrains
 ```
 
+To install the dev version from Github:
+```bash
+pip3 install git+https://github.com/navis-org/navis-flybrains.git
+```
+
 ### External dependencies
 In order to use the Jefferis lab or VFB transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
@@ -168,27 +173,49 @@ Most templates come with a mesh e.g. for plotting via navis:
 - `0.1.0` (03/01/21): first working version
 
 ## Acknowledgements
-Critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
-_et al._ for inspiration for the implementation and meta data on e.g. template
-brains.
+`navis-flybrains` is critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
+_et al._ for both inspiration regarding the implementation as well as template brain meta data.
 
-As reference for the Jefferis lab registrations, please use:
+## Citing
+If you use `navis-flybrains` in for your research please make sure to cite us
+(see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and _importantly_ the
+people who generated the meshes & registrations distributed with `flybrains`!
+
+As reference for the Jefferis lab registrations please use:
 
 ```
 The natverse, a versatile toolbox for combining and analysing neuroanatomical data.
 A.S. Bates, J.D. Manton, S.R. Jagannathan, M. Costa, P. Schlegel, T. Rohlfing, G.S. Jefferis
-eLife. 9 (2020) e53350. doi:10.7554/eLife.53350.
+eLife (2020); doi: https://doi:10.7554/eLife.53350
 ```
 
-As (partial) reference for the Saalfeld lab registrations, please see:
+As (partial) reference for the Saalfeld lab registrations please see:
 
 ```
 An unbiased template of the Drosophila brain and ventral nerve cord.
 John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell, Oz Malkesman, Kei Ito, Stephan Saalfeld
-PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
+PLOS One (2018); doi: https://doi.org/10.1371/journal.pone.0236495
 ```
 
-For references of individual template brains, please see their docstrings:
+As reference for the VFB CMTK transforms please use:
+
+```
+A Systematic Nomenclature for the Drosophila Ventral Nerve Cord.
+Robert Court, Shigehiro Namiki, J. Douglas Armstrong, Jana Börner, Gwyneth Card, Marta Costa, Michael Dickinson, Carsten Duch, Wyatt Korff, Richard Mann, David Merritt, Rod K. Murphey, Andrew M. Seeds, Troy Shirangi, Julie H. Simpson, James W. Truman, John C. Tuthill, Darren W. Williams, David Shepherd
+Neuron (2020); doi: https://doi.org/10.1016/j.neuron.2020.08.005.
+```
+
+As reference for the FANC<->JRCVNC2018F transform by Jasper Phelps please use:
+
+```
+Reconstruction of motor control circuits in adult Drosophila using automated transmission electron microscopy.
+Phelps JS, Hildebrand DGC, Graham BJ, Kuan AT, Thomas LA, Nguyen TM, Buhmann J, Azevedo AW, Sustar A, Agrawal S, Liu M, Shanny BL, Funke J, Tuthill JC, Lee WA
+Cell (2021); doi: 10.1016/j.cell.2020.12.013
+```
+
+For references on individual template brains, please see their docstrings:
 ```Python
 >>> help(flybrains.IBN)
 ```
+
+When in doubt, feel free to open an [issue](https://github.com/navis-org/navis-flybrains/issues/new) to ask for advice.
