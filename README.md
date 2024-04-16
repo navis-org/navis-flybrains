@@ -149,8 +149,12 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.2.10` (16/04/24):
+  - added download for `JRCFIB2022M` (maleCNS) <-> `JRC2018M` transform (via Saalfeld lab)
+  - added mirror transform for `JRCFIB2022M` (maleCNS)
+  - dropped VFB VNC transforms
 - `0.2.9` (08/08/23): added MANC template brain and transform to/from `JRCVNC2018M`
-- `0.2.8` (02/04/23): added transform between `JRCFIB2022M` and `FLYWIRE`
+- `0.2.8` (02/04/23): added transform between `JRCFIB2022M` (maleCNS) and `FLYWIRE`
 - `0.2.7` (05/01/23): fixed `JRC2018M` <-> `JRC2018U` transform download
 - ~~`0.2.6` (06/09/22): added `JRC2018M` <-> `JRC2018U` transform~~ (YANKED)
 - `0.2.5` (22/05/22): added `JRCFIB2022M` mesh and transform to/from `FAFB14`
