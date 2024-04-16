@@ -276,7 +276,8 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         "21749535?private_link=ca603876efb33fdf3028",
         "14371574?private_link=b7120207f38b35f1e372",
         "14448911?private_link=2afde323b12274d3243b",
-        "14368358?private_link=b29e25b6e47ccf9187a8"
+        "14368358?private_link=b29e25b6e47ccf9187a8",
+        "42106125?private_link=bfbfc18d24fe959b78c0",
             )
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
 
@@ -287,7 +288,8 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         'JRC2018F_JRCFIB2018F.h5',
         'JRC2018U_JRC2018F.h5',
         'JRC2018U_JRC2018M.h5',
-        'JRC2018F_JFRC2010.h5'
+        'JRC2018F_JFRC2010.h5',
+        'JRCFIB2022M_JRC2018M.h5'  # originally: MaleCNS_JRC2018M_d2.h5
       )
 
     print(f'Downloading JRC (Saalfeld lab) brain transforms into {data_home}')
