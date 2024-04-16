@@ -446,6 +446,22 @@ def register_transforms():
                                            target='JRCFIB2022M',
                                            transform_type='bridging')
 
+    # Add mirror transform for the maleCNS
+    fp = os.path.join(data_filepath, 'maleCNS_mirror_landmarks_nm.csv')
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values,
+                                 lm[['x_mirr', 'y_mirr', 'z_mirr']].values)
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCFIB2022M',
+                                           target=None,
+                                           transform_type='mirror')
+    tr = transforms.TPStransform(lm[['x_flip', 'y_flip', 'z_flip']].values / 8,
+                                 lm[['x_mirr', 'y_mirr', 'z_mirr']].values / 8)
+    transforms.registry.register_transform(transform=tr,
+                                           source='JRCFIB2022Mraw',
+                                           target=None,
+                                           transform_type='mirror')
+
     # Add FANC mirror transform based on subsampling a FANC -> MANCsym transform
     fp = os.path.join(data_filepath, 'FANC_mirror_landmarks.csv')
     lm = pd.read_csv(fp)
