@@ -149,6 +149,7 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.2.11` (23/07/24): fixed bounding box for `JRCFIB2022Mraw`
 - `0.2.10` (16/04/24):
   - added download for `JRCFIB2022M` (maleCNS) <-> `JRC2018M` transform (via Saalfeld lab)
   - added mirror transform for `JRCFIB2022M` (maleCNS)
