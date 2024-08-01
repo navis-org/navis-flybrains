@@ -287,31 +287,101 @@ def search_register_path(path, verbose=False):
                     warnings.warn(f"Error registering {hit} as transform: {str(e)}")
 
 
-def register_transforms():
-    """Register transforms with navis."""
-    # These are the paths we need to scan
-    data_home = pathlib.Path(get_data_home()).expanduser()
-    default_path = pathlib.Path("~/flybrain-data").expanduser()
-    nat_paths = get_nat_regdirs()
+def register_aliases():
+    """Register alias transforms (defined at the top of this file)."""
+    for a1, a2 in ALIASES:
+        tr = transforms.AliasTransform()
+        transforms.registry.register_transform(
+            transform=tr, source=a1, target=a2, transform_type="bridging", weight=0
+        )
 
-    # Combine while retaining order
-    search_paths = [data_home]
-    if default_path not in search_paths:
-        search_paths.append(default_path)
-    search_paths += nat_paths
 
-    # Go over all paths and add transforms
-    for path in search_paths:
-        # Do not (re-)move this line! Otherwise is_dir() might fail
-        path = pathlib.Path(path).expanduser()
+def register_mirror_transforms():
+    """Register mirror transforms."""
+    # 1. MaleCNS
+    fp = os.path.join(data_filepath, "maleCNS_mirror_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="JRCFIB2022M", target=None, transform_type="mirror"
+    )
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values / 8,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values / 8,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="JRCFIB2022Mraw", target=None, transform_type="mirror"
+    )
+    # 2. FANC (based on subsampling a FANC -> MANCsym transform)
+    fp = os.path.join(data_filepath, "FANC_mirror_landmarks.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="FANC", target=None, transform_type="mirror"
+    )
+    # 3. FlyWire
+    fp = os.path.join(data_filepath, "FLYWIRE_mirror_landmarks.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="FLYWIRE", target=None, transform_type="mirror"
+    )
+    # 4.1 FAFB14 (created by xforming landmarks for FlyWire mirror into FAFB14 space)
+    fp = os.path.join(data_filepath, "FAFB14_mirror_landmarks.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="FAFB14", target=None, transform_type="mirror"
+    )
+    # 4.2 "FAFB" (synonym to "FAFB14" since this is its alias on the chart)
+    transforms.registry.register_transform(
+        transform=tr, source="FAFB", target=None, transform_type="mirror"
+    )
 
-        # Skip if path does not exist
-        if not path.is_dir():
-            continue
 
-        search_register_path(path)
-
-    #### Manually add some transforms (e.g. from landmark files)
+def register_unit_transforms():
+    """Add transform between raw (voxel) and nanometer space."""
+    # Hemibrain, MANC and MaleCNS are in 8x8x8 nm voxels
+    for template in ("JRCFIB2022M", "MANC", "JRCFIB2018F"):
+        tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
+        transforms.registry.register_transform(
+            transform=tr,
+            source=f"{template}raw",
+            target=template,
+            transform_type="bridging",
+            weight=0.1,
+        )
+        # FAFB and FLYWIRE are in 4x4x40 nm voxels
+        for template in ("FLYWIRE", "FAFB14"):
+            tr = transforms.AffineTransform(np.diag([4, 4, 40, 1]))
+            transforms.registry.register_transform(
+                transform=tr,
+                source=f"{template}raw",
+                target=template,
+                transform_type="bridging",
+                weight=0.1,
+            )
+    # FANC is in 4.3x4.3x45 nm voxels
+    tr = transforms.AffineTransform(np.diag([4.3, 4.3, 45, 1]))
+    transforms.registry.register_transform(
+        transform=tr,
+        source="FANCraw",
+        target="FANC",
+        transform_type="bridging",
+        weight=0.1,
+    )
 
     # Bogovic et al seem to have a difference in Z calibration
     tr = transforms.AffineTransform(np.diag([1, 1, 1 / 0.6220880, 1]))
@@ -323,6 +393,20 @@ def register_transforms():
         weight=0.1,
     )
 
+    #### Add transforms between nanometer and microns space for:
+    for template in ("FAFB14", "FLYWIRE", "MANC", "JRCFIB2018F", "FANC", "JRCFIB2022M"):
+        tr = transforms.AffineTransform(np.diag([1e-3, 1e-3, 1e-3, 1]))
+        transforms.registry.register_transform(
+            transform=tr,
+            source=f"{template}um",
+            target=template,
+            transform_type="bridging",
+            weight=0.1,
+        )
+
+
+def register_manual_transforms():
+    """Manually add some transforms (e.g. from landmark files)."""
     # Add a simple symmetrization transform for FAFB14
     fp = os.path.join(data_filepath, "FAFB14_symmetrize_landmarks_nm.csv")
     lm = pd.read_csv(fp)
@@ -331,16 +415,6 @@ def register_transforms():
     )
     transforms.registry.register_transform(
         transform=tr, source="FAFB14", target="FAFB14sym", transform_type="bridging"
-    )
-
-    # Add transform between JRCFIB2022M (nm) and JRCFIB2022Mum (um)
-    tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
-    transforms.registry.register_transform(
-        transform=tr,
-        source="JRCFIB2022Mum",
-        target="JRCFIB2022M",
-        transform_type="bridging",
-        weight=0.1,
     )
 
     # Add a male CNS <-> FAFB transform
@@ -378,6 +452,9 @@ def register_transforms():
         transform=tr, source="MANC", target="FANC", transform_type="bridging"
     )
 
+
+def register_fanc_jrcvnc2018f():
+    """Register FANC -> JRCVNC2018F and reverse transforms."""
     # Some general notes for the Elastix transform between FANC and JRCVNC2018F:
     # 1. Elastix transforms are not invertible - hence there are two separate
     #    transforms for forward and reverse directions
@@ -442,104 +519,43 @@ def register_transforms():
         transform=tr, source="FANCum_fixed", target="FANC", transform_type="bridging"
     )
 
-    #### Add mirror transform for:
-    # 1. MaleCNS
-    fp = os.path.join(data_filepath, "maleCNS_mirror_landmarks_nm.csv")
-    lm = pd.read_csv(fp)
-    tr = transforms.TPStransform(
-        lm[["x_flip", "y_flip", "z_flip"]].values,
-        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
-    )
-    transforms.registry.register_transform(
-        transform=tr, source="JRCFIB2022M", target=None, transform_type="mirror"
-    )
-    tr = transforms.TPStransform(
-        lm[["x_flip", "y_flip", "z_flip"]].values / 8,
-        lm[["x_mirr", "y_mirr", "z_mirr"]].values / 8,
-    )
-    transforms.registry.register_transform(
-        transform=tr, source="JRCFIB2022Mraw", target=None, transform_type="mirror"
-    )
-    # 2. FANC (based on subsampling a FANC -> MANCsym transform)
-    fp = os.path.join(data_filepath, "FANC_mirror_landmarks.csv")
-    lm = pd.read_csv(fp)
-    tr = transforms.TPStransform(
-        lm[["x_flip", "y_flip", "z_flip"]].values,
-        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
-    )
-    transforms.registry.register_transform(
-        transform=tr, source="FANC", target=None, transform_type="mirror"
-    )
-    # 3. FlyWire
-    fp = os.path.join(data_filepath, "FLYWIRE_mirror_landmarks.csv")
-    lm = pd.read_csv(fp)
-    tr = transforms.TPStransform(
-        lm[["x_flip", "y_flip", "z_flip"]].values,
-        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
-    )
-    transforms.registry.register_transform(
-        transform=tr, source="FLYWIRE", target=None, transform_type="mirror"
-    )
-    # 4.1 FAFB14 (created by xforming landmarks for FlyWire mirror into FAFB14 space)
-    fp = os.path.join(data_filepath, "FAFB14_mirror_landmarks.csv")
-    lm = pd.read_csv(fp)
-    tr = transforms.TPStransform(
-        lm[["x_flip", "y_flip", "z_flip"]].values,
-        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
-    )
-    transforms.registry.register_transform(
-        transform=tr, source="FAFB14", target=None, transform_type="mirror"
-    )
-    # 4.2 "FAFB" (synonym to "FAFB14" since this is its alias on the chart)
-    transforms.registry.register_transform(
-        transform=tr, source="FAFB", target=None, transform_type="mirror"
-    )
 
-    #### Add transform between raw (voxel) and nanometer space for:
-    # Hemibrain, MANC and MaleCNS are in 8x8x8 nm voxels
-    for template in ("JRCFIB2022M", "MANC", "JRCFIB2018F"):
-        tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
-        transforms.registry.register_transform(
-            transform=tr,
-            source=f"{template}raw",
-            target=template,
-            transform_type="bridging",
-            weight=0.1,
-        )
-    # FAFB and FLYWIRE are in 4x4x40 nm voxels
-        for template in ("FLYWIRE", "FAFB14"):
-            tr = transforms.AffineTransform(np.diag([4, 4, 40, 1]))
-            transforms.registry.register_transform(
-                transform=tr,
-                source=f"{template}raw",
-                target=template,
-                transform_type="bridging",
-                weight=0.1,
-            )
-    # FANC is in 4.3x4.3x45 nm voxels
-    tr = transforms.AffineTransform(np.diag([4.3, 4.3, 45, 1]))
-    transforms.registry.register_transform(
-        transform=tr,
-        source="FANCraw",
-        target="FANC",
-        transform_type="bridging",
-        weight=0.1,
-    )
+def register_transforms():
+    """Register transforms with navis."""
+    # These are the paths we need to scan
+    data_home = pathlib.Path(get_data_home()).expanduser()
+    default_path = pathlib.Path("~/flybrain-data").expanduser()
+    nat_paths = get_nat_regdirs()
 
-    #### Add transforms between nanometer and microns space for:
-    for template in ("FAFB14", "FLYWIRE", "MANC", "JRCFIB2018F", "FANC", "JRCFIB2022M"):
-        tr = transforms.AffineTransform(np.diag([1e-3, 1e-3, 1e-3, 1]))
-        transforms.registry.register_transform(
-            transform=tr,
-            source=f"{template}um",
-            target=template,
-            transform_type="bridging",
-            weight=0.1,
-        )
+    # Combine while retaining order
+    search_paths = [data_home]
+    if default_path not in search_paths:
+        search_paths.append(default_path)
+    search_paths += nat_paths
 
-    ##### Add alias transforms (defined at the top of this file)
-    for a1, a2 in ALIASES:
-        tr = transforms.AliasTransform()
-        transforms.registry.register_transform(
-            transform=tr, source=a1, target=a2, transform_type="bridging", weight=0
-        )
+    # Go over all paths and add transforms
+    for path in search_paths:
+        # Do not (re-)move this line! Otherwise is_dir() might fail
+        path = pathlib.Path(path).expanduser()
+
+        # Skip if path does not exist
+        if not path.is_dir():
+            continue
+
+        search_register_path(path)
+
+    # Register some manual transforms
+    register_manual_transforms()
+
+    # Register FANC -> JRCVNC2018F transform
+    # (we put this in a separate function as it is a bit more involved)
+    register_fanc_jrcvnc2018f()
+
+    # Add transforms between raw and um space
+    register_unit_transforms()
+
+    # Register (additional) mirror transforms
+    register_mirror_transforms()
+
+    # Register aliases
+    register_aliases()
