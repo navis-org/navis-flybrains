@@ -363,16 +363,16 @@ def register_unit_transforms():
             transform_type="bridging",
             weight=0.1,
         )
-        # FAFB and FLYWIRE are in 4x4x40 nm voxels
-        for template in ("FLYWIRE", "FAFB14"):
-            tr = transforms.AffineTransform(np.diag([4, 4, 40, 1]))
-            transforms.registry.register_transform(
-                transform=tr,
-                source=f"{template}raw",
-                target=template,
-                transform_type="bridging",
-                weight=0.1,
-            )
+    # FAFB and FLYWIRE are in 4x4x40 nm voxels
+    for template in ("FLYWIRE", "FAFB14"):
+        tr = transforms.AffineTransform(np.diag([4, 4, 40, 1]))
+        transforms.registry.register_transform(
+            transform=tr,
+            source=f"{template}raw",
+            target=template,
+            transform_type="bridging",
+            weight=0.1,
+        )
     # FANC is in 4.3x4.3x45 nm voxels
     tr = transforms.AffineTransform(np.diag([4.3, 4.3, 45, 1]))
     transforms.registry.register_transform(
@@ -395,7 +395,7 @@ def register_unit_transforms():
 
     #### Add transforms between nanometer and microns space for:
     for template in ("FAFB14", "FLYWIRE", "MANC", "JRCFIB2018F", "FANC", "JRCFIB2022M"):
-        tr = transforms.AffineTransform(np.diag([1e-3, 1e-3, 1e-3, 1]))
+        tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
         transforms.registry.register_transform(
             transform=tr,
             source=f"{template}um",
