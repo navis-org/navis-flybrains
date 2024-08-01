@@ -109,12 +109,12 @@ def download_jefferislab_transforms(repos=("BridgingRegistrations",
       - VNCIS1 <-> V2
       - JFRC2013DS <-> JFRC2013
       - JFRC2 <-> IS2
+      - JRC2018F <-> FLYWIRE
 
     MirrorRegistrations (~40Mb):
       - ATAG
       - FCWB
       - IS2
-      - JFRC2
       - JFRC2
       - JFRC
       - T1
