@@ -335,28 +335,32 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrain',
                                            target='JRCFIB2018F',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
     tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrainraw',
                                            target='JRCFIB2018Fraw',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Add alias transform between JRCFIB2018F and hemibrain (they are synonymous)
     tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='hemibrainum',
                                            target='JRCFIB2018Fum',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Add alias transform between FAFB and FAFB14 (they are synonymous)
     tr = transforms.AliasTransform()
     transforms.registry.register_transform(transform=tr,
                                            source='FAFB',
                                            target='FAFB14',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Bogovic et al seem to have a difference in Z calibration
     tr = transforms.AffineTransform(np.diag([1, 1, 1/0.6220880, 1]))
@@ -404,7 +408,8 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='FANC',
                                            target='FANCnm',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Add transform between JRCFIB2022M (nm) and JRCFIB2022Mum (um)
     tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
@@ -427,7 +432,8 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='JRCFIB2022M',
                                            target='JRCFIB2022Mnm',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
     # Add transform between voxel and nm space
     tr = transforms.AffineTransform(np.diag([8, 8, 8, 1]))
     transforms.registry.register_transform(transform=tr,
@@ -500,7 +506,8 @@ def register_transforms():
     transforms.registry.register_transform(transform=tr,
                                            source='MANC',
                                            target='MANCnm',
-                                           transform_type='bridging')
+                                           transform_type='bridging',
+                                           weight=0)
 
     # Add MANC to MANCum transform
     tr = transforms.AffineTransform(np.diag([1000, 1000, 1000, 1]))
