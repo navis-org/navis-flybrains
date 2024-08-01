@@ -416,6 +416,15 @@ def register_manual_transforms():
     transforms.registry.register_transform(
         transform=tr, source="FAFB14", target="FAFB14sym", transform_type="bridging"
     )
+    # Add a simple symmetrization transform for FLYWIRE
+    fp = os.path.join(data_filepath, "FLYWIRE_symmetrize_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x", "y", "z"]].values, lm[["x_sym", "y_sym", "z_sym"]].values
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="FLYWIRE", target="FLYWIREsym", transform_type="bridging"
+    )
 
     # Add a male CNS <-> FAFB transform
     fp = os.path.join(data_filepath, "maleCNS_brain_FAFB_landmarks_nm.csv")
