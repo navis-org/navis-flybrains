@@ -724,20 +724,59 @@ class _JRCFIB2022M(FlyTemplateBrain):
     and microns with 8x8x8nm isotropic voxels, respectively.
 
     """
+    @property
+    def mesh(self):
+        """On-demand loading of surface mesh."""
+        if not hasattr(self, '_mesh'):
+            # Load the raw mesh (voxels)
+            fp1 = os.path.join(mesh_filepath, 'JRCFIB2022M_brain.ply')
+            fp2 = os.path.join(mesh_filepath, 'JRCFIB2022M_vnc.ply')
+            self._mesh = tm.util.concatenate(
+                tm.load_mesh(fp1), tm.load_mesh(fp2)
+                )
+        return self._mesh
+
+    @property
+    def mesh_brain(self):
+        """On-demand loading of brain surface mesh."""
+        if not hasattr(self, '_mesh_brain'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, 'JRCFIB2022M_brain.ply')
+            self._mesh_brain = tm.load_mesh(fp)
+        return self._mesh_brain
+
+    @property
+    def mesh_vnc(self):
+        """On-demand loading of VNC surface mesh."""
+        if not hasattr(self, '_mesh_vnc'):
+            # Load the raw mesh (voxels)
+            fp = os.path.join(mesh_filepath, 'JRCFIB2022M_vnc.ply')
+            self._mesh_vnc = tm.load_mesh(fp)
+        return self._mesh_vnc
 
 JRCFIB2022M = _JRCFIB2022M(**template_meta['JRCFIB2022M'])
 
 class _JRCFIB2022Mraw(_JRCFIB2022M):
     @property
     def mesh(self):
-        """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
-            # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'JRCFIB2022M.ply')
-            self._mesh = tm.load_mesh(fp)
-            # Convert nanometers to voxels
-            self._mesh.vertices /= 8
-        return self._mesh
+        mesh = super().mesh.copy()
+        # Convert nanometers to voxels
+        mesh.vertices /= 8
+        return mesh
+
+    @property
+    def mesh_brain(self):
+        mesh = super().mesh_brain.copy()
+        # Convert nanometers to voxels
+        mesh.vertices /= 8
+        return mesh
+
+    @property
+    def mesh_vnc(self):
+        mesh = super().mesh_vnc.copy()
+        # Convert nanometers to voxels
+        mesh.vertices /= 8
+        return mesh
 
 JRCFIB2022Mraw = _JRCFIB2022Mraw(**template_meta['JRCFIB2022Mraw'])
 
