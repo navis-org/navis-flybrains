@@ -40,6 +40,8 @@ ALIASES = [
     ("hemibrainraw", "JRCFIB2018Fraw"),
     ("hemibrainum", "JRCFIB2018Fum"),
     ("FAFB", "FAFB14"),
+    ("FAFBum", "FAFB14um"),
+    ("FAFBnm", "FAFB14nm"),
     ("FANC", "FANCnm"),
     ("JRCFIB2022M", "JRCFIB2022Mnm"),
     ("MANC", "MANCnm"),
