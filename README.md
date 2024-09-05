@@ -149,6 +149,15 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.3.0` (01/08/24):
+  - **potentially breaking** as it may change transform paths:
+    - weights for `AliasTransforms` are now set to 0 (i.e. no cost)
+    - weights for simple `AffineTransforms` are set to 0.1
+  - improved the mirror transforms for `FAFB14` and `FLYWIRE` based on a new `JRC2018F-FLYWIRE` CMTK transform (S. Cachero, Jefferis lab)
+  - added a symmetrizing transform for `FLYWIRE`
+  - added VNC mesh to `JRCFIB2022M`; it now has `.mesh`, `.mesh_brain`, `.mesh_vnc`
+  - fixed stray vertex in `FLYWIRE.mesh_whole_brain`
+  - some under-the-hood refactoring
 - `0.2.11` (23/07/24): fixed bounding box for `JRCFIB2022Mraw`
 - `0.2.10` (16/04/24):
   - added download for `JRCFIB2022M` (maleCNS) <-> `JRC2018M` transform (via Saalfeld lab)
