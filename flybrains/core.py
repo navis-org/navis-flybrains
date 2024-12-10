@@ -138,7 +138,7 @@ def report():
     """)
 
     nat_paths = get_nat_regdirs(verbose=False)
-    rep += dedent(f"""
+    rep += dedent("""
     nat regdirs
     -----------
     """)
@@ -269,6 +269,30 @@ def search_register_path(path, verbose=False):
                             source += "um"
                         if target == template:
                             target += "um"
+
+                    if ext == '.list':
+                        # Some CMTK transforms may require an additional affine transform either before
+                        # or after the main transform. By convention, these are placed as separate
+                        # CMTK transforms in a subfolder called either `post_registration` or `pre_registration`.
+                        # See also https://github.com/jefferislab/BridgingRegistrations/pull/10
+                        if (hit / "post_registration").exists():
+                            # Define intermediate space
+                            transforms.registry.register_transform(
+                                transform=tr(hit / "post_registration"),
+                                source=f"{source}-{target}(post)",
+                                target=target,
+                                transform_type=transform_type,
+                            )
+                            target = f"{source}-{target}(post)"
+                        if (hit / "pre_registration").exists():
+                            # Define intermediate space
+                            transforms.registry.register_transform(
+                                transform=tr(hit / "pre_registration"),
+                                source=source,
+                                target=f"{source}-{target}(pre)",
+                                transform_type=transform_type,
+                            )
+                            source = f"{source}-{target}(pre)"
 
                     # Initialize the transform
                     transform = tr(hit)
