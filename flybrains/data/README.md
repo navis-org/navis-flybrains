@@ -59,12 +59,24 @@ male adult nerve cord (MANC) and female adult nerve cord (FANC) VNC data sets.
 These landmarks were manually placed at cross-identifiable locations in both
 datasets.
 
-## `maleCNS_brain_FAFB_landmarks_nm.csv`
-This file contains landmarks to transform between the brain portion of the
-Janelia full male CNS and the FAFB datasets.
+## `[FLYWIRE/FAFB14]_maleCNS_landmarks.csv`
+These files contain landmarks to transform between the brains portion of the
+Janelia full male CNS and the FLYWIRE/FAFB14 datasets.
 
-These landmarks were manually placed using the Big Warp on the images created
-from synapse clouds.
+These landmarks were generated using Elastix to create an alignment between
+the synapse clouds of the Janelia and FLYWIRE datasets. The resulting transform
+was then used to generate a set of ~470 landmarks on an evenly spaced grid.
+These landmarks were then manually adjusted using ImageJ's BigWarp plugin.
+
+To generate a direct transform from FAFB14 to the male CNS, the FLYWIRE
+coordinates were transforms to FAFB14 space using the re-alignment deformation field.
+
+> [!IMPORTANT]
+> Prior to `flybrains` version `0.4.0` the transforms between FLYWIRE/FAFB14 and
+> the male CNS were based on a set of ~70 manually placed landmarks
+> (`maleCNS_brain_FAFB_landmarks_nm.csv`). Those transforms had significant issues
+> in some parts of the brain such as the area around the foramen and slight offsets
+> elsewhere.
 
 # Transforms
 

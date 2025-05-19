@@ -453,11 +453,11 @@ def register_manual_transforms():
     )
 
     # Add a male CNS <-> FAFB transform
-    fp = os.path.join(data_filepath, "maleCNS_brain_FAFB_landmarks_nm.csv")
+    fp = os.path.join(data_filepath, "FAFB14_maleCNS_landmarks.csv")
     lm = pd.read_csv(fp)
     tr = transforms.TPStransform(
-        lm[["fafb_x", "fafb_y", "fafb_z"]].values,
-        lm[["cns_x", "cns_y", "cns_z"]].values,
+        lm[["fafb14_x", "fafb14_y", "fafb14_z"]].values,
+        lm[["mcns_x", "mcns_y", "mcns_z"]].values,
     )
     transforms.registry.register_transform(
         transform=tr, source="FAFB14", target="JRCFIB2022M", transform_type="bridging"
@@ -465,11 +465,11 @@ def register_manual_transforms():
 
     # Add male CNS <-> FlyWire transform. This was generated from the
     # CNS <-> FAFB transform by simply xforming the FAFB coordinates
-    fp = os.path.join(data_filepath, "maleCNS_brain_FLYWIRE_landmarks_nm.csv")
+    fp = os.path.join(data_filepath, "FLYWIRE_maleCNS_landmarks.csv")
     lm = pd.read_csv(fp)
     tr = transforms.TPStransform(
         lm[["flywire_x", "flywire_y", "flywire_z"]].values,
-        lm[["cns_x", "cns_y", "cns_z"]].values,
+        lm[["mcns_x", "mcns_y", "mcns_z"]].values,
     )
     transforms.registry.register_transform(
         transform=tr, source="FLYWIRE", target="JRCFIB2022M", transform_type="bridging"
