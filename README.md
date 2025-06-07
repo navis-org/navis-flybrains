@@ -149,7 +149,7 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
-- `0.4.0` (01/08/24):
+- `0.4.0` (19/05/25):
   - improved the `FLYWIRE/FAFB14` <-> `JRCFIB2022M` (maleCNS) transform
   - added support for two-step CMTK transforms
 - `0.3.0` (01/08/24):
