@@ -270,7 +270,7 @@ def search_register_path(path, verbose=False):
                         if target == template:
                             target += "um"
 
-                    if ext == '.list':
+                    if ext == ".list":
                         # Some CMTK transforms may require an additional affine transform either before
                         # or after the main transform. By convention, these are placed as separate
                         # CMTK transforms in a subfolder called either `post_registration` or `pre_registration`.
@@ -473,6 +473,20 @@ def register_manual_transforms():
     )
     transforms.registry.register_transform(
         transform=tr, source="FLYWIRE", target="JRCFIB2022M", transform_type="bridging"
+    )
+
+    # Add transform for male CNS where the VNC is tilted down 90 degrees (for visualization)
+    fp = os.path.join(data_filepath, "JRCFIB2022M_plotting_landmarks.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["mcns_plot_x", "mcns_plot_y", "mcns_plot_z"]].values,
+        lm[["mcns_x", "mcns_y", "mcns_z"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr,
+        source="JRCFIB2022Mtilt",
+        target="JRCFIB2022M",
+        transform_type="bridging",
     )
 
     # Add a FANC-MANC transform. These landmarks are created from the

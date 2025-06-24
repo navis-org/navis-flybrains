@@ -25,35 +25,55 @@ from navis import transforms
 from navis.transforms.templates import TemplateBrain
 
 
-__all__ = ['FCWB', 'IBN', 'IBNWB', 'IS2', 'JFRC2', 'T1', 'Dmel', 'DsecI',
-           'Dsim', 'Dvir',
-           'JFRC2013', 'JFRC2013DS',
-           'JRC2018F', 'JRC2018U', 'JRC2018M',
-           'JRCFIB2018F', 'JRCFIB2018Fraw', 'JRCFIB2018Fum',
-           'JRCFIB2022M', 'JRCFIB2022Mraw',
-           'JRCVNC2018F',
-           'JRCVNC2018M',
-           'JRCVNC2018U',
-           'VNCIS1',
-           'FAFB14', 'FAFB',
-           'FLYWIRE',
-           'FANC',
-           "MANC", "MANCraw",
-           'DmelL1CNS_Seymour',
-           'COURT2017VNS', 'COURT2018VNS',
-           'register_templates']
+__all__ = [
+    "FCWB",
+    "IBN",
+    "IBNWB",
+    "IS2",
+    "JFRC2",
+    "T1",
+    "Dmel",
+    "DsecI",
+    "Dsim",
+    "Dvir",
+    "JFRC2013",
+    "JFRC2013DS",
+    "JRC2018F",
+    "JRC2018U",
+    "JRC2018M",
+    "JRCFIB2018F",
+    "JRCFIB2018Fraw",
+    "JRCFIB2018Fum",
+    "JRCFIB2022M",
+    "JRCFIB2022Mraw",
+    "JRCFIB2022Mtilt",
+    "JRCVNC2018F",
+    "JRCVNC2018M",
+    "JRCVNC2018U",
+    "VNCIS1",
+    "FAFB14",
+    "FAFB",
+    "FLYWIRE",
+    "FANC",
+    "MANC",
+    "MANCraw",
+    "DmelL1CNS_Seymour",
+    "COURT2017VNS",
+    "COURT2018VNS",
+    "register_templates",
+]
 
 # Read in meta data
 fp = os.path.dirname(__file__)
 
-meta_filepath = os.path.join(fp, 'data/template_meta.json')
-mesh_filepath = os.path.join(fp, 'meshes')
+meta_filepath = os.path.join(fp, "data/template_meta.json")
+mesh_filepath = os.path.join(fp, "meshes")
 
-with open(meta_filepath, 'r', encoding='utf-8') as f:
+with open(meta_filepath, "r", encoding="utf-8") as f:
     template_meta = json.load(f)
 
 # Index by short label
-template_meta = {e['label']: e for e in template_meta}
+template_meta = {e["label"]: e for e in template_meta}
 
 
 class FlyTemplateBrain(TemplateBrain):
@@ -72,12 +92,12 @@ class FlyTemplateBrain(TemplateBrain):
         return self.__str__()
 
     def __str__(self):
-        units = getattr(self, 'units', 'units NA')
+        units = getattr(self, "units", "units NA")
 
         if isinstance(units, list):
             units = units[0]
 
-        if getattr(self, 'boundingbox'):
+        if getattr(self, "boundingbox"):
             bbox = f"""\
             Bounding box ({units}):
               x = {self.boundingbox[0]}, y = {self.boundingbox[2]}, z = {self.boundingbox[4]},
@@ -87,16 +107,16 @@ class FlyTemplateBrain(TemplateBrain):
             Bounding box ({units}):
               NA"""
 
-        if getattr(self, 'dims'):
+        if getattr(self, "dims"):
             dims = f"{self.dims[0]} x {self.dims[1]} x {self.dims[2]} voxels"
         else:
             dims = "NA"
 
-        if getattr(self, 'voxdims'):
-            units = getattr(self, 'units', None)
+        if getattr(self, "voxdims"):
+            units = getattr(self, "units", None)
 
             if not units:
-                units = ['dimensionless', 'dimensionless', 'dimensionless']
+                units = ["dimensionless", "dimensionless", "dimensionless"]
             elif not navis.utils.is_iterable(units):
                 units = [units, units, units]
 
@@ -125,25 +145,27 @@ class FlyTemplateBrain(TemplateBrain):
         Description: {description}
         DOI: {doi}"""
 
-        msg = dedent(msg).format(name=getattr(self, 'name', 'NA'),
-                                 label=getattr(self, 'label', 'NA'),
-                                 type=getattr(self, 'type', 'NA'),
-                                 sex=getattr(self, 'sex', 'NA'),
-                                 dims=dims,
-                                 vxsize=dedent(vxsize),
-                                 bbox=dedent(bbox),
-                                 description=getattr(self, 'description', 'NA'),
-                                 doi=getattr(self, 'doi', 'NA'))
+        msg = dedent(msg).format(
+            name=getattr(self, "name", "NA"),
+            label=getattr(self, "label", "NA"),
+            type=getattr(self, "type", "NA"),
+            sex=getattr(self, "sex", "NA"),
+            dims=dims,
+            vxsize=dedent(vxsize),
+            bbox=dedent(bbox),
+            description=getattr(self, "description", "NA"),
+            doi=getattr(self, "doi", "NA"),
+        )
         return msg
 
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
-            fp = os.path.join(mesh_filepath, f'{self.label}.ply')
+        if not hasattr(self, "_mesh"):
+            fp = os.path.join(mesh_filepath, f"{self.label}.ply")
 
             if not os.path.isfile(fp):
-                raise ValueError(f'{self.label} does not appear to have a mesh')
+                raise ValueError(f"{self.label} does not appear to have a mesh")
 
             self._mesh = tm.load_mesh(fp)
 
@@ -175,7 +197,8 @@ class _FCWB(FlyTemplateBrain):
 
     """
 
-FCWB = _FCWB(**template_meta['FCWB'])
+
+FCWB = _FCWB(**template_meta["FCWB"])
 
 
 class _IBN(FlyTemplateBrain):
@@ -221,7 +244,8 @@ class _IBN(FlyTemplateBrain):
 
     """
 
-IBN = _IBN(**template_meta['IBN'])
+
+IBN = _IBN(**template_meta["IBN"])
 
 
 class _IBNWB(FlyTemplateBrain):
@@ -246,7 +270,8 @@ class _IBNWB(FlyTemplateBrain):
 
     """
 
-IBNWB = _IBNWB(**template_meta['IBNWB'])
+
+IBNWB = _IBNWB(**template_meta["IBNWB"])
 
 
 class _IS2(FlyTemplateBrain):
@@ -260,7 +285,8 @@ class _IS2(FlyTemplateBrain):
 
     """
 
-IS2 = _IS2(**template_meta['IS2'])
+
+IS2 = _IS2(**template_meta["IS2"])
 
 
 class _JFRC2(FlyTemplateBrain):
@@ -290,7 +316,8 @@ class _JFRC2(FlyTemplateBrain):
 
     """
 
-JFRC2 = _JFRC2(**template_meta['JFRC2'])
+
+JFRC2 = _JFRC2(**template_meta["JFRC2"])
 
 
 class _T1(FlyTemplateBrain):
@@ -315,7 +342,8 @@ class _T1(FlyTemplateBrain):
 
     """
 
-T1 = _T1(**template_meta['T1'])
+
+T1 = _T1(**template_meta["T1"])
 
 
 class _Dmel(FlyTemplateBrain):
@@ -334,7 +362,8 @@ class _Dmel(FlyTemplateBrain):
 
     """
 
-Dmel = _Dmel(**template_meta['Dmel'])
+
+Dmel = _Dmel(**template_meta["Dmel"])
 
 
 class _DsecI(FlyTemplateBrain):
@@ -352,7 +381,8 @@ class _DsecI(FlyTemplateBrain):
 
     """
 
-DsecI = _DsecI(**template_meta['DsecI'])
+
+DsecI = _DsecI(**template_meta["DsecI"])
 
 
 class _Dsim(FlyTemplateBrain):
@@ -371,7 +401,8 @@ class _Dsim(FlyTemplateBrain):
 
     """
 
-Dsim = _Dsim(**template_meta['Dsim'])
+
+Dsim = _Dsim(**template_meta["Dsim"])
 
 
 class _Dvir(FlyTemplateBrain):
@@ -390,7 +421,8 @@ class _Dvir(FlyTemplateBrain):
 
     """
 
-Dvir = _Dvir(**template_meta['Dvir'])
+
+Dvir = _Dvir(**template_meta["Dvir"])
 
 
 class _JFRC2013(FlyTemplateBrain):
@@ -432,7 +464,8 @@ class _JFRC2013(FlyTemplateBrain):
 
     """
 
-JFRC2013 = _JFRC2013(**template_meta['JFRC2013'])
+
+JFRC2013 = _JFRC2013(**template_meta["JFRC2013"])
 
 
 class _JFRC2013DS(FlyTemplateBrain):
@@ -473,7 +506,8 @@ class _JFRC2013DS(FlyTemplateBrain):
 
     """
 
-JFRC2013DS = _JFRC2013DS(**template_meta['JFRC2013DS'])
+
+JFRC2013DS = _JFRC2013DS(**template_meta["JFRC2013DS"])
 
 
 class _JRC2018F(FlyTemplateBrain):
@@ -513,7 +547,8 @@ class _JRC2018F(FlyTemplateBrain):
 
     """
 
-JRC2018F = _JRC2018F(**template_meta['JRC2018F'])
+
+JRC2018F = _JRC2018F(**template_meta["JRC2018F"])
 
 
 class _JRC2018U(FlyTemplateBrain):
@@ -553,7 +588,8 @@ class _JRC2018U(FlyTemplateBrain):
 
     """
 
-JRC2018U = _JRC2018U(**template_meta['JRC2018U'])
+
+JRC2018U = _JRC2018U(**template_meta["JRC2018U"])
 
 
 class _JRC2018M(FlyTemplateBrain):
@@ -593,7 +629,8 @@ class _JRC2018M(FlyTemplateBrain):
 
     """
 
-JRC2018M = _JRC2018M(**template_meta['JRC2018M'])
+
+JRC2018M = _JRC2018M(**template_meta["JRC2018M"])
 
 
 class _JRCFIB2018F(FlyTemplateBrain):
@@ -637,12 +674,13 @@ class _JRCFIB2018F(FlyTemplateBrain):
     Jain, Viren; Plaza, Stephen M bioRxiv doi:10.1101/2020.01.21.911859.
 
     """
+
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
+        if not hasattr(self, "_mesh"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}raw.ply")
             self._mesh = tm.load_mesh(fp)
             # Convert voxels to nanometers
             self._mesh.vertices *= 8
@@ -651,63 +689,67 @@ class _JRCFIB2018F(FlyTemplateBrain):
     @property
     def bbox(self):
         """On-demand loading of approximate bounding box."""
-        if not hasattr(self, '_mesh_bbox'):
+        if not hasattr(self, "_mesh_bbox"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}raw_bbox.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}raw_bbox.ply")
             self._mesh_bbox = tm.load_mesh(fp)
             # Convert voxels to nanometers
             self._mesh_bbox.vertices *= 8
         return self._mesh_bbox
 
-JRCFIB2018F = _JRCFIB2018F(**template_meta['JRCFIB2018F'])
+
+JRCFIB2018F = _JRCFIB2018F(**template_meta["JRCFIB2018F"])
 
 
 class _JRCFIB2018Fum(_JRCFIB2018F):
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
+        if not hasattr(self, "_mesh"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}raw.ply")
             self._mesh = tm.load_mesh(fp)
             # Convert voxels to microns
-            self._mesh.vertices *= (8 / 1000)
+            self._mesh.vertices *= 8 / 1000
         return self._mesh
 
     @property
     def bbox(self):
         """On-demand loading of approximate bounding box."""
-        if not hasattr(self, '_mesh_bbox'):
+        if not hasattr(self, "_mesh_bbox"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}raw_bbox.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}raw_bbox.ply")
             self._mesh_bbox = tm.load_mesh(fp)
             # Convert voxels to microns
-            self._mesh_bbox.vertices *= (8 / 1000)
+            self._mesh_bbox.vertices *= 8 / 1000
         return self._mesh_bbox
 
-JRCFIB2018Fum = _JRCFIB2018Fum(**template_meta['JRCFIB2018Fum'])
+
+JRCFIB2018Fum = _JRCFIB2018Fum(**template_meta["JRCFIB2018Fum"])
 
 
 class _JRCFIB2018Fraw(_JRCFIB2018F):
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
+        if not hasattr(self, "_mesh"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}.ply")
             self._mesh = tm.load_mesh(fp)
         return self._mesh
 
     @property
     def bbox(self):
         """On-demand loading of approximate bounding box."""
-        if not hasattr(self, '_mesh_bbox'):
+        if not hasattr(self, "_mesh_bbox"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}_bbox.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}_bbox.ply")
             self._mesh_bbox = tm.load_mesh(fp)
         return self._mesh_bbox
 
-JRCFIB2018Fraw = _JRCFIB2018Fraw(**template_meta['JRCFIB2018Fraw'])
+
+JRCFIB2018Fraw = _JRCFIB2018Fraw(**template_meta["JRCFIB2018Fraw"])
+
 
 class _JRCFIB2022M(FlyTemplateBrain):
     """JRCFIB2022M aka "male CNS" dataset.
@@ -724,37 +766,38 @@ class _JRCFIB2022M(FlyTemplateBrain):
     and microns with 8x8x8nm isotropic voxels, respectively.
 
     """
+
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
+        if not hasattr(self, "_mesh"):
             # Load the raw mesh (voxels)
-            fp1 = os.path.join(mesh_filepath, 'JRCFIB2022M_brain.ply')
-            fp2 = os.path.join(mesh_filepath, 'JRCFIB2022M_vnc.ply')
-            self._mesh = tm.util.concatenate(
-                tm.load_mesh(fp1), tm.load_mesh(fp2)
-                )
+            fp1 = os.path.join(mesh_filepath, "JRCFIB2022M_brain.ply")
+            fp2 = os.path.join(mesh_filepath, "JRCFIB2022M_vnc.ply")
+            self._mesh = tm.util.concatenate(tm.load_mesh(fp1), tm.load_mesh(fp2))
         return self._mesh
 
     @property
     def mesh_brain(self):
         """On-demand loading of brain surface mesh."""
-        if not hasattr(self, '_mesh_brain'):
+        if not hasattr(self, "_mesh_brain"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, 'JRCFIB2022M_brain.ply')
+            fp = os.path.join(mesh_filepath, "JRCFIB2022M_brain.ply")
             self._mesh_brain = tm.load_mesh(fp)
         return self._mesh_brain
 
     @property
     def mesh_vnc(self):
         """On-demand loading of VNC surface mesh."""
-        if not hasattr(self, '_mesh_vnc'):
+        if not hasattr(self, "_mesh_vnc"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, 'JRCFIB2022M_vnc.ply')
+            fp = os.path.join(mesh_filepath, "JRCFIB2022M_vnc.ply")
             self._mesh_vnc = tm.load_mesh(fp)
         return self._mesh_vnc
 
-JRCFIB2022M = _JRCFIB2022M(**template_meta['JRCFIB2022M'])
+
+JRCFIB2022M = _JRCFIB2022M(**template_meta["JRCFIB2022M"])
+
 
 class _JRCFIB2022Mraw(_JRCFIB2022M):
     @property
@@ -778,7 +821,57 @@ class _JRCFIB2022Mraw(_JRCFIB2022M):
         mesh.vertices /= 8
         return mesh
 
-JRCFIB2022Mraw = _JRCFIB2022Mraw(**template_meta['JRCFIB2022Mraw'])
+
+JRCFIB2022Mraw = _JRCFIB2022Mraw(**template_meta["JRCFIB2022Mraw"])
+
+
+class _JRCFIB2022Mtilt(_JRCFIB2022M):
+    """JRCFIB2022M aka "male CNS" dataset.
+
+    The JRCFIB2022Mtilt template is a version of the JRCFIB2022M template space
+    in which the VNC has been tilted down by ~90 degrees to allow co-visualization
+    of the brain and the VNC from a frontal perspective.
+
+    The JRCFIB2022M EM volume is a whole male CNS (brain + VNC) currently being
+    generated by FlyEM at HHMI Janelia Research Campus. At this point, only the
+    brain portion of the volume is available.
+
+    The mesh was generated from a point cloud of automaticaly detected synaptic
+    t-bars.
+    """
+
+    @property
+    def mesh(self):
+        if not hasattr(self, "_mesh_xf"):
+            import navis
+
+            self._mesh_xf = navis.xform_brain(
+                super().mesh, source="JRCFIB2022M", target="JRCFIB2022Mtilt"
+            )
+        return self._mesh_xf
+
+    @property
+    def mesh_brain(self):
+        if not hasattr(self, "_mesh_brain_xf"):
+            import navis
+
+            self._mesh_brain_xf = navis.xform_brain(
+                super().mesh_brain, source="JRCFIB2022M", target="JRCFIB2022Mtilt"
+            )
+        return self._mesh_brain_xf
+
+    @property
+    def mesh_vnc(self):
+        if not hasattr(self, "_mesh_vnc_xf"):
+            import navis
+
+            self._mesh_vnc_xf = navis.xform_brain(
+                super().mesh_vnc, source="JRCFIB2022M", target="JRCFIB2022Mtilt"
+            )
+        return self._mesh_vnc_xf
+
+
+JRCFIB2022Mtilt = _JRCFIB2022Mtilt(**template_meta["JRCFIB2022M"])
 
 
 class _JRCVNC2018F(FlyTemplateBrain):
@@ -822,7 +915,8 @@ class _JRCVNC2018F(FlyTemplateBrain):
 
     """
 
-JRCVNC2018F = _JRCVNC2018F(**template_meta['JRCVNC2018F'])
+
+JRCVNC2018F = _JRCVNC2018F(**template_meta["JRCVNC2018F"])
 
 
 class _JRCVNC2018M(FlyTemplateBrain):
@@ -865,7 +959,8 @@ class _JRCVNC2018M(FlyTemplateBrain):
     PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
     """
 
-JRCVNC2018M = _JRCVNC2018M(**template_meta['JRCVNC2018M'])
+
+JRCVNC2018M = _JRCVNC2018M(**template_meta["JRCVNC2018M"])
 
 
 class _JRCVNC2018U(FlyTemplateBrain):
@@ -908,7 +1003,8 @@ class _JRCVNC2018U(FlyTemplateBrain):
     PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
     """
 
-JRCVNC2018U = _JRCVNC2018U(**template_meta['JRCVNC2018U'])
+
+JRCVNC2018U = _JRCVNC2018U(**template_meta["JRCVNC2018U"])
 
 
 class _VNCIS1(FlyTemplateBrain):
@@ -926,7 +1022,8 @@ class _VNCIS1(FlyTemplateBrain):
 
     """
 
-VNCIS1 = _VNCIS1(**template_meta['VNCIS1'])
+
+VNCIS1 = _VNCIS1(**template_meta["VNCIS1"])
 
 
 class _FAFB14(FlyTemplateBrain):
@@ -962,7 +1059,8 @@ class _FAFB14(FlyTemplateBrain):
 
     """
 
-FAFB14 = FAFB = _FAFB14(**template_meta['FAFB14'])
+
+FAFB14 = FAFB = _FAFB14(**template_meta["FAFB14"])
 
 
 class _FLYWIRE(FlyTemplateBrain):
@@ -990,17 +1088,19 @@ class _FLYWIRE(FlyTemplateBrain):
     melanogaster. Cell. 2018 Jul 26;174(3):730-743.e22.
     doi: 10.1016/j.cell.2018.06.019.
     """
+
     @property
     def mesh_whole_brain(self):
         """On-demand loading of whole brain mesh."""
-        if not hasattr(self, '_mesh_whole_brain'):
-            fp = os.path.join(mesh_filepath, f'{self.label}_whole_brain.ply')
+        if not hasattr(self, "_mesh_whole_brain"):
+            fp = os.path.join(mesh_filepath, f"{self.label}_whole_brain.ply")
 
             self._mesh_whole_brain = tm.load_mesh(fp)
 
         return self._mesh_whole_brain
 
-FLYWIRE = _FLYWIRE(**template_meta['FLYWIRE'])
+
+FLYWIRE = _FLYWIRE(**template_meta["FLYWIRE"])
 
 
 class _COURT2017VNS(FlyTemplateBrain):
@@ -1024,7 +1124,8 @@ class _COURT2017VNS(FlyTemplateBrain):
     biorxiv. 2017. doi: https://doi.org/10.1101/122952
     """
 
-COURT2017VNS = _COURT2017VNS(**template_meta['COURT2017VNS'])
+
+COURT2017VNS = _COURT2017VNS(**template_meta["COURT2017VNS"])
 
 
 class _COURT2018VNS(FlyTemplateBrain):
@@ -1048,7 +1149,8 @@ class _COURT2018VNS(FlyTemplateBrain):
     PLOS One; doi: https://doi.org/10.1371/journal.pone.0236495
     """
 
-COURT2018VNS = _COURT2018VNS(**template_meta['COURT2018VNS'])
+
+COURT2018VNS = _COURT2018VNS(**template_meta["COURT2018VNS"])
 
 
 class _FANC(FlyTemplateBrain):
@@ -1070,7 +1172,8 @@ class _FANC(FlyTemplateBrain):
 
     """
 
-FANC = _FANC(**template_meta['FANC'])
+
+FANC = _FANC(**template_meta["FANC"])
 
 
 class _MANC(FlyTemplateBrain):
@@ -1104,24 +1207,25 @@ class _MANC(FlyTemplateBrain):
     bioRxiv 2023.06.05.543757; doi: https://doi.org/10.1101/2023.06.05.543757
 
     """
+
     @property
     def mesh(self):
         """On-demand loading of surface mesh."""
-        if not hasattr(self, '_mesh'):
+        if not hasattr(self, "_mesh"):
             # Load the raw mesh (voxels)
-            fp = os.path.join(mesh_filepath, f'{self.label}raw.ply')
+            fp = os.path.join(mesh_filepath, f"{self.label}raw.ply")
             self._mesh = tm.load_mesh(fp)
             # Convert voxels to nanometers
-            if self.units[0] == 'nm':
+            if self.units[0] == "nm":
                 self._mesh.vertices *= 8
         return self._mesh
 
 
 # MANC in nanometers
-MANC = _MANC(**template_meta['MANC'])
+MANC = _MANC(**template_meta["MANC"])
 MANC.boundingbox = [b * 8 for b in MANC.boundingbox]
 MANC.dims = [b * 8 for b in MANC.dims]
-MANC.units = ['nm', 'nm', 'nm']
+MANC.units = ["nm", "nm", "nm"]
 
 
 class _MANCraw(FlyTemplateBrain):
@@ -1129,8 +1233,8 @@ class _MANCraw(FlyTemplateBrain):
 
 
 # MANC in raw voxels (original)
-MANCraw = _MANCraw(**template_meta['MANC'])
-MANCraw.label = 'MANCraw'
+MANCraw = _MANCraw(**template_meta["MANC"])
+MANCraw.label = "MANCraw"
 
 
 class _DmelL1CNS_Seymour(FlyTemplateBrain):
@@ -1146,21 +1250,46 @@ class _DmelL1CNS_Seymour(FlyTemplateBrain):
 
     """
 
-DmelL1CNS_Seymour = _DmelL1CNS_Seymour(**template_meta['Dmel-L1-CNS-Seymour'])
+
+DmelL1CNS_Seymour = _DmelL1CNS_Seymour(**template_meta["Dmel-L1-CNS-Seymour"])
 
 
 def register_templates():
     """Register template brains with navis."""
-    templates = [FCWB, IBN, IBNWB, IS2, JFRC2, T1, Dmel, DsecI, Dsim, Dvir,
-                 JFRC2013, JFRC2013DS,
-                 JRC2018F, JRC2018U, JRC2018M,
-                 JRCVNC2018F, JRCVNC2018U, JRCVNC2018M, VNCIS1,
-                 FAFB14, FAFB, FLYWIRE,
-                 JRCFIB2022M,JRCFIB2022Mraw,
-                 JRCFIB2018F, JRCFIB2018Fraw,
-                 FANC, MANC, MANCraw,
-                 DmelL1CNS_Seymour,
-                 COURT2017VNS, COURT2018VNS]
+    templates = [
+        FCWB,
+        IBN,
+        IBNWB,
+        IS2,
+        JFRC2,
+        T1,
+        Dmel,
+        DsecI,
+        Dsim,
+        Dvir,
+        JFRC2013,
+        JFRC2013DS,
+        JRC2018F,
+        JRC2018U,
+        JRC2018M,
+        JRCVNC2018F,
+        JRCVNC2018U,
+        JRCVNC2018M,
+        VNCIS1,
+        FAFB14,
+        FAFB,
+        FLYWIRE,
+        JRCFIB2022M,
+        JRCFIB2022Mraw,
+        JRCFIB2018F,
+        JRCFIB2018Fraw,
+        FANC,
+        MANC,
+        MANCraw,
+        DmelL1CNS_Seymour,
+        COURT2017VNS,
+        COURT2018VNS,
+    ]
 
     for tmp in templates:
         transforms.registry.register_templatebrain(tmp, skip_existing=True)
