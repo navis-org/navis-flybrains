@@ -543,6 +543,7 @@ def register_fanc_jrcvnc2018f():
         source="JRCVNC2018F_reflected",
         target="JRCVNC2018F",
         transform_type="bridging",
+        weight=0.1
     )
 
     # Now the reverse: JRCVNC2018F -> FANC (nm)
