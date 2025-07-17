@@ -519,7 +519,11 @@ def register_fanc_jrcvnc2018f():
     # Preflight for FANCnm (v3) -> JRCVNC2018F
     tr = transforms.FunctionTransform(_FANCnm_JRCVNC2018F_pre)
     transforms.registry.register_transform(
-        transform=tr, source="FANC", target="FANCum_fixed", transform_type="bridging"
+        transform=tr,
+        source="FANC",
+        target="FANCum_fixed",
+        transform_type="bridging",
+        weight=0.1,
     )
 
     # Elastix FANC_fixed -> JRCVNC2018F (reflected) transform
@@ -549,6 +553,7 @@ def register_fanc_jrcvnc2018f():
         source="JRCVNC2018F",
         target="JRCVNC2018F_reflected",
         transform_type="bridging",
+        weight=0.1,
     )
 
     # Second apply Elastix FANC_fixed -> JRCVNC2018F transform
@@ -565,7 +570,11 @@ def register_fanc_jrcvnc2018f():
     # Postflight for JRCVNC2018F -> FANCnm (v3)
     tr = transforms.FunctionTransform(_JRCVNC2018F_FANCnm_post)
     transforms.registry.register_transform(
-        transform=tr, source="FANCum_fixed", target="FANC", transform_type="bridging"
+        transform=tr,
+        source="FANCum_fixed",
+        target="FANC",
+        transform_type="bridging",
+        weight=0.1,
     )
 
 
