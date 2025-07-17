@@ -149,6 +149,9 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.5.0` (17/07/25):
+  - added a `JRCFIB2022Mtilt` mesh + transform where the VNC is tilted forward for visualization
+  - reduced weights for internal FANC transform (fixes #15)
 - `0.4.0` (19/05/25):
   - improved the `FLYWIRE/FAFB14` <-> `JRCFIB2022M` (maleCNS) transform
   - added support for two-step CMTK transforms
