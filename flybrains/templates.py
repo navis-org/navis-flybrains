@@ -58,6 +58,7 @@ __all__ = [
     "MANC",
     "MANCraw",
     "DmelL1CNS_Seymour",
+    "L3CNS_Wood2018",
     "COURT2017VNS",
     "COURT2018VNS",
     "register_templates",
@@ -1254,6 +1255,28 @@ class _DmelL1CNS_Seymour(FlyTemplateBrain):
 DmelL1CNS_Seymour = _DmelL1CNS_Seymour(**template_meta["Dmel-L1-CNS-Seymour"])
 
 
+class _L3CNS_Wood2018(FlyTemplateBrain):
+    """L3 CNS template from Wood2018.
+
+    The L3 CNS template from Wood2018 is a confocal microscopy template created 
+    from a single third instar larva brain selected from over 10,000 candidate 
+    stacks. The template was chosen for optimal registration performance with 
+    high contrast ratio, good stitching, proper anatomical orientation, and 
+    perpendicular mushroom body lobes. The template combines both central brain (CB) 
+    and ventral nerve cord (VNC) regions to form a complete CNS template.
+
+    References
+    ----------
+    Wood, C. R. (2018). Spatial representation of third instar larval Drosophila 
+    central nervous system via image registration. PhD Thesis, University of Edinburgh.
+    http://hdl.handle.net/1842/35918
+
+    """
+
+
+L3CNS_Wood2018 = _L3CNS_Wood2018(**template_meta["L3CNS_Wood2018"])
+
+
 def register_templates():
     """Register template brains with navis."""
     templates = [
@@ -1287,6 +1310,7 @@ def register_templates():
         MANC,
         MANCraw,
         DmelL1CNS_Seymour,
+        L3CNS_Wood2018,
         COURT2017VNS,
         COURT2018VNS,
     ]

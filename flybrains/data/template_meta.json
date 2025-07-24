@@ -583,7 +583,6 @@
          0.008
       ],
       "origin": null,
-      "boundingbox": null,
       "boundingbox": [
          0.0,
          275.456,
@@ -1089,5 +1088,43 @@
          62793
       ],
       "doi": "10.1101/2023.06.05.543757"
+   },
+   {
+      "name": "L3 CNS template - Wood2018",
+      "label": "L3CNS_Wood2018",
+      "type": "Single brain template",
+      "sex": "Unknown",
+      "dims": [
+         486,
+         1999,
+         364
+      ],
+      "voxdims": [
+         0.293,
+         0.293,
+         0.5
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "microns",
+         "microns",
+         "microns"
+      ],
+      "_navis_units": "1 micron",
+      "description": "The L3 CNS template from Wood2018 is a confocal microscopy template created from a single third instar larva brain selected from over 10,000 candidate stacks. The template was chosen for optimal registration performance with high contrast ratio, good stitching, proper anatomical orientation, and perpendicular mushroom body lobes. The template combines both central brain (CB) and ventral nerve cord (VNC) regions to form a complete CNS template with dimensions 982×1760×365 voxels, then cropped to the final dimensions. A 0.9 degree rotation was applied to improve mushroom body alignment.",
+      "doi": "http://hdl.handle.net/1842/35918",
+      "boundingbox": [
+         0.0,
+         142.398,
+         0.0,
+         585.707,
+         0.0,
+         182.0
+      ],
+      "symmetrical": true
    }
 ]
