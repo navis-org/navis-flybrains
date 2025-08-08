@@ -149,6 +149,11 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.5.2` (08/08/25):
+  - renamed `JRCFIB2022Mtilt` -> `JRCFIB2022Mplot`
+  - improved `JRCFIB2022Mplot` transform to also correct for a tilt along the z-axis
+- `0.5.1` (17/07/25):
+  - small fix for FANC transform weights
 - `0.5.0` (17/07/25):
   - added a `JRCFIB2022Mtilt` mesh + transform where the VNC is tilted forward for visualization
   - reduced weights for internal FANC transform (fixes #15)
