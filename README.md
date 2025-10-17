@@ -1,8 +1,7 @@
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
 </p>
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5515281.svg)](https://doi.org/10.5281/zenodo.5515281)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4966640.svg)](https://doi.org/10.5281/zenodo.4966640)
 
 # navis-flybrains
 Transforms to map between different _Drosophila_ template brains. Intended to be used with [navis](https://github.com/schlegelp/navis).
