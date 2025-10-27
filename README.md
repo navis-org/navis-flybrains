@@ -12,7 +12,7 @@ This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.
 
 - meta data + surface meshes for 31 light-level templates and connectome datasets
 - Elastix transforms from/to the `FANC` and `BANC` connectomes and template spaces (by Jasper Phelps)
-- various landmark-based transforms (e.g. `MANC` and `FANC`, or `BANC` and `FLYWIRE`)
+- various landmark-based transforms (e.g. between `MANC` and `FANC` or between `BANC` and `FLYWIRE`)
 - mirror transforms for many brain spaces/datasets (e.g. `FAFB14`, `FANC` and `BANC`)
 
 > [!IMPORTANT]
@@ -202,14 +202,19 @@ Most templates come with a mesh e.g. for plotting via navis:
 - `0.1.1` (06/01/21): added `um` (for microns) suffix to `JRCFIB2018F` transforms; added affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms
 - `0.1.0` (03/01/21): first working version
 
+## Contributing
+Contributions are very welcome! Want to use `navis-flybrains` to distribute your own transforms, meshes or
+templates? Found a bug, bad transform or incorrect information? Feel free to open a pull request or an issue
+to discuss details!
+
 ## Acknowledgements
 `navis-flybrains` is critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
 _et al._ for both inspiration regarding the implementation as well as template brain meta data.
 
 ## Citing
-If you use `navis-flybrains` in for your research please make sure to cite us
-(see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and _importantly_ the
-people who generated the meshes & registrations distributed with `flybrains`!
+If you use `navis-flybrains` in your research please make sure to cite us
+(see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and
+even _most importantly_ the people who generated the meshes & registrations distributed with `flybrains`!
 
 As reference for the Jefferis lab registrations please use:
 
