@@ -221,6 +221,14 @@ John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, G
 PLOS One (2018); doi: https://doi.org/10.1371/journal.pone.0236495
 ```
 
+As reference for the JRCFIB022M registrations please use:
+
+```
+Sexual dimorphism in the complete connectome of the Drosophila male central nervous system
+Stuart Berg, Isabella R Beckett, Marta Costa, Philipp Schlegel, [...] Gerald M Rubin, Gregory SXE Jefferis
+bioRxiv 2025.10.09.680999; doi: https://doi.org/10.1101/2025.10.09.680999
+```
+
 As reference for the VFB CMTK transforms please use:
 
 ```
@@ -235,6 +243,14 @@ As reference for the FANC<->JRCVNC2018F transform by Jasper Phelps please use:
 Reconstruction of motor control circuits in adult Drosophila using automated transmission electron microscopy.
 Phelps JS, Hildebrand DGC, Graham BJ, Kuan AT, Thomas LA, Nguyen TM, Buhmann J, Azevedo AW, Sustar A, Agrawal S, Liu M, Shanny BL, Funke J, Tuthill JC, Lee WA
 Cell (2021); doi: 10.1016/j.cell.2020.12.013
+```
+
+As reference for the BANC<->JRC2018F/JRCVNC2018F transforms by Jasper Phelps please use:
+
+```
+Distributed control circuits across a brain-and-cord connectome
+Alexander Shakeel Bates, Jasper S. Phelps, Minsu Kim, Helen H. Yang, [...] Rachel I. Wilson, Wei-Chung Allen Lee
+bioRxiv 2025.07.31.667571; doi: https://doi.org/10.1101/2025.07.31.667571
 ```
 
 For references on individual template brains, please see their docstrings:
