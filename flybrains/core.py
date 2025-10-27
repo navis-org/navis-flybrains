@@ -556,7 +556,7 @@ def register_fanc_jrcvnc2018f():
     )
 
     # Elastix FANC_fixed -> JRCVNC2018F (reflected) transform
-    fp = os.path.join(data_filepath, "TransformParameters.FixedFANC.txt")
+    fp = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedFANC.txt")
     tr = transforms.ElastixTransform(fp)
     transforms.registry.register_transform(
         transform=tr,
@@ -587,8 +587,8 @@ def register_fanc_jrcvnc2018f():
     )
 
     # Second apply Elastix FANC_fixed -> JRCVNC2018F transform
-    fp1 = os.path.join(data_filepath, "TransformParameters.FixedTemplate.Bspline.txt")
-    fp2 = os.path.join(data_filepath, "TransformParameters.FixedTemplate.affine.txt")
+    fp1 = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedTemplate.Bspline.txt")
+    fp2 = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedTemplate.affine.txt")
     tr = transforms.ElastixTransform(fp1, copy_files=[fp2])
     transforms.registry.register_transform(
         transform=tr,

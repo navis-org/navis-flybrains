@@ -77,10 +77,3 @@ coordinates were transforms to FAFB14 space using the re-alignment deformation f
 > (`maleCNS_brain_FAFB_landmarks_nm.csv`). Those transforms had significant issues
 > in some parts of the brain such as the area around the foramen and slight offsets
 > elsewhere.
-
-# Transforms
-
-## `TransformParameters.FixedFANC.txt` & TransformParameters.FixedTemplate.txt
-These files represent Elastix transforms for FANC (v3) -> JRCVNC2018F and
-JRCVNC2018F -> FANC (v3), respectively. They have been provided by Jasper
-Phelps (see https://github.com/htem/FANC_auto_recon/tree/main/transforms).
