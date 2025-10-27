@@ -519,6 +519,17 @@ def register_manual_transforms():
         transform=tr, source="MANC", target="FANC", transform_type="bridging"
     )
 
+    # MaleCNS - BANC transform
+    fp = os.path.join(data_filepath, "maleCNS_BANC_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_banc", "y_banc", "z_banc"]].values,
+        lm[["x_mcns", "y_mcns", "z_mcns"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="BANC", target="JRCFIB2022M", transform_type="bridging"
+    )
+
 
 def register_fanc_jrcvnc2018f():
     """Register FANC -> JRCVNC2018F and reverse transforms."""
