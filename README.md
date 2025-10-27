@@ -4,18 +4,19 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4966640.svg)](https://doi.org/10.5281/zenodo.4966640)
 
 # navis-flybrains
-Transforms to map between different _Drosophila_ template brains. Intended to be used with [navis](https://github.com/schlegelp/navis).
+Transforms to map between different _Drosophila_ template brains and datasets. Intended to be used with [navis](https://github.com/schlegelp/navis).
 
 This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.com/natverse/nat.templatebrains), [nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and [nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
 
 `flybrains` ships with:
 
-- meta data + surface meshes for 22 template brains and nerve cords
-- an Elastix transform between `FANC` and `JRCVNC2018F` kindly shared by Jasper Phelps
-- a landmark-based transform between `MANC` and `FANC`
-- mirror transforms for `FAFB14` and `FANC`
+- meta data + surface meshes for 31 light-level templates and connectome datasets
+- Elastix transforms from/to the `FANC` and `BANC` connectomes and template spaces (by Jasper Phelps)
+- various landmark-based transforms (e.g. `MANC` and `FANC`, or `BANC` and `FLYWIRE`)
+- mirror transforms for many brain spaces/datasets (e.g. `FAFB14`, `FANC` and `BANC`)
 
-There are plenty additional transforms that need to be downloaded separately (see below).
+> [!IMPORTANT]
+> There are many additional transforms that need to be downloaded separately (see below).
 
 ## Installation
 You can install `flybrains` from PyPI:
@@ -33,7 +34,7 @@ pip3 install git+https://github.com/navis-org/navis-flybrains.git
 In order to use the Jefferis lab or VFB transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
 
-For the FANC to JRCVNC2018F transform, you will need to download
+For FANC and BANC transforms, you will need to download
 [elastix](https://elastix.lumc.nl/index.php) and make sure that the path
 to the binaries is in your `PATH` variable.
 
