@@ -1,0 +1,27 @@
+(CenterOfRotationPoint 489.41866254429664 149.7909077995943 157.65647121670872)
+(Direction 1 0 0 0 1 0 0 0 1)
+(FixedImageDimension 3)
+(FixedInternalImagePixelType "float")
+(HowToCombineTransforms "Compose")
+(Index 0 0 0)
+(InitialTransformParametersFileName "0_manual_affine.txt")
+(MovingImageDimension 3)
+(MovingInternalImagePixelType "float")
+(NumberOfParameters 12)
+(Origin 0 0 0)
+(Size 1652 768 479)
+(Spacing 0.38 0.38 0.38)
+(Transform "AffineTransform")
+(TransformParameters 0.9938791950674617 -0.08438074453969331 -0.022181527647283462 0.018805757853935266 1.0174156165563366 0.059908686868475294 0.03359713353866615 -0.0926994136317027 0.9711918828959457 -4.47546881930727 -6.609588852914791 -7.790429012992311)
+(UseDirectionCosines "true")
+
+// ResampleInterpolator specific
+(FinalBSplineInterpolationOrder 3)
+(ResampleInterpolator "FinalBSplineInterpolator")
+
+// Resampler specific
+(CompressResultImage "true")
+(DefaultPixelValue 0)
+(Resampler "DefaultResampler")
+(ResultImageFormat "nrrd")
+(ResultImagePixelType "float")
