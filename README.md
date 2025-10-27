@@ -46,12 +46,11 @@ to the binaries is in your `PATH` variable.
 It's highly recommended that after install, you download the (optional)
 bridging transforms to map between template brains/nerve cords.
 
-**IMPORTANT**: the URL for the JRC2018F <-> JRC2018M transform (`JRC2018U_JRC2018M.h5`)
-was incorrect in `flybrains` version `0.2.6`. If you downloaded it using that
-version of flybrains you need to manually remove the file, update flybrains and
-download again using a newer version.
-
-> :exclamation: If you already have downloaded these registrations via `nat.jrcbrains` and/or `nat.flybrains` you can skip this: `flybrains` should be able to find the registrations downloaded via R and register them for you (see also code at the bottom).
+> [!TIP]
+> If you already have downloaded these registrations via `nat.jrcbrains`
+> and/or `nat.flybrains` you can skip this: `flybrains` should be able to
+> find the registrations downloaded via R and register them for you.
+> See also code at the bottom to generate a report of available transforms.
 
 ```Python
 >>> import flybrains
@@ -60,12 +59,12 @@ download again using a newer version.
 # generated or collated by the Jefferis lab - see docstring for details
 >>> flybrains.download_jefferislab_transforms()
 
-# This downloads H5 bridging transforms between JRC brain templates
-# (Saalfeld lab, Janelia Research Campus) - see docstring for details
+# This downloads H5 bridging transforms between Janelia brain datasets
+# (templates and connectomes) - see docstring for details
 >>> flybrains.download_jrc_transforms()
 
-# This downloads H5 bridging transforms between JRC VNC templates
-# (Saalfeld lab, Janelia Research Campus) - see docstring for details
+# This downloads H5 bridging transforms between Janelia ventral nerve cord (VNC)
+# datasets (templates and connectomes) - see docstring for details
 >>> flybrains.download_jrc_vnc_transforms()
 
 # This downloads (or updates) various CMTK bridging and mirror transforms
@@ -73,9 +72,15 @@ download again using a newer version.
 >>> flybrains.download_vfb_transforms()
 
 # Register the transforms - this is only necessary if you just downloaded them
-# Alternatively just restart your Python session and import flybrains
+# Alternatively, just restart your Python session and import flybrains
 >>> flybrains.register_transforms()
 ```
+
+> [!CAUTION]
+>  The URL for the JRC2018F <-> JRC2018M transform (`JRC2018U_JRC2018M.h5`)
+>  was incorrect in `flybrains` version `0.2.6`. If you downloaded it using that
+>  version of flybrains you need to manually remove the file, update flybrains and
+>  download again using a newer version.
 
 In the future, simply importing `flybrains` is sufficient to make the
 transforms available to [navis](https://navis.readthedocs.io/en/latest/):
