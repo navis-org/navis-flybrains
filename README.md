@@ -1,6 +1,7 @@
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
 </p>
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4966640.svg)](https://doi.org/10.5281/zenodo.4966640)
 
 # navis-flybrains
@@ -214,7 +215,7 @@ _et al._ for both inspiration regarding the implementation as well as template b
 ## Citing
 If you use `navis-flybrains` in your research please make sure to cite us
 (see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and
-even _most importantly_ the people who generated the meshes & registrations distributed with `flybrains`!
+_most importantly_ the people who generated the meshes & registrations distributed with `flybrains`!
 
 As reference for the Jefferis lab registrations please use:
 
