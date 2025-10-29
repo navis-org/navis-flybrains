@@ -385,6 +385,16 @@ def register_mirror_transforms():
     transforms.registry.register_transform(
         transform=tr, source="BANC", target=None, transform_type="mirror"
     )
+    # 6. Aedes
+    fp = os.path.join(data_filepath, "Aedes_mirror_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="AEDES", target=None, transform_type="mirror"
+    )
 
 
 def register_unit_transforms():

@@ -1117,7 +1117,7 @@
       ],
       "_navis_units": "1 nanometer",
       "description": "ssTEM volume comprising an entire female Drosophila brain + nerve cord.",
-      "doi": "https://doi.org/10.1101/2025.10.09.680999 ",
+      "doi": "https://doi.org/10.1101/2025.10.09.680999",
       "boundingbox": [
          79342,
          966128,
@@ -1125,6 +1125,43 @@
          1131156,
          43,
          315520
+      ]
+   },
+   {
+      "name": "Aedes aegypti brain",
+      "label": "AEDES",
+      "type": null,
+      "sex": "female",
+      "dims": [
+         98304,
+         73728,
+         7482
+      ],
+      "voxdims": [
+         8,
+         8,
+         45
+      ],
+      "origin": [
+         0.0,
+         0.0,
+         0.0
+      ],
+      "units": [
+         "nanometers",
+         "nanometers",
+         "nanometers"
+      ],
+      "_navis_units": "1 nanometer",
+      "description": "ssTEM volume comprising an entire mated female mosquito brain.",
+      "doi": "unpublished",
+      "boundingbox": [
+         54273,
+         678243,
+         96587,
+         454259,
+         4832,
+         323848
       ]
    }
 ]
