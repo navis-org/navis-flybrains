@@ -25,7 +25,7 @@ from navis import transforms
 import numpy as np
 import pandas as pd
 
-from .download import get_data_home
+from .download import get_data_home, _total_h5_transforms, _total_cmtk_transforms
 
 __all__ = ["register_transforms", "report"]
 
@@ -133,8 +133,8 @@ def report():
     n_h5 = len([p for p in data_home.rglob(f"*.h5") if p.is_file()])
 
     rep += dedent(f"""
-    CMTK registrations (Jefferis lab/VFB): {n_cmtk} of 45
-    H5 registrations (JRC/Saalfeld lab): {n_h5} of 8
+    CMTK registrations (Jefferis lab/VFB): {n_cmtk} of {_total_cmtk_transforms}
+    H5 registrations (JRC/Saalfeld lab): {n_h5} of {_total_h5_transforms}
     """)
 
     nat_paths = get_nat_regdirs(verbose=False)
