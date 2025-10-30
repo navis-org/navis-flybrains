@@ -17,7 +17,7 @@ This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.
 - mirror transforms for many brain spaces/datasets (e.g. `FAFB14`, `FANC` and `BANC`)
 
 > [!IMPORTANT]
-> There are many additional transforms that need to be downloaded separately (see below).
+> There are many additional transforms that need to be downloaded separately as a one-off (see below).
 
 ## Installation
 You can install `flybrains` from PyPI:
@@ -52,7 +52,7 @@ bridging transforms to map between template brains/nerve cords.
 > If you already have downloaded these registrations via `nat.jrcbrains`
 > and/or `nat.flybrains` you can skip this: `flybrains` should be able to
 > find the registrations downloaded via R and register them for you.
-> See also code at the bottom to generate a report of available transforms.
+> See also code below for generating a report of available transforms.
 
 ```Python
 >>> import flybrains
@@ -73,8 +73,8 @@ bridging transforms to map between template brains/nerve cords.
 # generated or collated by VirtualFlyBrain.org - see docstring for details
 >>> flybrains.download_vfb_transforms()
 
-# Register the transforms - this is only necessary if you just downloaded them
-# Alternatively, just restart your Python session and import flybrains
+# Register the transforms - this is only necessary if you just downloaded them.
+# Alternatively, just restart your Python session and import flybrains again.
 >>> flybrains.register_transforms()
 ```
 
@@ -109,8 +109,8 @@ Flybrains Status Report
 =======================
 Data Home: /Users/philipps/flybrain-data
 
-CMTK registrations (Jefferis lab/VFB): 41 of 45
-H5 registrations (JRC/Saalfeld lab): 3 of 8
+CMTK registrations (Jefferis lab/VFB): 45 of 45
+H5 registrations (JRC/Saalfeld lab): 11 of 11
 
 nat regdirs
 -----------
