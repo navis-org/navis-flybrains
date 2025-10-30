@@ -1,21 +1,23 @@
 <p align="center">
 <img src="https://github.com/schlegelp/navis-flybrains/blob/main/_static/flybrains_logo.png?raw=true" width="400">
 </p>
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4966640.svg)](https://doi.org/10.5281/zenodo.4966640)
 
 # navis-flybrains
-Transforms to map between different _Drosophila_ template brains. Intended to be used with [navis](https://github.com/schlegelp/navis).
+Transforms to map between different _Drosophila_ template brains and datasets. Intended to be used with [navis](https://github.com/schlegelp/navis).
 
 This library is analogous to Greg Jefferis' [nat.templatebrains](https://github.com/natverse/nat.templatebrains), [nat.jrcbrains](https://github.com/natverse/nat.jrcbrains) and [nat.flybrains](https://github.com/natverse/nat.flybrains) for R.
 
 `flybrains` ships with:
 
-- meta data + surface meshes for 22 template brains and nerve cords
-- an Elastix transform between `FANC` and `JRCVNC2018F` kindly shared by Jasper Phelps
-- a landmark-based transform between `MANC` and `FANC`
-- mirror transforms for `FAFB14` and `FANC`
+- meta data + surface meshes for 31 light-level templates and connectome datasets
+- Elastix transforms from/to the `FANC` and `BANC` connectomes and template spaces (by Jasper Phelps)
+- various landmark-based transforms (e.g. between `MANC` and `FANC` or between `BANC` and `FLYWIRE`)
+- mirror transforms for many brain spaces/datasets (e.g. `FAFB14`, `FANC` and `BANC`)
 
-There are plenty additional transforms that need to be downloaded separately (see below).
+> [!IMPORTANT]
+> There are many additional transforms that need to be downloaded separately as a one-off (see below).
 
 ## Installation
 You can install `flybrains` from PyPI:
@@ -33,7 +35,7 @@ pip3 install git+https://github.com/navis-org/navis-flybrains.git
 In order to use the Jefferis lab or VFB transforms, you will need to have
 [CMTK](https://www.nitrc.org/projects/cmtk/) installed.
 
-For the FANC to JRCVNC2018F transform, you will need to download
+For FANC and BANC transforms, you will need to download
 [elastix](https://elastix.lumc.nl/index.php) and make sure that the path
 to the binaries is in your `PATH` variable.
 
@@ -46,12 +48,11 @@ to the binaries is in your `PATH` variable.
 It's highly recommended that after install, you download the (optional)
 bridging transforms to map between template brains/nerve cords.
 
-**IMPORTANT**: the URL for the JRC2018F <-> JRC2018M transform (`JRC2018U_JRC2018M.h5`)
-was incorrect in `flybrains` version `0.2.6`. If you downloaded it using that
-version of flybrains you need to manually remove the file, update flybrains and
-download again using a newer version.
-
-> :exclamation: If you already have downloaded these registrations via `nat.jrcbrains` and/or `nat.flybrains` you can skip this: `flybrains` should be able to find the registrations downloaded via R and register them for you (see also code at the bottom).
+> [!TIP]
+> If you already have downloaded these registrations via `nat.jrcbrains`
+> and/or `nat.flybrains` you can skip this: `flybrains` should be able to
+> find the registrations downloaded via R and register them for you.
+> See also code below for generating a report of available transforms.
 
 ```Python
 >>> import flybrains
@@ -60,22 +61,28 @@ download again using a newer version.
 # generated or collated by the Jefferis lab - see docstring for details
 >>> flybrains.download_jefferislab_transforms()
 
-# This downloads H5 bridging transforms between JRC brain templates
-# (Saalfeld lab, Janelia Research Campus) - see docstring for details
+# This downloads H5 bridging transforms between Janelia brain datasets
+# (templates and connectomes) - see docstring for details
 >>> flybrains.download_jrc_transforms()
 
-# This downloads H5 bridging transforms between JRC VNC templates
-# (Saalfeld lab, Janelia Research Campus) - see docstring for details
+# This downloads H5 bridging transforms between Janelia ventral nerve cord (VNC)
+# datasets (templates and connectomes) - see docstring for details
 >>> flybrains.download_jrc_vnc_transforms()
 
 # This downloads (or updates) various CMTK bridging and mirror transforms
 # generated or collated by VirtualFlyBrain.org - see docstring for details
 >>> flybrains.download_vfb_transforms()
 
-# Register the transforms - this is only necessary if you just downloaded them
-# Alternatively just restart your Python session and import flybrains
+# Register the transforms - this is only necessary if you just downloaded them.
+# Alternatively, just restart your Python session and import flybrains again.
 >>> flybrains.register_transforms()
 ```
+
+> [!CAUTION]
+>  The URL for the JRC2018F <-> JRC2018M transform (`JRC2018U_JRC2018M.h5`)
+>  was incorrect in `flybrains` version `0.2.6`. If you downloaded it using that
+>  version of flybrains you need to manually remove the file, update flybrains and
+>  download again using a newer version.
 
 In the future, simply importing `flybrains` is sufficient to make the
 transforms available to [navis](https://navis.readthedocs.io/en/latest/):
@@ -102,8 +109,8 @@ Flybrains Status Report
 =======================
 Data Home: /Users/philipps/flybrain-data
 
-CMTK registrations (Jefferis lab/VFB): 41 of 45
-H5 registrations (JRC/Saalfeld lab): 3 of 8
+CMTK registrations (Jefferis lab/VFB): 45 of 45
+H5 registrations (JRC/Saalfeld lab): 11 of 11
 
 nat regdirs
 -----------
@@ -196,14 +203,19 @@ Most templates come with a mesh e.g. for plotting via navis:
 - `0.1.1` (06/01/21): added `um` (for microns) suffix to `JRCFIB2018F` transforms; added affine `JRCFIB2018Fraw` -> `JRCFIB2018F` -> `JRCFIB2018Fum` transforms
 - `0.1.0` (03/01/21): first working version
 
+## Contributing
+Contributions are very welcome! Want to use `navis-flybrains` to distribute your own transforms, meshes or
+templates? Found a bug, bad transform or incorrect information? Feel free to open a pull request or an issue
+to discuss details!
+
 ## Acknowledgements
 `navis-flybrains` is critically based on `nat.flybrains` and `nat.jrcbrains` by Greg Jefferis
 _et al._ for both inspiration regarding the implementation as well as template brain meta data.
 
 ## Citing
-If you use `navis-flybrains` in for your research please make sure to cite us
-(see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and _importantly_ the
-people who generated the meshes & registrations distributed with `flybrains`!
+If you use `navis-flybrains` in your research please make sure to cite us
+(see Zenodo DOI badge at the top of this page), [navis](https://github.com/navis-org/navis) and
+_most importantly_ the people who generated the meshes & registrations distributed with `flybrains`!
 
 As reference for the Jefferis lab registrations please use:
 
@@ -221,6 +233,14 @@ John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, G
 PLOS One (2018); doi: https://doi.org/10.1371/journal.pone.0236495
 ```
 
+As reference for the JRCFIB022M registrations please use:
+
+```
+Sexual dimorphism in the complete connectome of the Drosophila male central nervous system
+Stuart Berg, Isabella R Beckett, Marta Costa, Philipp Schlegel, [...] Gerald M Rubin, Gregory SXE Jefferis
+bioRxiv 2025.10.09.680999; doi: https://doi.org/10.1101/2025.10.09.680999
+```
+
 As reference for the VFB CMTK transforms please use:
 
 ```
@@ -235,6 +255,14 @@ As reference for the FANC<->JRCVNC2018F transform by Jasper Phelps please use:
 Reconstruction of motor control circuits in adult Drosophila using automated transmission electron microscopy.
 Phelps JS, Hildebrand DGC, Graham BJ, Kuan AT, Thomas LA, Nguyen TM, Buhmann J, Azevedo AW, Sustar A, Agrawal S, Liu M, Shanny BL, Funke J, Tuthill JC, Lee WA
 Cell (2021); doi: 10.1016/j.cell.2020.12.013
+```
+
+As reference for the BANC<->JRC2018F/JRCVNC2018F transforms by Jasper Phelps please use:
+
+```
+Distributed control circuits across a brain-and-cord connectome
+Alexander Shakeel Bates, Jasper S. Phelps, Minsu Kim, Helen H. Yang, [...] Rachel I. Wilson, Wei-Chung Allen Lee
+bioRxiv 2025.07.31.667571; doi: https://doi.org/10.1101/2025.07.31.667571
 ```
 
 For references on individual template brains, please see their docstrings:

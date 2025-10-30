@@ -25,7 +25,7 @@ from navis import transforms
 import numpy as np
 import pandas as pd
 
-from .download import get_data_home
+from .download import get_data_home, _total_h5_transforms, _total_cmtk_transforms
 
 __all__ = ["register_transforms", "report"]
 
@@ -133,8 +133,8 @@ def report():
     n_h5 = len([p for p in data_home.rglob(f"*.h5") if p.is_file()])
 
     rep += dedent(f"""
-    CMTK registrations (Jefferis lab/VFB): {n_cmtk} of 45
-    H5 registrations (JRC/Saalfeld lab): {n_h5} of 8
+    CMTK registrations (Jefferis lab/VFB): {n_cmtk} of {_total_cmtk_transforms}
+    H5 registrations (JRC/Saalfeld lab): {n_h5} of {_total_h5_transforms}
     """)
 
     nat_paths = get_nat_regdirs(verbose=False)
@@ -375,6 +375,26 @@ def register_mirror_transforms():
     transforms.registry.register_transform(
         transform=tr, source="FAFB", target=None, transform_type="mirror"
     )
+    # 5. BANC
+    fp = os.path.join(data_filepath, "BANC_mirror_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="BANC", target=None, transform_type="mirror"
+    )
+    # 6. Aedes
+    fp = os.path.join(data_filepath, "Aedes_mirror_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_flip", "y_flip", "z_flip"]].values,
+        lm[["x_mirr", "y_mirr", "z_mirr"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="AEDES", target=None, transform_type="mirror"
+    )
 
 
 def register_unit_transforms():
@@ -420,7 +440,15 @@ def register_unit_transforms():
     )
 
     #### Add transforms between nanometer and microns space for:
-    for template in ("FAFB14", "FLYWIRE", "MANC", "JRCFIB2018F", "FANC", "JRCFIB2022M"):
+    for template in (
+        "FAFB14",
+        "FLYWIRE",
+        "MANC",
+        "JRCFIB2018F",
+        "FANC",
+        "JRCFIB2022M",
+        "BANC",
+    ):
         tr = transforms.AffineTransform(np.diag([1e3, 1e3, 1e3, 1]))
         transforms.registry.register_transform(
             transform=tr,
@@ -501,6 +529,17 @@ def register_manual_transforms():
         transform=tr, source="MANC", target="FANC", transform_type="bridging"
     )
 
+    # MaleCNS - BANC transform
+    fp = os.path.join(data_filepath, "maleCNS_BANC_landmarks_nm.csv")
+    lm = pd.read_csv(fp)
+    tr = transforms.TPStransform(
+        lm[["x_banc", "y_banc", "z_banc"]].values,
+        lm[["x_mcns", "y_mcns", "z_mcns"]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="BANC", target="JRCFIB2022M", transform_type="bridging"
+    )
+
 
 def register_fanc_jrcvnc2018f():
     """Register FANC -> JRCVNC2018F and reverse transforms."""
@@ -527,7 +566,7 @@ def register_fanc_jrcvnc2018f():
     )
 
     # Elastix FANC_fixed -> JRCVNC2018F (reflected) transform
-    fp = os.path.join(data_filepath, "TransformParameters.FixedFANC.txt")
+    fp = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedFANC.txt")
     tr = transforms.ElastixTransform(fp)
     transforms.registry.register_transform(
         transform=tr,
@@ -543,7 +582,7 @@ def register_fanc_jrcvnc2018f():
         source="JRCVNC2018F_reflected",
         target="JRCVNC2018F",
         transform_type="bridging",
-        weight=0.1
+        weight=0.1,
     )
 
     # Now the reverse: JRCVNC2018F -> FANC (nm)
@@ -558,8 +597,8 @@ def register_fanc_jrcvnc2018f():
     )
 
     # Second apply Elastix FANC_fixed -> JRCVNC2018F transform
-    fp1 = os.path.join(data_filepath, "TransformParameters.FixedTemplate.Bspline.txt")
-    fp2 = os.path.join(data_filepath, "TransformParameters.FixedTemplate.affine.txt")
+    fp1 = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedTemplate.Bspline.txt")
+    fp2 = os.path.join(data_filepath, "FANC_JRCVNC2018F/TransformParameters.FixedTemplate.affine.txt")
     tr = transforms.ElastixTransform(fp1, copy_files=[fp2])
     transforms.registry.register_transform(
         transform=tr,
@@ -576,6 +615,51 @@ def register_fanc_jrcvnc2018f():
         target="FANC",
         transform_type="bridging",
         weight=0.1,
+    )
+
+
+def register_banc_transforms():
+    """Register BANC -> JRC templates and reverse transforms.
+
+    Kindly shared by Jasper Phelps. See:
+    https://github.com/navis-org/navis-flybrains/issues/17
+
+    """
+    # First up: forward BANC (um) -> JRC2018F
+    fp = os.path.join(data_filepath, "BANC_JRC2018F/BANC_to_template.txt")
+    tr = transforms.ElastixTransform(fp)
+    transforms.registry.register_transform(
+        transform=tr,
+        source="BANCum",
+        target="JRC2018F",
+        transform_type="bridging",
+    )
+    # Next up: reverse JRC2018F -> BANC (um)
+    fp = os.path.join(data_filepath, "BANC_JRC2018F/3_elastix_Bspline_fine.txt")
+    tr = transforms.ElastixTransform(fp)
+    transforms.registry.register_transform(
+        transform=tr,
+        source="JRC2018F",
+        target="BANCum",
+        transform_type="bridging",
+    )
+    # VNC transforms:
+    fp = os.path.join(data_filepath, "BANC_JRCVNC2018F/BANC_to_template.txt")
+    tr = transforms.ElastixTransform(fp)
+    transforms.registry.register_transform(
+        transform=tr,
+        source="BANCum",
+        target="JRCVNC2018F",
+        transform_type="bridging",
+    )
+    # Next up: reverse JRCVNC2018F -> BANC (um)
+    fp = os.path.join(data_filepath, "BANC_JRCVNC2018F/3_elastix_Bspline_fine.txt")
+    tr = transforms.ElastixTransform(fp)
+    transforms.registry.register_transform(
+        transform=tr,
+        source="JRCVNC2018F",
+        target="BANCum",
+        transform_type="bridging",
     )
 
 
@@ -615,6 +699,9 @@ def register_transforms():
 
     # Register (additional) mirror transforms
     register_mirror_transforms()
+
+    # Register BANC transforms
+    register_banc_transforms()
 
     # Register aliases
     register_aliases()

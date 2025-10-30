@@ -21,14 +21,31 @@ from navis import utils
 
 import git
 
-__all__ = ['download_vfb_transforms', 'download_jefferislab_transforms',
-           'download_jrc_transforms', 'download_jrc_vnc_transforms']
+__all__ = [
+    "download_vfb_transforms",
+    "download_jefferislab_transforms",
+    "download_jrc_transforms",
+    "download_jrc_vnc_transforms",
+]
+
+_total_cmtk_transforms = (
+    3  # from VFB
+    + 21  # from Jefferis lab BridgingRegistrations
+    + 9  # from Jefferis lab MirrorRegistrations
+    + 13  # from Jefferis lab DrosophilidBridgingRegistrations
+)
+_total_h5_transforms = (
+    8  # from JRC Saalfeld lab
+    + 3  # from JRC VNC Saalfeld lab
+)
 
 
-def download_vfb_transforms(repos=("VfbBridgingRegistrations", ),
-                                   update_existing=True,
-                                   use_ssh=False,
-                                   data_home=None):
+def download_vfb_transforms(
+    repos=("VfbBridgingRegistrations",),
+    update_existing=True,
+    use_ssh=False,
+    data_home=None,
+):
     """Download VirtualFlyBrain.org (VFB) CMTK transforms.
 
     BridgingRegistrations (~6Mb):
@@ -73,20 +90,26 @@ def download_vfb_transforms(repos=("VfbBridgingRegistrations", ),
     data_home = get_data_home(data_home, create=True)
     repos = utils.make_iterable(repos)
 
-    print(f'Downloading VFB transforms into {data_home}')
-    for repo in tqdm(repos, desc='Repos', leave=False):
-        download_reg_repo(f'VirtualFlyBrain/{repo}',
-                          use_ssh=use_ssh,
-                          data_home=data_home,
-                          update_existing=update_existing)
+    print(f"Downloading VFB transforms into {data_home}")
+    for repo in tqdm(repos, desc="Repos", leave=False):
+        download_reg_repo(
+            f"VirtualFlyBrain/{repo}",
+            use_ssh=use_ssh,
+            data_home=data_home,
+            update_existing=update_existing,
+        )
 
 
-def download_jefferislab_transforms(repos=("BridgingRegistrations",
-                                           "MirrorRegistrations",
-                                           "DrosophilidBridgingRegistrations"),
-                                    update_existing=True,
-                                    use_ssh=False,
-                                    data_home=None):
+def download_jefferislab_transforms(
+    repos=(
+        "BridgingRegistrations",
+        "MirrorRegistrations",
+        "DrosophilidBridgingRegistrations",
+    ),
+    update_existing=True,
+    use_ssh=False,
+    data_home=None,
+):
     """Download Jefferis lab CMTK transforms.
 
     BridgingRegistrations (~50Mb):
@@ -168,12 +191,14 @@ def download_jefferislab_transforms(repos=("BridgingRegistrations",
     data_home = get_data_home(data_home, create=True)
     repos = utils.make_iterable(repos)
 
-    print(f'Downloading Jefferis lab transforms into {data_home}')
-    for repo in tqdm(repos, desc='Repos', leave=False):
-        download_reg_repo(f'jefferislab/{repo}',
-                          use_ssh=use_ssh,
-                          data_home=data_home,
-                          update_existing=update_existing)
+    print(f"Downloading Jefferis lab transforms into {data_home}")
+    for repo in tqdm(repos, desc="Repos", leave=False):
+        download_reg_repo(
+            f"jefferislab/{repo}",
+            use_ssh=use_ssh,
+            data_home=data_home,
+            update_existing=update_existing,
+        )
 
 
 def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=True):
@@ -192,12 +217,12 @@ def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=
     data_home = get_data_home(data_home, create=True)
 
     if use_ssh:
-        url = f'git@github.com:{repo}'
+        url = f"git@github.com:{repo}"
     else:
-        url = f'https://github.com/{repo}'
+        url = f"https://github.com/{repo}"
 
     # Generate target path for this repo
-    clone_to = os.path.join(data_home, repo.split('/')[-1])
+    clone_to = os.path.join(data_home, repo.split("/")[-1])
 
     # If target path exists, check if it's an already initialized Github repo
     if os.path.isdir(clone_to):
@@ -207,9 +232,9 @@ def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=
 
             # If we were able to initialize
             if update_existing:
-                with tqdm(desc='Updating', leave=False) as pbar:
+                with tqdm(desc="Updating", leave=False) as pbar:
                     # We have to define a function that clone_from can call to show progress
-                    def update_pbar(_, cur_count, max_count=None, message=''):
+                    def update_pbar(_, cur_count, max_count=None, message=""):
                         """Update progress bar from .clone_from callbar."""
                         if max_count is not None:
                             pbar.total = max_count
@@ -221,15 +246,17 @@ def download_reg_repo(repo: str, data_home=None, use_ssh=False, update_existing=
 
             return
         except git.InvalidGitRepositoryError:
-            raise ValueError(f'Target directory "{clone_to}" already exists but'
-                             'is not a valid repository.')
+            raise ValueError(
+                f'Target directory "{clone_to}" already exists but'
+                "is not a valid repository."
+            )
         except BaseException:
             raise
 
     # If Folder does not yet exist, clone the repo into that folder
-    with tqdm(desc='Downloading', leave=False) as pbar:
+    with tqdm(desc="Downloading", leave=False) as pbar:
         # We have to define a function that clone_from can call to show progress
-        def update_pbar(_, cur_count, max_count=None, message=''):
+        def update_pbar(_, cur_count, max_count=None, message=""):
             """Update progress bar from .clone_from callbar."""
             if max_count is not None:
                 pbar.total = max_count
@@ -278,23 +305,24 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         "14448911?private_link=2afde323b12274d3243b",
         "14368358?private_link=b29e25b6e47ccf9187a8",
         "42106125?private_link=bfbfc18d24fe959b78c0",
-            )
+    )
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
 
     filenames = (
-        'JRC2018F_FAFB.h5',
-        'JRC2018F_JFRC2013.h5',
-        'JRC2018F_FCWB.h5',
-        'JRC2018F_JRCFIB2018F.h5',
-        'JRC2018U_JRC2018F.h5',
-        'JRC2018U_JRC2018M.h5',
-        'JRC2018F_JFRC2010.h5',
-        'JRCFIB2022M_JRC2018M.h5'  # originally: MaleCNS_JRC2018M_d2.h5
-      )
+        "JRC2018F_FAFB.h5",
+        "JRC2018F_JFRC2013.h5",
+        "JRC2018F_FCWB.h5",
+        "JRC2018F_JRCFIB2018F.h5",
+        "JRC2018U_JRC2018F.h5",
+        "JRC2018U_JRC2018M.h5",
+        "JRC2018F_JFRC2010.h5",
+        "JRCFIB2022M_JRC2018M.h5",  # originally: MaleCNS_JRC2018M_d2.h5
+    )
 
-    print(f'Downloading JRC (Saalfeld lab) brain transforms into {data_home}')
-    for url, file in tqdm(zip(urls, filenames), leave=False,
-                          total=len(urls), desc='Transforms'):
+    print(f"Downloading JRC (Saalfeld lab) brain transforms into {data_home}")
+    for url, file in tqdm(
+        zip(urls, filenames), leave=False, total=len(urls), desc="Transforms"
+    ):
         dst = os.path.join(data_home, file)
         if skip_existing and os.path.exists(dst):
             continue
@@ -327,19 +355,21 @@ def download_jrc_vnc_transforms(data_home=None, skip_existing=True):
     urls = (
         "28909212?private_link=c4589cef9180e1dd4ee1",
         "28908795?private_link=42ad71eb14e7dd51e81a",
-        "38827794")
+        "38827794",
+    )
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
 
     # Note that we are renaming the files upon download!
     filenames = (
-        'JRCVNC2018U_JRCVNC2018F.h5',  # originally: JRC2018VncU_JRC2018VncF.h5
-        'JRCVNC2018M_JRCVNC2018U.h5',  # originally: JRC2018VncM_JRC2018VncU.h5
-        'JRCVNC2018M_MANC.h5',  # originally: JRC2018VncM_MANC.h5
-      )
+        "JRCVNC2018U_JRCVNC2018F.h5",  # originally: JRC2018VncU_JRC2018VncF.h5
+        "JRCVNC2018M_JRCVNC2018U.h5",  # originally: JRC2018VncM_JRC2018VncU.h5
+        "JRCVNC2018M_MANC.h5",  # originally: JRC2018VncM_MANC.h5
+    )
 
-    print(f'Downloading JRC (Saalfeld lab) VNC transforms into {data_home}')
-    for url, file in tqdm(zip(urls, filenames), leave=False,
-                          total=len(urls), desc='Transforms'):
+    print(f"Downloading JRC (Saalfeld lab) VNC transforms into {data_home}")
+    for url, file in tqdm(
+        zip(urls, filenames), leave=False, total=len(urls), desc="Transforms"
+    ):
         dst = os.path.join(data_home, file)
         if skip_existing and os.path.exists(dst):
             continue
@@ -366,23 +396,30 @@ def download_from_url(url, dst, resume=False):
 
     """
     try:
-        file_size = int(requests.head(url, allow_redirects=True).headers["Content-Length"])
+        file_size = int(
+            requests.head(url, allow_redirects=True).headers["Content-Length"]
+        )
     except KeyError:
         file_size = None
 
     if file_size and os.path.exists(dst) and resume:
         first_byte = os.path.getsize(dst)
-        mode = 'ab'
+        mode = "ab"
     else:
         first_byte = 0
-        mode = 'wb'
+        mode = "wb"
 
     if file_size and first_byte >= file_size:
         return file_size
 
     header = {"Range": f"bytes={first_byte}-{file_size}"}
-    with tqdm(total=file_size, initial=first_byte,
-              unit='B', unit_scale=True, desc=os.path.basename(dst)) as pbar:
+    with tqdm(
+        total=file_size,
+        initial=first_byte,
+        unit="B",
+        unit_scale=True,
+        desc=os.path.basename(dst),
+    ) as pbar:
         req = requests.get(url, headers=header, stream=True, allow_redirects=True)
         with open(dst, mode) as f:
             for chunk in req.iter_content(chunk_size=1024):
@@ -400,8 +437,7 @@ def get_data_home(data_home: Optional[str] = None, create=False) -> str:
     ``FLYBRAINS_DATA`` environment variable and defaults to ``~/flybrain-data``.
     """
     if data_home is None:
-        data_home = os.environ.get('FLYBRAINS_DATA',
-                                   os.path.join('~', 'flybrain-data'))
+        data_home = os.environ.get("FLYBRAINS_DATA", os.path.join("~", "flybrain-data"))
 
     data_home = os.path.expanduser(data_home)
     if not os.path.exists(data_home) and create:

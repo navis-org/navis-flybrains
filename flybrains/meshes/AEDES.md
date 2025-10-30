@@ -1,0 +1,1 @@
+The AEDES neuropil mesh was made from the synapse point cloud, some downsampling and a bit of manual clean-up afterwards.
