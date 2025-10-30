@@ -155,6 +155,9 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- `0.6.0` (29/10/25):
+  - added the BANC (brain and nerve cord) connectome: template, meshes, transforms to/from JFCR2018F and maleCNS, mirror transform
+  - fix normals for the Male CNS VNC mesh
 - `0.5.2` (08/08/25):
   - renamed `JRCFIB2022Mtilt` -> `JRCFIB2022Mplot`
   - improved `JRCFIB2022Mplot` transform to also correct for a tilt along the z-axis
