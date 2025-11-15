@@ -1,4 +1,4 @@
 include flybrains/data/*.json
-include flybrains/data/*.csv
-include flybrains/data/*.txt
+include flybrains/data/**/*.csv
+include flybrains/data/**/*.txt
 include flybrains/meshes/*.ply
