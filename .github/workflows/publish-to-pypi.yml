@@ -9,9 +9,9 @@ jobs:
     name: Build and publish Python 🐍 distributions 📦 to PyPI
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python 3.12
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: 3.12
     - name: Install wheel and setuptools
@@ -28,7 +28,16 @@ jobs:
         setup.py
         sdist
         bdist_wheel
+    - name: Test install of the package
+      run: >-
+        python3 -m
+        pip install
+        dist/*.whl
+    - name: Test import of the package
+      run: >-
+        python3 -c
+        "import flybrains"
     - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@master
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ secrets.pypi_password }}
