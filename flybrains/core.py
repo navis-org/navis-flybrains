@@ -560,6 +560,16 @@ def register_manual_transforms():
         transform=tr, source="BANC", target="JRCFIB2022M", transform_type="bridging"
     )
 
+    # JRC2018U - flyLICONN (Tavakoli lab) transform
+    fp = os.path.join(data_filepath, "JRC2018U_flyLICONN_tavakolilab_landmarks.csv")
+    lm = pd.read_csv(fp, header=None)
+    tr = transforms.TPStransform(
+        lm[[2, 3, 4]].values,
+        lm[[5, 6, 7]].values,
+    )
+    transforms.registry.register_transform(
+        transform=tr, source="JRC2018U", target="JRCflyLICONN_TAV2026a", transform_type="bridging"
+    )
 
 def register_fanc_jrcvnc2018f():
     """Register FANC -> JRCVNC2018F and reverse transforms."""
