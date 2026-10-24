@@ -155,6 +155,14 @@ Most templates come with a mesh e.g. for plotting via navis:
 ```
 
 ## Changes
+- unreleased:
+  - **potentially breaking**: fixed a 9.5um z-offset when transforming to/from `JRC2018M` (#24). The Saalfeld lab
+    `JRC2018U <-> JRC2018M` and `JRCFIB2022M <-> JRC2018M` transforms are now registered against a new `JRC2018Mzoff`
+    space which is bridged to the actual `JRC2018M` template via an affine. Chains passing _through_ `JRC2018M`
+    (e.g. `JRCFIB2022M -> JRC2018U`) are unaffected but data transformed _into_ `JRC2018M` will now sit 9.5um further
+    along z than before.
+  - replaced the `JRCFIB2022M <-> JRC2018M` transform with a re-encoded version readable by newer HDF5 versions;
+    removed the `h5py<=3.12.1` pin (#23)
 - `0.6.0` (29/10/25):
   - added the BANC (brain and nerve cord) connectome: template, meshes, transforms to/from JFCR2018F and maleCNS, mirror transform
   - fix normals for the Male CNS VNC mesh

@@ -278,6 +278,16 @@ def search_register_path(path, verbose=False):
                         if target == template:
                             target += "um"
 
+                    # The JRC2018M space used by the Saalfeld lab H5 transforms is offset
+                    # from the published JRC2018M template by 9.5um (25 slices) in z.
+                    # We register them against "JRC2018Mzoff" instead and bridge to the
+                    # actual JRC2018M via an affine (see `register_unit_transforms`)
+                    if ext == ".h5":
+                        if source == "JRC2018M":
+                            source = "JRC2018Mzoff"
+                        if target == "JRC2018M":
+                            target = "JRC2018Mzoff"
+
                     if ext == ".list":
                         # Some CMTK transforms may require an additional affine transform either before
                         # or after the main transform. By convention, these are placed as separate
@@ -496,6 +506,21 @@ def register_unit_transforms():
         transform=tr,
         source="JFRC2",
         target="JFRC2010",
+        transform_type="bridging",
+        weight=0.1,
+    )
+
+    # The JRC2018M space of the Saalfeld lab transforms (JRC2018U <-> JRC2018M and
+    # JRCFIB2022M <-> JRC2018M) is offset by 9.5um (25 slices at 0.38um) in z
+    # compared to the published JRC2018M template.
+    # See https://github.com/navis-org/navis-flybrains/issues/24
+    M = np.eye(4)
+    M[2, 3] = 9.5
+    tr = transforms.AffineTransform(M)
+    transforms.registry.register_transform(
+        transform=tr,
+        source="JRC2018Mzoff",
+        target="JRC2018M",
         transform_type="bridging",
         weight=0.1,
     )
