@@ -19,13 +19,21 @@ import shutil
 import pathlib
 import warnings
 
+import h5py
+
 from textwrap import dedent
 from navis import transforms
 
 import numpy as np
 import pandas as pd
 
-from .download import get_data_home, _total_h5_transforms, _total_cmtk_transforms
+from .download import (
+    get_data_home,
+    _total_h5_transforms,
+    _total_cmtk_transforms,
+    _is_outdated_transform,
+    _is_readable_transform,
+)
 
 __all__ = ["register_transforms", "report"]
 
@@ -294,6 +302,16 @@ def search_register_path(path, verbose=False):
                             )
                             source = f"{source}-{target}(pre)"
 
+                    # Some transforms have since been replaced with fixed versions
+                    # because the originals can't be read by some versions of HDF5
+                    if _is_outdated_transform(hit) and not _is_readable_transform(hit):
+                        # If we already have the fixed version (e.g. in the data home
+                        # while the outdated one sits in a nat regdir), skip this one
+                        # so navis doesn't route through it
+                        if _has_fixed_copy(hit):
+                            continue
+                        _warn_outdated_transform(hit)
+
                     # Initialize the transform
                     transform = tr(hit)
 
@@ -311,6 +329,29 @@ def search_register_path(path, verbose=False):
                     )
                 except BaseException as e:
                     warnings.warn(f"Error registering {hit} as transform: {str(e)}")
+
+
+def _has_fixed_copy(fp):
+    """Check if a fixed version of an outdated H5 transform is already registered."""
+    return any(
+        isinstance(edge.transform, transforms.h5reg.H5transform)
+        and pathlib.Path(edge.transform.file).name == pathlib.Path(fp).name
+        and not _is_outdated_transform(edge.transform.file)
+        for edge in transforms.registry.transforms
+    )
+
+
+def _warn_outdated_transform(fp):
+    """Warn that an outdated H5 transform can't be read with the local HDF5."""
+    fp = pathlib.Path(fp)
+    warnings.warn(
+        f"{fp} is an outdated version of the {fp.stem.replace('_', ' <-> ')} "
+        "transform which can not be read with the version of HDF5 used by "
+        f"your h5py (HDF5 {h5py.version.hdf5_version}). Please run "
+        "`flybrains.download_jrc_transforms()` to download the fixed version "
+        f"into {get_data_home()} and delete this file if it lives elsewhere. "
+        "See https://github.com/navis-org/navis-flybrains/issues/23 for details."
+    )
 
 
 def register_aliases():

@@ -12,6 +12,7 @@
 #    GNU General Public License for more details.
 
 import os
+import h5py
 import requests
 
 from tqdm.auto import tqdm
@@ -38,6 +39,48 @@ _total_h5_transforms = (
     8  # from JRC Saalfeld lab
     + 3  # from JRC VNC Saalfeld lab
 )
+
+# H5 transforms that have since been replaced on figshare with a fixed version.
+# The original JRCFIB2022M <-> JRC2018M transform was encoded with HDF5's
+# scale-offset filter in a way that HDF5 1.14.x fails to decode ("minimum number
+# of bits exceeds size of type" or "filter returned failure during read"). The
+# re-encoded file contains the exact same values but is gzip-compressed only.
+# Note that only some chunks are affected (e.g. 234 of 864 in `dfield`): values
+# map filenames to the origin of a chunk known to fail with HDF5 1.14.x.
+# See https://github.com/navis-org/navis-flybrains/issues/23
+_OUTDATED_H5 = {"JRCFIB2022M_JRC2018M.h5": (0, 128, 128)}
+
+
+def _is_outdated_transform(fp):
+    """Check whether file is an outdated version of a since-fixed H5 transform."""
+    if os.path.basename(fp) not in _OUTDATED_H5:
+        return False
+
+    try:
+        with h5py.File(fp, "r") as f:
+            dcpl = f["dfield"].id.get_create_plist()
+            return any(
+                dcpl.get_filter(i)[0] == h5py.h5z.FILTER_SCALEOFFSET
+                for i in range(dcpl.get_nfilters())
+            )
+    # If we can't even read the metadata, the file is broken in some other way
+    except (OSError, KeyError):
+        return False
+
+
+def _is_readable_transform(fp):
+    """Check whether the local HDF5 can decode an outdated H5 transform.
+
+    This reads only the one chunk listed in `_OUTDATED_H5` (~1.5Mb).
+    """
+    origin = _OUTDATED_H5[os.path.basename(fp)]
+    try:
+        with h5py.File(fp, "r") as f:
+            ds = f["dfield"]
+            ds[tuple(slice(o, o + c) for o, c in zip(origin, ds.chunks))]
+        return True
+    except OSError:
+        return False
 
 
 def download_vfb_transforms(
@@ -299,7 +342,8 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
                     read from the ``FLYBRAINS_DATA`` environment variable and
                     defaults to ``~/flybrain-data``.
     skip_existing : bool
-                    If True, existing files will be skipped. If False, they
+                    If True, existing files will be skipped unless they are an
+                    outdated version of a since-fixed transform. If False, they
                     will be overwritten.
 
     """
@@ -312,7 +356,8 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         "14371574?private_link=b7120207f38b35f1e372",
         "14448911?private_link=2afde323b12274d3243b",
         "14368358?private_link=b29e25b6e47ccf9187a8",
-        "42106125?private_link=bfbfc18d24fe959b78c0",
+        # Re-encoded version of 42106125 (see `_OUTDATED_H5`)
+        "70575984?private_link=ec0965d83b1b8361df90",
     )
     urls = [f"https://ndownloader.figshare.com/files/{f}" for f in urls]
 
@@ -332,7 +377,7 @@ def download_jrc_transforms(data_home=None, skip_existing=True):
         zip(urls, filenames), leave=False, total=len(urls), desc="Transforms"
     ):
         dst = os.path.join(data_home, file)
-        if skip_existing and os.path.exists(dst):
+        if skip_existing and os.path.exists(dst) and not _is_outdated_transform(dst):
             continue
         _ = download_from_url(url, dst)
 
